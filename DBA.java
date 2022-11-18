@@ -37,6 +37,7 @@ public class DBA {
 				user.setReward(rs.getInt("상벌점"));
 				user.setPoint(rs.getInt("포인트"));
 				list.add(user);
+
 			}
 		} catch (SQLException e1) {
 			e1.printStackTrace();

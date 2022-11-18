@@ -10,6 +10,7 @@ public class adminGui extends JFrame implements ActionListener {
 	JButton updateBtn;
 	JButton deleteBtn;
 	JButton shopBtn;
+	int select; // jtable 데이터 선택
 	
 	public adminGui(ArrayList<User> list){
 		setTitle("관리자");
@@ -67,8 +68,10 @@ public class adminGui extends JFrame implements ActionListener {
 				if(j==6) s[i][j]=list.get(i).getPoint()+"";
 			}
 		}
+
 		
 		JTable users=new JTable(s,column);		
+		select = users.getSelectedRow();
 		users.getTableHeader().setReorderingAllowed(false);
 		users.getTableHeader().setResizingAllowed(false);
 		JScrollPane scroll=new JScrollPane(users);
@@ -95,7 +98,9 @@ public class adminGui extends JFrame implements ActionListener {
 		// 삭제
 		else if(e.getSource()==deleteBtn) {
 			JOptionPane.showMessageDialog(null,"삭제되었습니다 - 미구현");
+			
 		}
+		
 		else if(e.getSource()==shopBtn) {
 			AdminShop adminShop = new AdminShop();
 			adminShop.setLocation(600, 100);
