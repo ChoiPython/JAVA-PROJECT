@@ -1,0 +1,21 @@
+create database test;
+
+use test;
+
+create table user(
+사원번호 INT(10) not null primary key,
+사원이름 CHAR(12),
+부서 CHAR(12),
+직급 CHAR(12),
+반차 INT(5),
+상벌점 INT(5),
+포인트 INT(5)
+);
+
+insert into user values(0,'admin',NULL,NULL,NULL,NULL,NULL);
+
+create user 'testjju'@'localhost' identified by '1234';
+
+grant all privileges on test.* to 'testjju'@'localhost';
+
+flush privileges;
