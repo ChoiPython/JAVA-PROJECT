@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 
 public class Login extends JFrame implements ActionListener {
-	// test
+	
 	DBA dba=new DBA();
 	private JTextField textField;
 	private JTextField textField_1;
