@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 
@@ -95,6 +94,7 @@ public class Login extends JFrame implements ActionListener {
 			}
 		}
 	}
+	
 	
 	public static void main(String args[]) {
 		// 로그인 화면
