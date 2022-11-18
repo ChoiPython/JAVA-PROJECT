@@ -5,12 +5,12 @@ import java.util.ArrayList;
 
 public class adminGui extends JFrame implements ActionListener {
 	JTextField searchText;
-	JButton searchBtn;
-	JButton insertBtn;
-	JButton updateBtn;
-	JButton deleteBtn;
-	JButton shopBtn;
-	int select; // jtable 데이터 선택
+	JButton searchBtn;	// 검색버튼
+	JButton insertBtn;	// 등록버튼
+	JButton updateBtn;	// 수정버튼
+	JButton deleteBtn;	// 삭제버튼
+	JButton shopBtn;	// 상점버튼
+	
 	
 	public adminGui(ArrayList<User> list){
 		setTitle("관리자");
@@ -53,8 +53,7 @@ public class adminGui extends JFrame implements ActionListener {
 		shopBtn.setBounds(650, 400, 110, 30);
 		contentpane.add(shopBtn);
 		
-		//테이블
-		
+		//테이블 데이터 set
 		String column[]= {"사원번호","사원이름","부서","직급","반차","상벌점","포인트"};
 		String[][] s=new String[100][7];//= {{null,null,null,null,null,null,null}};
 		for(int i=0;i<list.size();i++) {
@@ -70,19 +69,22 @@ public class adminGui extends JFrame implements ActionListener {
 		}
 
 		
+		// 테이블 생성
 		JTable users=new JTable(s,column);		
-		select = users.getSelectedRow();
 		users.getTableHeader().setReorderingAllowed(false);
 		users.getTableHeader().setResizingAllowed(false);
+		
+		// 테이블 스크롤 바 생성
 		JScrollPane scroll=new JScrollPane(users);
 		scroll.setBounds(40, 90, 580, 440);
 		contentpane.add(scroll);
 		
 		setSize(800,600);
 		setVisible(true);
-		setLocationRelativeTo(null);
-		setResizable(false);
+		setLocationRelativeTo(null);	// 화면중간출력
+		setResizable(false);			// 크기조절
 	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// 등록
@@ -95,7 +97,7 @@ public class adminGui extends JFrame implements ActionListener {
 			
 		}
 		
-		// 삭제
+		// 삭제 
 		else if(e.getSource()==deleteBtn) {
 			JOptionPane.showMessageDialog(null,"삭제되었습니다 - 미구현");
 			

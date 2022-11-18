@@ -6,12 +6,11 @@ import java.util.ArrayList;
 
 
 public class Login extends JFrame implements ActionListener {
-	
-	DBA dba=new DBA();
-	private JTextField textField;
-	private JTextField textField_1;
-	private JLabel lblNewLabel;
-	private JLabel lblNewLabel_1;
+	DBA dba=new DBA();	// db 생성
+	private JTextField idtextField;	// id 입력 박스
+	private JTextField pwtextField;	// pw 입력 박스
+	private JLabel idLabel;		// id 라벨 생성
+	private JLabel pwJLabel;	// pw 라벨 생성
 	
 	public  Login(String title, int xsize, int ysize, Boolean visible)   {
 		getContentPane().setBackground(Color.GRAY);
@@ -22,6 +21,7 @@ public class Login extends JFrame implements ActionListener {
 		// 폰트 지정 - PLAIN-기본, BOLD - 굵게, ITALIC - 기울임
 		Font font = new Font("돋움", Font.BOLD, 50);
 		
+		
 		loginPane.setLayout(null);
 		JLabel test = new JLabel("XX회사");
 		test.setLocation(210, 20);
@@ -29,25 +29,25 @@ public class Login extends JFrame implements ActionListener {
 		test.setFont(font);
 		loginPane.add(test);
 		
-		lblNewLabel = new JLabel(" 아이디(이름)");
-		lblNewLabel.setFont(new Font("굴림", Font.PLAIN, 15));
-		lblNewLabel.setBounds(144, 180, 119, 40);
-		getContentPane().add(lblNewLabel);
+		idLabel = new JLabel(" 아이디(이름)");
+		idLabel.setFont(new Font("굴림", Font.PLAIN, 15));
+		idLabel.setBounds(144, 180, 119, 40);
+		getContentPane().add(idLabel);
 		
-		lblNewLabel_1 = new JLabel("패스워드(사원번호)");
-		lblNewLabel_1.setFont(new Font("굴림", Font.PLAIN, 15));
-		lblNewLabel_1.setBounds(108, 230, 132, 40);
-		getContentPane().add(lblNewLabel_1);
+		pwJLabel = new JLabel("패스워드(사원번호)");
+		pwJLabel.setFont(new Font("굴림", Font.PLAIN, 15));
+		pwJLabel.setBounds(108, 230, 132, 40);
+		getContentPane().add(pwJLabel);
 		
-		textField = new JTextField();
-		textField.setBounds(261, 189, 183, 21);
-		getContentPane().add(textField);
-		textField.setColumns(10);
+		idtextField = new JTextField();
+		idtextField.setBounds(261, 189, 183, 21);
+		getContentPane().add(idtextField);
+		idtextField.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(261, 240, 183, 21);
-		getContentPane().add(textField_1);
-		textField_1.setColumns(10);
+		pwtextField = new JTextField();
+		pwtextField.setBounds(261, 240, 183, 21);
+		getContentPane().add(pwtextField);
+		pwtextField.setColumns(10);
 		
 		JButton btnNewButton = new JButton("로그인");
 		btnNewButton.setBounds(468, 239, 91, 23);
@@ -66,27 +66,30 @@ public class Login extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		User user=new User();
 		JButton b=(JButton)e.getSource();
-		if(textField_1.getText().equals("")||textField.getText().equals("")) {
+		if(pwtextField.getText().equals("")||idtextField.getText().equals("")) {
 			JOptionPane.showMessageDialog(null, "아이디 또는 비밀번호가 다릅니다.","로그인 실패",JOptionPane.WARNING_MESSAGE);
 		}
 		else {
-			user=dba.login(textField_1.getText(),textField.getText());
+			user=dba.login(pwtextField.getText(),idtextField.getText());
+			
 			if(user.getName()==null||Integer.toString(user.getId())==null) {
 				JOptionPane.showMessageDialog(null, "아이디 또는 비밀번호가 다릅니다.","로그인 실패",JOptionPane.WARNING_MESSAGE);
 			}
+			
 			else if(user.getId()==0&&user.getName().equals("admin")) {
 				//user=dba.login(textField_1.getText(),textField.getText());
 				ArrayList<User> list=new ArrayList<>();
 				dba.selectAllData(list);
 				this.dispose();
 				new adminGui(list);
-
 			}
+			
 			else if (Integer.toString(user.getId())!=null) {
 				//user=dba.login(textField_1.getText(),textField.getText());
 				this.dispose();
 				new MyUser(user);
 			}
+			
 			else {
 				JOptionPane.showMessageDialog(null, "아이디 또는 비밀번호가 다릅니다.","로그인 실패",JOptionPane.WARNING_MESSAGE);
 			}
