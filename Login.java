@@ -16,7 +16,7 @@ public class Login extends JFrame implements ActionListener {
 		setTitle("xx회사 로그인 창");	// 화면 제목
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		Container loginPane = getContentPane();
-		
+		//test
 		// 폰트 지정 - PLAIN-기본, BOLD - 굵게, ITALIC - 기울임
 		Font font = new Font("돋움", Font.BOLD, 50);
 		
