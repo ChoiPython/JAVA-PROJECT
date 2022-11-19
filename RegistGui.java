@@ -155,6 +155,7 @@ public class RegistGui extends JFrame {
       
       
       //------------------------------------------//
+      // 이미지 파일 선택하는 거인듯?
         Container contentPane = getContentPane();
 
         setLocation(100, 100);

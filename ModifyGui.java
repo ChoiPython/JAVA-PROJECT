@@ -163,7 +163,7 @@ public class ModifyGui extends JFrame {
             }
             imagePanel.repaint(); //repaint 메소드 호출
         });
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         pack();
         setVisible(true);
         setLocationRelativeTo(null);

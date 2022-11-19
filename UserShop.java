@@ -279,8 +279,8 @@ public class UserShop extends JFrame{
 	}
 	
 	public static void main(String[] args) {
-//		User user = new User();
-//		user.setReward(20);
-//		new UserShop(user);
+		User user = new User();
+		user.setReward(20);
+		new UserShop(user);
 	}
 }

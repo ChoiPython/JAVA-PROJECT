@@ -20,7 +20,7 @@ public class MyUser extends JFrame implements ActionListener{
 		Container c = getContentPane();
 		c.setLayout(null);
 		c.setBackground(SystemColor.info);
-		ImageIcon img = new ImageIcon("employee.jpg");
+		ImageIcon img = new ImageIcon(this.getClass().getResource("/employee.jpg"));
 		JLabel imageLabel = new JLabel(img, JLabel.CENTER);
 		imageLabel.setBounds(30, 30, 150, 187);
 		c.add(imageLabel);
