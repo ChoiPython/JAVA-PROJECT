@@ -229,11 +229,7 @@ public class AdminShop extends JFrame{
 			
 		}
 		
-//				JOptionPane.showMessageDialog(null, "버튼 클릭 됨", "메시지 박스");
-//				JOptionPane.showMessageDialog(null, "버튼 클릭 됨", "메시지 박스", JOptionPane.WARNING_MESSAGE);	// 경고
-//				JOptionPane.showMessageDialog(null, "버튼 클릭 됨", "메시지 박스", JOptionPane.ERROR_MESSAGE);		// 에러
-//				JOptionPane.showMessageDialog(null, "버튼 클릭 됨", "메시지 박스", JOptionPane.INFORMATION_MESSAGE);	// 정보
-//				JOptionPane.showMessageDialog(null, "버튼 클릭 됨", "메시지 박스", JOptionPane.QUESTION_MESSAGE);
+
 		// 상점 - 메시지 박스 이벤트 처리
 		class ShowBuyMessage implements ActionListener {
 			int price;
@@ -241,7 +237,8 @@ public class AdminShop extends JFrame{
 				this.price = price;
 				
 			}
-			// 
+			
+			// 구매 로직
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int buy = JOptionPane.showConfirmDialog(null, "버튼 클릭 됨", "메시지 박스", JOptionPane.YES_NO_OPTION);

@@ -8,7 +8,7 @@ import javax.swing.event.*;
 public class MyInventory {
 
 	private JFrame frame;
-	private JTextField textField;
+	private JTextField textField;	// 사용권
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;

@@ -3,10 +3,13 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class UserShop extends JFrame{
-	private int coin = 10;
+	private int coin;
 	private JLabel coinLabel;
+	private DBA db=new DBA();
+	private User user;
 	
-	public UserShop() {
+	public UserShop(User u) {
+		user = u;
 		setTitle("상점");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		Container usershoppane = getContentPane();
@@ -63,7 +66,7 @@ public class UserShop extends JFrame{
 		
 		
 		// 상벌점 현황 라벨
-		coinLabel = new JLabel("상/벌점 : " + coin);
+		coinLabel = new JLabel("상/벌점 : " + u.getReward());
 
 		
 		// 상벌점 라벨 설정
@@ -200,6 +203,7 @@ public class UserShop extends JFrame{
 		// 구매 조건
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			coin = user.getReward();
 			int buy = JOptionPane.showConfirmDialog(null, "버튼 클릭 됨", "메시지 박스", JOptionPane.YES_NO_OPTION);
 			// 구매
 			if (buy == JOptionPane.YES_OPTION) { 
@@ -208,8 +212,11 @@ public class UserShop extends JFrame{
 				}
 				else {
 					coin -= price;
+					user.setReward(coin);
+					
 					JOptionPane.showMessageDialog(null, "구매되었습니다. \n현재 보유 코인 : " + coin, "구매 성공", JOptionPane.INFORMATION_MESSAGE);
-					coinLabel.setText("상/벌점 : " + coin);
+					db.updatecoin(user.getId(), user.getReward());
+					coinLabel.setText("상/벌점 : " + user.getReward());
 				}
 				
 			}
@@ -222,7 +229,6 @@ public class UserShop extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			dispose();
-//			System.exit(0);
 			
 		}
 		
@@ -271,7 +277,10 @@ public class UserShop extends JFrame{
 	public void SetLocation() {
 		
 	}
+	
 	public static void main(String[] args) {
-		new UserShop();
+//		User user = new User();
+//		user.setReward(20);
+//		new UserShop(user);
 	}
 }

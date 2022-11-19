@@ -9,6 +9,7 @@ class ImagePanel2 extends JPanel {
     Image image;
     Toolkit toolkit = getToolkit();
 
+
     void setPath(String path) {
         image = toolkit.getImage(path); //이미지 경로 저장
     }
@@ -21,14 +22,14 @@ class ImagePanel2 extends JPanel {
 }
 
 public class RegistGui extends JFrame {
-
+	String imgaddr=null;
    private JPanel contentPane;
-   private JTextField textField;
-   private JTextField textField_1;
-   private JTextField textField_2;
-   private JTextField textField_3;
-   private JTextField textField_4;
-   private JTextField textField_5;
+   private JTextField idTextField;		// 사원번호
+   private JTextField nameTextField;	// 사원이름
+   private JTextField departTextField;	// 부서
+   private JTextField rankTextField;	// 직급
+   private JTextField rewordTextField;	// 상벌점
+   private JTextField halfwayTextField;	// 반차
 
    public static void main(String[] args) {
 	   new RegistGui();
@@ -44,78 +45,115 @@ public class RegistGui extends JFrame {
       setContentPane(contentPane);
       contentPane.setLayout(null);
       
-      JLabel lblNewLabel = new JLabel("관리자");
-      lblNewLabel.setBounds(274, 20, 99, 36);
-      lblNewLabel.setForeground(Color.BLUE);
-      lblNewLabel.setFont(new Font("궁서체", Font.BOLD | Font.ITALIC, 30));
-      contentPane.add(lblNewLabel);
+      // 제목 라벨
+      JLabel titleLabel = new JLabel("관리자");
+      titleLabel.setBounds(274, 20, 99, 36);
+      titleLabel.setForeground(Color.BLUE);
+      titleLabel.setFont(new Font("궁서체", Font.BOLD | Font.ITALIC, 30));
+      contentPane.add(titleLabel);
       
-      JLabel lblNewLabel_1 = new JLabel("");
-      lblNewLabel_1.setBounds(27, 104, 156, 164);
-      contentPane.add(lblNewLabel_1);
+      // 사원번호 라벨
+      JLabel idLabel = new JLabel("사번");
+      idLabel.setBounds(216, 86, 50, 15);
+      contentPane.add(idLabel);
       
-      JLabel lblNewLabel_1_1 = new JLabel("부서");
-      lblNewLabel_1_1.setBounds(216, 131, 50, 15);
-      contentPane.add(lblNewLabel_1_1);
+      // 이름 라벨
+      JLabel nameLabel = new JLabel("이름");
+      nameLabel.setBounds(216, 131, 50, 15);
+      contentPane.add(nameLabel);
       
-      JLabel lblNewLabel_1_2 = new JLabel("직급");
-      lblNewLabel_1_2.setBounds(216, 179, 50, 15);
-      contentPane.add(lblNewLabel_1_2);
+      // 부서 라벨
+      JLabel departLabel = new JLabel("부서");
+      departLabel.setBounds(216, 179, 50, 15);
+      contentPane.add(departLabel);
       
-      JLabel lblNewLabel_1_3 = new JLabel("사원번호");
-      lblNewLabel_1_3.setBounds(195, 230, 50, 15);
-      contentPane.add(lblNewLabel_1_3);
+      // 직급 라벨
+      JLabel rankLabel = new JLabel("직급");
+      rankLabel.setBounds(216, 230, 50, 15);
+      contentPane.add(rankLabel);
       
-      JLabel lblNewLabel_1_4 = new JLabel("상/벌점");
-      lblNewLabel_1_4.setBounds(205, 323, 50, 15);
-      contentPane.add(lblNewLabel_1_4);
+      // 반차 라벨
+      JLabel halfwayLabel = new JLabel("반차");
+      halfwayLabel.setBounds(216, 278, 80, 15);
+      contentPane.add(halfwayLabel);
       
-      textField = new JTextField();
-      textField.setBounds(257, 83, 360, 21);
-      contentPane.add(textField);
-      textField.setColumns(10);
+      // 상벌점 라벨
+      JLabel rewordLabel = new JLabel("상벌점");
+      rewordLabel.setBounds(206, 323, 50, 15);
+      contentPane.add(rewordLabel);
       
-      textField_1 = new JTextField();
-      textField_1.setBounds(257, 128, 360, 21);
-      textField_1.setColumns(10);
-      contentPane.add(textField_1);
+      // 사원번호 텍필
+      idTextField = new JTextField();
+      idTextField.setBounds(257, 83, 360, 21);
+      contentPane.add(idTextField);
+      idTextField.setColumns(10);
       
-      textField_2 = new JTextField();
-      textField_2.setBounds(257, 176, 360, 21);
-      textField_2.setColumns(10);
-      contentPane.add(textField_2);
+      // 사원이름 텍필
+      nameTextField = new JTextField();
+      nameTextField.setBounds(257, 128, 360, 21);
+      nameTextField.setColumns(10);
+      contentPane.add(nameTextField);
       
-      textField_3 = new JTextField();
-      textField_3.setBounds(257, 227, 360, 21);
-      textField_3.setColumns(10);
-      contentPane.add(textField_3);
+      // 부서 텍필
+      departTextField = new JTextField();
+      departTextField.setBounds(257, 176, 360, 21);
+      departTextField.setColumns(10);
+      contentPane.add(departTextField);
       
-      textField_4 = new JTextField();
-      textField_4.setBounds(257, 320, 360, 21);
-      textField_4.setColumns(10);
-      contentPane.add(textField_4);
+      // 직급 텍필
+      rankTextField = new JTextField();
+      rankTextField.setBounds(257, 227, 360, 21);
+      rankTextField.setColumns(10);
+      contentPane.add(rankTextField);
+      
+      // 반차 텍필
+      halfwayTextField = new JTextField();
+      halfwayTextField.setBounds(257, 274, 360, 21);
+      halfwayTextField.setColumns(10);
+      contentPane.add(halfwayTextField);
+      
+      // 상벌점 텍필
+      rewordTextField = new JTextField();
+      rewordTextField.setBounds(257, 320, 360, 21);
+      rewordTextField.setColumns(10);
+      contentPane.add(rewordTextField);
+      
+      
+      JLabel imgLabel = new JLabel("");
+      imgLabel.setBounds(27, 104, 156, 157);
+      contentPane.add(imgLabel);
       javax.swing.ImageIcon icon = new javax.swing.ImageIcon(this.getClass().getResource("/employee.jpg")); //이미지 파일명
-        lblNewLabel_1.setIcon(icon);
+      imgLabel.setIcon(icon);
       
-      JButton btnNewButton = new JButton("사진 선택\r\n");
-      btnNewButton.setBounds(61, 279, 91, 30);
-      contentPane.add(btnNewButton);
+      // 사진선택 버튼
+      JButton selecimg = new JButton("사진 선택\r\n");
+      selecimg.setBounds(61, 279, 91, 30);
+      contentPane.add(selecimg);
       
-      JButton btnNewButton_1 = new JButton("등록");
-      btnNewButton_1.setBounds(526, 361, 91, 30);
-      btnNewButton_1.addActionListener(new ActionListener() {
+      // 등록 버튼
+      JButton registButton = new JButton("등록");
+      registButton.setBounds(526, 361, 91, 30);
+      registButton.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
-            if(e.getSource()==btnNewButton_1) {
+            if(e.getSource()==registButton) {
+            	DBA db=new DBA();
+            	int id, halfway, reword;
+            	String name,depart,rank;
+            	id=Integer.parseInt(idTextField.getText());
+            	halfway=Integer.parseInt(halfwayTextField.getText());
+            	reword=Integer.parseInt(rewordTextField.getText());
+            	name=nameTextField.getText();
+            	depart=departTextField.getText();
+            	rank=rankTextField.getText();
+            	db.insertData(id,name,depart,rank,halfway,reword,0,imgaddr);
                JOptionPane.showMessageDialog(null,"등록되었습니다"); //버튼1 클릭시 "등록되었습니다" 메세지창 출력
             }
             dispose();
          }
       });
-      contentPane.add(btnNewButton_1);
+      contentPane.add(registButton);
       
-      JLabel lblNewLabel_2 = new JLabel("이름");
-      lblNewLabel_2.setBounds(216, 86, 50, 15);
-      contentPane.add(lblNewLabel_2);
+      
       //------------------------------------------//
         Container contentPane = getContentPane();
 
@@ -134,25 +172,13 @@ public class RegistGui extends JFrame {
         JTextField text = new JTextField(30);
         controlPanel.add(text);
         contentPane.add(controlPanel);
-
-        JLabel lblNewLabel_6 = new JLabel("");
-        lblNewLabel_6.setBounds(69, 113, 164, 161);
-        getContentPane().add(lblNewLabel_6);
         
-        textField_5 = new JTextField();
-        textField_5.setBounds(257, 274, 360, 21);
-        textField_5.setColumns(10);
-        contentPane.add(textField_5);
-        
-        JLabel lblNewLabel_3 = new JLabel("사원번호 확인");
-        lblNewLabel_3.setBounds(175, 278, 80, 15);
-        contentPane.add(lblNewLabel_3);
-
-      btnNewButton.addActionListener(e -> {  //버튼을 클릭했을때 이미지 디렉토리 경로와 파일이름 가져오기
+        selecimg.addActionListener(e -> {  //버튼을 클릭했을때 이미지 디렉토리 경로와 파일이름 가져오기
             image.setVisible(true);
             if (image.getFile() != null) {
                 ImageIcon imageIcon = new ImageIcon(image.getDirectory() + image.getFile());
-                lblNewLabel_1.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(156, 161, Image.SCALE_SMOOTH)));//getScaledInstance 를 사용하여 사진을 크기에 맞춰서 출력
+                selecimg.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(156, 161, Image.SCALE_SMOOTH)));//getScaledInstance 를 사용하여 사진을 크기에 맞춰서 출력
+                imgaddr=image.getDirectory() + image.getFile();
             }
             imagePanel.repaint(); //repaint 메소드 호출
         });
@@ -160,7 +186,5 @@ public class RegistGui extends JFrame {
         pack();
         setVisible(true);
         setLocationRelativeTo(null);	// 화면 중간 출력
-        setResizable(false);
    }
-
 }

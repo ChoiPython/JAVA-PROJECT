@@ -6,6 +6,7 @@ public class User {
 	private int halfway;
 	private int reward;
 	private int point;
+	private String imgaddr;
 	
 	public int getId() {
 		return id;
@@ -48,6 +49,12 @@ public class User {
 	}
 	public void setPoint(int point) {
 		this.point = point;
+	}
+	public String getImgaddr() {
+		return imgaddr;
+	}
+	public void setImgaddr(String imgaddr) {
+		this.imgaddr = imgaddr;
 	}
 	
 	@Override
