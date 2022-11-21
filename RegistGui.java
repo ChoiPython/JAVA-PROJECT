@@ -1,4 +1,3 @@
-
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -36,6 +35,7 @@ public class RegistGui extends JFrame {
    }
 
    public RegistGui() {
+	  setTitle("사원정보 등록창"); //폼 제목
       setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
       setBounds(100, 100, 679, 440);
       contentPane = new JPanel();
@@ -78,7 +78,7 @@ public class RegistGui extends JFrame {
       contentPane.add(halfwayLabel);
       
       // 상벌점 라벨
-      JLabel rewordLabel = new JLabel("상벌점");
+      JLabel rewordLabel = new JLabel("포인트");
       rewordLabel.setBounds(206, 323, 50, 15);
       contentPane.add(rewordLabel);
       
@@ -178,7 +178,7 @@ public class RegistGui extends JFrame {
             image.setVisible(true);
             if (image.getFile() != null) {
                 ImageIcon imageIcon = new ImageIcon(image.getDirectory() + image.getFile());
-                selecimg.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(156, 161, Image.SCALE_SMOOTH)));//getScaledInstance 를 사용하여 사진을 크기에 맞춰서 출력
+                imgLabel.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(156, 161, Image.SCALE_SMOOTH)));//getScaledInstance 를 사용하여 사진을 크기에 맞춰서 출력
                 imgaddr=image.getDirectory() + image.getFile();
             }
             imagePanel.repaint(); //repaint 메소드 호출

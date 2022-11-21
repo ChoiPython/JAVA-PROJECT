@@ -7,10 +7,9 @@ public class adminGui extends JFrame implements ActionListener {
 	JTextField searchText;
 	JButton searchBtn;	// 검색버튼
 	JButton insertBtn;	// 등록버튼
-	JButton updateBtn;	// 수정버튼
-	JButton deleteBtn;	// 삭제버튼
 	JButton shopBtn;	// 상점버튼
 	JButton refreshBtn;	// 새로고침버튼
+	JButton viewBtn; //상세보기버튼
 	JTable users;
 	JScrollPane scroll;
 	
@@ -19,8 +18,8 @@ public class adminGui extends JFrame implements ActionListener {
 		setTitle("관리자");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Container contentpane = getContentPane();
-		contentpane.setLayout(null);
 		contentpane.setBackground(Color.LIGHT_GRAY);
+		getContentPane().setLayout(null);
 		
 		//검색
 		JLabel searchLabel=new JLabel("이름 :");
@@ -31,37 +30,32 @@ public class adminGui extends JFrame implements ActionListener {
 		searchText.setBounds(130, 40, 280, 25);
 		contentpane.add(searchText);
 		searchBtn=new JButton("검색");
-		searchBtn.addActionListener(this);
 		searchBtn.setBounds(430, 40, 67, 25);
+		searchBtn.addActionListener(this);
 		contentpane.add(searchBtn);
 		refreshBtn =new JButton("새로고침");
-		refreshBtn.addActionListener(this);
 		refreshBtn.setBounds(530, 40, 90, 25);
+		refreshBtn.addActionListener(this);
 		contentpane.add(refreshBtn);
 		
 		//등록,수정,삭제 버튼, 상점 버튼
 		insertBtn = new JButton("등록");
+		insertBtn.setBounds(650, 357, 110, 30);
 		insertBtn.addActionListener(this);
-		insertBtn.setBounds(650, 180, 110, 30);
 		contentpane.add(insertBtn);
 		
-		updateBtn = new JButton("수정");
-		updateBtn.addActionListener(this);
-		updateBtn.setBounds(650, 240, 110, 30);
-		contentpane.add(updateBtn);
-		
-		deleteBtn = new JButton("삭제");
-		deleteBtn.addActionListener(this);
-		deleteBtn.setBounds(650, 300, 110, 30);
-		contentpane.add(deleteBtn);
-		
 		shopBtn = new JButton("상점");
+		shopBtn.setBounds(650, 416, 110, 30);
 		shopBtn.addActionListener(this);
-		shopBtn.setBounds(650, 400, 110, 30);
 		contentpane.add(shopBtn);
 		
+		viewBtn=new JButton("상세보기");
+		viewBtn.setBounds(650,294,110,30);
+		viewBtn.addActionListener(this);
+		contentpane.add(viewBtn);
+		
 		//테이블 데이터 set
-		String column[]= {"사원번호","사원이름","부서","직급","반차","상벌점","포인트"};
+		String column[]= {"사원번호","사원이름","만근","지각","무단결근"};
 		String[][] s=new String[100][7];//= {{null,null,null,null,null,null,null}};
 		for(int i=0;i<list.size();i++) {
 			for(int j=0;j<7;j++) {
@@ -83,8 +77,21 @@ public class adminGui extends JFrame implements ActionListener {
 		
 		// 테이블 스크롤 바 생성
 		scroll=new JScrollPane(users);
-		scroll.setBounds(40, 90, 580, 440);
+		scroll.setBounds(40, 172, 580, 358);
 		contentpane.add(scroll);
+		
+	
+		JComboBox YearBox=new JComboBox();
+		YearBox.setModel(new DefaultComboBoxModel(new String[] {"2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030"}));
+		YearBox.setBounds(47, 103, 90, 23);		
+		getContentPane().add(YearBox);
+		
+	
+	
+		JComboBox MonthBox = new JComboBox();
+		MonthBox.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}));
+		MonthBox.setBounds(150, 103, 54, 23);
+		getContentPane().add(MonthBox);
 		
 		setSize(800,600);
 		setVisible(true);
@@ -98,22 +105,9 @@ public class adminGui extends JFrame implements ActionListener {
 		if(e.getSource()==insertBtn) {
 			new RegistGui();
 		}
-		// 수정
-		else if(e.getSource()==updateBtn) {
-			new ModifyGui();
-			
-		}
-		
-		// 삭제 
-		else if(e.getSource()==deleteBtn) {
-			String idstr=JOptionPane.showInputDialog("삭제할 사원번호를 입력하세요.");
-			if(idstr!=null) {
-				DBA db=new DBA();
-				int id;
-				id=Integer.parseInt(idstr);
-				db.deleteData(id);
-				JOptionPane.showConfirmDialog(null, "성공적으로 삭제되었습니다.","확인",JOptionPane.YES_OPTION);
-			}
+		else if(e.getSource()==viewBtn) {
+			ViewGui viewgui = new ViewGui();
+			viewgui.setVisible(true);
 		}
 		
 		else if(e.getSource()==shopBtn) {
@@ -131,7 +125,7 @@ public class adminGui extends JFrame implements ActionListener {
 				scroll.setVisible(false);
 				db.selectNameData(list, searchText.getText());
 				
-				String column[]= {"사원번호","사원이름","부서","직급","반차","상벌점","포인트"};
+				String column[]= {"사원번호","사원이름","만근","지각","무단결근"};
 				String[][] s=new String[100][7];
 				for(int i=0;i<list.size();i++) {
 					s[i][0]=list.get(i).getId()+"";
@@ -147,7 +141,7 @@ public class adminGui extends JFrame implements ActionListener {
 				users.getTableHeader().setReorderingAllowed(false);
 				users.getTableHeader().setResizingAllowed(false);
 				scroll=new JScrollPane(users);
-				scroll.setBounds(40, 90, 580, 440);
+				scroll.setBounds(40, 172, 580, 358);
 				getContentPane().add(scroll);
 			}
 		}
@@ -159,7 +153,7 @@ public class adminGui extends JFrame implements ActionListener {
 			scroll.setVisible(false);
 			db.selectAllData(list);
 			
-			String column[]= {"사원번호","사원이름","부서","직급","반차","상벌점","포인트"};
+			String column[]= {"사원번호","사원이름","만근","지각","무단결근"};
 			String[][] s=new String[100][7];
 			for(int i=0;i<list.size();i++) {
 				s[i][0]=list.get(i).getId()+"";
@@ -175,7 +169,7 @@ public class adminGui extends JFrame implements ActionListener {
 			users.getTableHeader().setReorderingAllowed(false);
 			users.getTableHeader().setResizingAllowed(false);
 			scroll=new JScrollPane(users);
-			scroll.setBounds(40, 90, 580, 440);
+			scroll.setBounds(40, 172, 580, 358);
 			getContentPane().add(scroll);
 		}
 	}
