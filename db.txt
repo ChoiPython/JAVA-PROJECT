@@ -18,7 +18,6 @@ insert into user values(0,'admin',NULL,NULL,NULL,NULL,NULL, NULL);
 // 유저 데이터 추가
 insert into user values(20212503, '최주영', '동의대', '학생', 10, 20, 50, NULL);
 
-create user 'testjju'@'localhost' identified by '1234';
 
 grant all privileges on test.* to 'testjju'@'localhost';
 
