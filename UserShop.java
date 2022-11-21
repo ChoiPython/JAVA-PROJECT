@@ -129,6 +129,11 @@ public class UserShop extends JFrame{
 		randomBuyMessage.SetPrice(1);
 		randomBoxButton.addActionListener(randomBuyMessage);
 		
+		// 구매 버튼 추가
+		usershoppane.add(vacationButton);
+		usershoppane.add(halfvacationButton);
+		usershoppane.add(randomBoxButton);
+		
 		
 		// 닫기(확인) 버튼 생성 & 설정 & 이벤트
 		JButton closeButton = new JButton("닫기");
@@ -138,41 +143,9 @@ public class UserShop extends JFrame{
 //		closeButton.setForeground(Color.white); // 글자 색상
 		closeButton.setBounds(880, 600, 80, 40);
 		closeButton.addActionListener(new CloseFrame());
-
-		
-		// 상품 정보 확인 버튼 - 확률(1등 1%, 2등 3%, 3등 4%), 각 등수 상품
-		JButton itemsinfoButton = new JButton("상품 확인");
-		SetFont(itemsinfoButton, 20);
-		SetDefBut(itemsinfoButton, false, false, false);
-		itemsinfoButton.setBounds(750, 500, 150, 50);
-		itemsinfoButton.addActionListener(new ShowItemsInfo());
-		
-		
-		// 내 가방 생성 & 설정 & 이벤트
-		// 내 가방 생성 시 id인자로 받아오고 user 데이터 생성해야할거같다
-		JButton invenButton = new JButton("내 가방");
-		SetBack(invenButton);
-		SetFont(invenButton, 20);
-		SetDefBut(invenButton, true, false, false);
-		invenButton.setBounds(790, 300, 150,50);
-		invenButton.addActionListener(new OpenMyBack() );
-		
-		
-		// 추가
-		// 구매 버튼
-		usershoppane.add(vacationButton);
-		usershoppane.add(halfvacationButton);
-		usershoppane.add(randomBoxButton);
-		
-		// 닫기 버튼
+		// 닫기 버튼 추가
 		usershoppane.add(closeButton);
-		
-		// 상품 정보 확인 버튼
-		usershoppane.add(itemsinfoButton);
-		
-		// 내 가방 버튼
-		usershoppane.add(invenButton);
-		
+
 		
 		// 폰트설정
 		SetFont(vacationButton, 20);
@@ -190,6 +163,26 @@ public class UserShop extends JFrame{
 		// 창 크기 변환x
 		setResizable(false);
 		
+		
+		
+		// 상품 정보 확인 버튼 - 확률(1등 1%, 2등 3%, 3등 4%), 각 등수 상품
+//		JButton itemsinfoButton = new JButton("상품 확인");
+//		SetFont(itemsinfoButton, 20);
+//		SetDefBut(itemsinfoButton, false, false, false);
+//		itemsinfoButton.setBounds(750, 500, 150, 50);
+//		itemsinfoButton.addActionListener(new ShowItemsInfo());
+		
+		// 내 가방 생성 & 설정 & 이벤트
+		// 내 가방 생성 시 id인자로 받아오고 user 데이터 생성해야할거같다
+//		JButton invenButton = new JButton("내 가방");
+//		SetBack(invenButton);
+//		SetFont(invenButton, 20);
+//		SetDefBut(invenButton, true, false, false);
+//		invenButton.setBounds(790, 300, 150,50);
+//		invenButton.addActionListener(new OpenMyBack() );
+//		// 추가 
+//		usershoppane.add(invenButton);
+		
 	}
 
 	// 상점 - 메시지 박스 이벤트 처리
@@ -203,6 +196,7 @@ public class UserShop extends JFrame{
 		// 구매 조건
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			JButton button = (JButton) e.getSource();
 			coin = user.getReward();
 			int buy = JOptionPane.showConfirmDialog(null, "버튼 클릭 됨", "메시지 박스", JOptionPane.YES_NO_OPTION);
 			// 구매
@@ -214,12 +208,23 @@ public class UserShop extends JFrame{
 					coin -= price;
 					user.setReward(coin);
 					
+					// 카드 뒤집기 이벤트 추가 예정
+					/* ... */
+					
 					JOptionPane.showMessageDialog(null, "구매되었습니다. \n현재 보유 코인 : " + coin, "구매 성공", JOptionPane.INFORMATION_MESSAGE);
 					db.updatecoin(user.getId(), user.getReward());
 					coinLabel.setText("상/벌점 : " + user.getReward());
+				
+				
+					if(button.getText().equals("뽑기 - 구매")) {
+						new RandomChoice();
+					}
+				
 				}
 				
 			}
+			
+			
 
 		}
 	}
