@@ -3,7 +3,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-
 public class Login extends JFrame implements ActionListener {
 	DBA dba=new DBA();	// db 생성
 	private JTextField idtextField;	// id 입력 박스
@@ -43,15 +42,23 @@ public class Login extends JFrame implements ActionListener {
 		getContentPane().add(idtextField);
 		idtextField.setColumns(10);
 		
-		pwtextField = new JTextField();
-		pwtextField.setBounds(261, 240, 183, 21);
-		getContentPane().add(pwtextField);
-		pwtextField.setColumns(10);
-		
 		JButton btnNewButton = new JButton("로그인");
 		btnNewButton.setBounds(468, 239, 91, 23);
 		btnNewButton.addActionListener(this);
 		getContentPane().add(btnNewButton);
+		
+		pwtextField = new JTextField();
+		pwtextField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER){ 
+				btnNewButton.doClick();  //엔터키를 누르면 btnNewButton(로그인 버튼)을 누르는거와 같음
+	            }
+			}
+		});
+		pwtextField.setBounds(261, 240, 183, 21);
+		getContentPane().add(pwtextField);
+		pwtextField.setColumns(10);
 		
 		
 		setSize(596, 405);	// 화면 사이즈
