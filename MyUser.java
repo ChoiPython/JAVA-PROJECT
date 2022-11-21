@@ -99,11 +99,15 @@ public class MyUser extends JFrame implements ActionListener{
 		
 		setSize(600,300);
 		setVisible(true);
+		setLocationRelativeTo(null);	// 화면중간출력
+		setResizable(false);			// 크기조절
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==store) {
-			new UserShop(user);
+			UserShop userShop = new UserShop(user);
+			userShop.setLocation(600, 100);
+			setLocation(200, 100);
 		}
 		else if(e.getSource()==inventory) {
 			new MyInventory();
