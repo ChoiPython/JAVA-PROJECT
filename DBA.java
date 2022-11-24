@@ -32,7 +32,6 @@ public class DBA {
 				user.setDepart(rs.getString("부서"));
 				user.setRank(rs.getString("직급"));
 				user.setHalfway(rs.getInt("반차"));
-				user.setReward(rs.getInt("상벌점"));
 				user.setPoint(rs.getInt("포인트"));
 				list.add(user);
 			}
@@ -64,7 +63,6 @@ public class DBA {
 				user.setDepart(rs.getString("부서"));
 				user.setRank(rs.getString("직급"));
 				user.setHalfway(rs.getInt("반차"));
-				user.setReward(rs.getInt("상벌점"));
 				user.setPoint(rs.getInt("포인트"));
 				list.add(user);
 			}
@@ -95,7 +93,6 @@ public class DBA {
 				user.setDepart(rs.getString("부서"));
 				user.setRank(rs.getString("직급"));
 				user.setHalfway(rs.getInt("반차"));
-				user.setReward(rs.getInt("상벌점"));
 				user.setPoint(rs.getInt("포인트"));
 			}
 		} catch (SQLException e1) {
@@ -107,14 +104,14 @@ public class DBA {
 		return user;
 	}
 	//유저를 추가 : 관리자 페이지의 추가에 들어갈 예정, 유저 클래스의 필드의 모든 값을 입력받는다.
-	public void insertData(int id,String name, String depart, String rank, int halfway, int reward,int point,String imgaddr) {
+	public void insertData(int id,String name, String depart, String rank, int halfway,int point,String imgaddr) {
 		try {
 			System.out.println("db로딩중");
 			conn=DriverManager.getConnection(dburl, dbUser, dbpw);
 		}catch(Exception e) {
 			System.out.println("db로딩 실패");
 		}
-		String sql="insert into user values(?,?,?,?,?,?,?,?)";
+		String sql="insert into user values(?,?,?,?,?,?,?)";
 		PreparedStatement pstmt=null;
 		
 		try {
@@ -124,9 +121,8 @@ public class DBA {
 			pstmt.setString(3, depart);
 			pstmt.setString(4, rank);
 			pstmt.setInt(5, halfway);
-			pstmt.setInt(6, reward);
-			pstmt.setInt(7, point);
-			pstmt.setString(8, imgaddr);
+			pstmt.setInt(6, point);
+			pstmt.setString(7, imgaddr);
 			
 			int result= pstmt.executeUpdate();
 			if(result==1) {
@@ -148,14 +144,14 @@ public class DBA {
 	//유저 클래스를 수정 : 관리자 페이지의 수정에 들어갈 예정, id는 수정할 수 없다. id가 수정을 위한 고유한 키이기 때문
 	//추가와 마찬가지로 모든 데이터를 입력 받는다.
 	//수정을 위한 기존 데이터 불러오기 추가하여 폼 불러올때 기본값 입력되게 한 후 변경할 수 있게 하면 될듯
-	public void updateData(int id,String name, String depart, String rank, int halfway, int reward,int point,String imgaddr) {
+	public void updateData(int id,String name, String depart, String rank, int halfway,int point,String imgaddr) {
 		try {
 			System.out.println("db로딩중");
 			conn=DriverManager.getConnection(dburl, dbUser, dbpw);
 		}catch(Exception e) {
 			System.out.println("db로딩 실패");
 		}
-		String sql="update user set 사원이름=?, 부서=?, 직급=?, 반차=?, 상벌점=?, 포인트=?, 사진=? where 사원번호=?";
+		String sql="update user set 사원이름=?, 부서=?, 직급=?, 반차=?, 포인트=?, 사진=? where 사원번호=?";
 		PreparedStatement pstmt=null;
 		//폼에서 데이터 받아올 코드 작성
 		
@@ -165,10 +161,9 @@ public class DBA {
 			pstmt.setString(2, depart);
 			pstmt.setString(3, rank);
 			pstmt.setInt(4, halfway);
-			pstmt.setInt(5, reward);
-			pstmt.setInt(6, point);
+			pstmt.setInt(5, point);
+			pstmt.setString(6, imgaddr);
 			pstmt.setInt(7, id);
-			pstmt.setString(8, imgaddr);
 			
 			int result= pstmt.executeUpdate();
 			if(result==1) {
@@ -187,20 +182,20 @@ public class DBA {
 			conn.close();
 		}catch(SQLException e) {}
 	}
-	public void updatecoin(int id, int reward) {
+	public void updatecoin(int id, int point) {
 		try {
 			System.out.println("db로딩중");
 			conn=DriverManager.getConnection(dburl, dbUser, dbpw);
 		}catch(Exception e) {
 			System.out.println("db로딩 실패");
 		}
-		String sql="update user set 상벌점=? where 사원번호=?";
+		String sql="update user set 포인트=? where 사원번호=?";
 		PreparedStatement pstmt=null;
-		//폼에서 데이터 받아올 코드 작성
+		//폼에서 데이터 받아올 코드 작성.
 		
 		try {
 			pstmt=conn.prepareStatement(sql);
-			pstmt.setInt(1, reward);
+			pstmt.setInt(1, point);
 			pstmt.setInt(2, id);
 			
 			int result= pstmt.executeUpdate();
@@ -276,7 +271,6 @@ public class DBA {
 				user.setDepart(rs.getString("부서"));
 				user.setRank(rs.getString("직급"));
 				user.setHalfway(rs.getInt("반차"));
-				user.setReward(rs.getInt("상벌점"));
 				user.setPoint(rs.getInt("포인트"));
 				user.setRank(rs.getString("사진"));
 			}
