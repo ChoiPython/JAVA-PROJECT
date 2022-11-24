@@ -8,9 +8,11 @@ public class RandomChoice extends JFrame{
 	ImageIcon img = new ImageIcon(this.getClass().getResource("/일반뽑기버튼.png"));
 	ImageIcon imgchange = new ImageIcon(this.getClass().getResource("/뽑기선택.jpg"));
 	int[] randomnum = {0, 0, 0, 0};	// 당첨될 4개 숫자
+	int count; // 뽑기 횟수
 	
 	
-	public RandomChoice() {
+	public RandomChoice(int count) {
+		this.count = count;
 		setTitle("뽑기창");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		Container randchoicepane = getContentPane();
@@ -63,17 +65,41 @@ public class RandomChoice extends JFrame{
 			
 			// 당첨
 			if(button.getText().equals(text[0]) || button.getText().equals(text[1]) || button.getText().equals(text[2]) || button.getText().equals(text[3])) {
+				count -= 1;
 				System.out.println("당첨");
-			}
-
-			else {
-				// 현재 기회 한번
-//				JOptionPane.showMessageDialog(button, "다음기회에...");
-				System.out.println("당첨X");
-
-
-					
+				JOptionPane.showMessageDialog(button, "당첨!!");
+				
+				// count =0이면 뽑기 종료
+				if(count!=0) {
+					dispose();
+					new RandomChoice(count);
 				}
+				else {
+					dispose();
+				}
+			}
+			
+			// 꽝
+			else {
+				// 현재 기회
+				count-=1;
+				if(count >= 1) {
+					System.out.println("당첨X");
+					JOptionPane.showMessageDialog(button, "꽝..  잔여횟수 : " + count);
+					dispose();
+					new RandomChoice(count);
+				}
+				
+				else {
+					System.out.println("당첨X");
+					JOptionPane.showMessageDialog(button, "다음기회에...");
+					dispose();
+				}
+				
+
+				System.out.println(count);
+					
+			}
 				
 			
 		}
@@ -124,7 +150,8 @@ public class RandomChoice extends JFrame{
 //		for(int i=0; i<10; i ++) {
 //			
 //		}
-		new RandomChoice();
+		
+//		new RandomChoice();
 
 	}
 
