@@ -48,28 +48,28 @@ public class UserShop extends JFrame{
 		halfvactionJLabel.setBounds(320, 80, 200, 400);		
 		randomboxLabel.setBounds(550, 80, 200, 400);
 		
-		// 물품 라벨 생성
-		JLabel vanameLabel = new JLabel("상점 : 8점");
-		JLabel halfnameLabel = new JLabel("상점 : 4점");
-		JLabel rannameLabel = new JLabel("상점 : 1점");
+		// 물품가격 라벨 생성
+		JLabel vanameLabel = new JLabel("포인트 : 36점");
+		JLabel halfnameLabel = new JLabel("포인트 : 18점");
+		JLabel rannameLabel = new JLabel("포인트 : 1점");
 		
 		
 		// 물품 라벨 설정
-		vanameLabel.setBounds(130, 560, 100, 50);
+		vanameLabel.setBounds(120, 555, 150, 50);
 		SetFont(vanameLabel, 20);
 		
-		halfnameLabel.setBounds(360, 560, 100, 50);
+		halfnameLabel.setBounds(350, 555, 150, 50);
 		SetFont(halfnameLabel, 20);
 		
-		rannameLabel.setBounds(595, 560, 100, 50);
+		rannameLabel.setBounds(590, 555, 150, 50);
 		SetFont(rannameLabel, 20);
 		
 		
-		// 상벌점 현황 라벨
-		coinLabel = new JLabel("상/벌점 : " + u.getReward());
+		// 포인트 현황 라벨
+		coinLabel = new JLabel("포인트 : " + u.getReward());
 
 		
-		// 상벌점 라벨 설정
+		// 포인트 라벨 설정
 		coinLabel.setBounds(790, 100, 200,100);
 		SetFont(coinLabel, 20);
 		
@@ -88,7 +88,7 @@ public class UserShop extends JFrame{
 		usershoppane.add(halfnameLabel);
 		usershoppane.add(rannameLabel);
 		
-		// 상벌점 현황 라벨
+		// 포인트 현황 라벨
 		usershoppane.add(coinLabel);
 
 		
@@ -198,30 +198,45 @@ public class UserShop extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			JButton button = (JButton) e.getSource();
 			coin = user.getReward();
-			int buy = JOptionPane.showConfirmDialog(null, "버튼 클릭 됨", "메시지 박스", JOptionPane.YES_NO_OPTION);
+			int buy = 0;
+			int select;
+			
+			try {
+			buy = Integer.parseInt(JOptionPane.showInputDialog(null, "몇개 구매하시겠습니까?", "구매개수"));
+			}
+			catch (NumberFormatException ex) {
+				System.out.println(ex);
+				JOptionPane.showMessageDialog(null, "숫자를 입력하세요!", "구매실패", JOptionPane.ERROR_MESSAGE);
+				buy = -1;
+			}
+			catch (Exception e2) {
+				System.out.println("다른 예외");
+			}
+			
 			// 구매
-			if (buy == JOptionPane.YES_OPTION) { 
-				if (coin < price) {
-					JOptionPane.showMessageDialog(null, "보유 상점이 부족합니다.", "구매 실패", JOptionPane.INFORMATION_MESSAGE);
+			if (buy >= 1) { 
+				if (coin < price*buy) {
+					JOptionPane.showMessageDialog(null, "보유 포인트가 부족합니다.", "구매 실패", JOptionPane.INFORMATION_MESSAGE);
 				}
 				else {
-					coin -= price;
+					coin -= price*buy;
 					user.setReward(coin);
-					
-					// 카드 뒤집기 이벤트 추가 예정
-					/* ... */
 					
 					JOptionPane.showMessageDialog(null, "구매되었습니다. \n현재 보유 코인 : " + coin, "구매 성공", JOptionPane.INFORMATION_MESSAGE);
 					db.updatecoin(user.getId(), user.getReward());
-					coinLabel.setText("상/벌점 : " + user.getReward());
+					coinLabel.setText("포인트 : " + user.getReward());
 				
-				
+					// 카드 뒤집기 이벤트
 					if(button.getText().equals("뽑기 - 구매")) {
-						new RandomChoice();
+						new RandomChoice(buy);
 					}
 				
 				}
 				
+			}
+			else if (buy == 0) {
+				System.out.println(buy);
+				JOptionPane.showMessageDialog(null, "0개는 구매할 수 없습니다.", "구매 실패", JOptionPane.INFORMATION_MESSAGE);
 			}
 			
 			
@@ -239,23 +254,6 @@ public class UserShop extends JFrame{
 		
 	}
 	
-	// 상품 정보 확인 이벤트
-	class ShowItemsInfo implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			JOptionPane.showMessageDialog(null, "상품 확인 \n1등 : " + AdminShop.firitem + ", 2등 : " + AdminShop.secitem + ", 3등 : " + AdminShop.thritem, "상품 정보 확인", JOptionPane.INFORMATION_MESSAGE);
-		}
-	}
-	
-	// 내 가방 이벤트
-	class OpenMyBack implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			new MyInventory();
-		}
-	}
-	
-
 	// 폰트 설정
 	public void SetFont(JButton button, int size) {
 		Font font = new Font("돋움", Font.BOLD, size);
