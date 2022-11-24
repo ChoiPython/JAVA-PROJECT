@@ -8,17 +8,31 @@ create table user(
 부서 CHAR(12),
 직급 CHAR(12),
 반차 INT(5),
-상벌점 INT(5),
 포인트 INT(5),
 사진 CHAR(150)
 );
 
-insert into user values(0,'admin',NULL,NULL,NULL,NULL,NULL, NULL);
+insert into user values(0,'admin',NULL,NULL,NULL,NULL,NULL);
 
 // 유저 데이터 추가
-insert into user values(20212503, '최주영', '동의대', '학생', 10, 20, 50, NULL);
+insert into user values(20212503, '최주영', '동의대', '학생', 20, 50, NULL);
 
-
-grant all privileges on test.* to 'testjju'@'localhost';
+// testjju -> test
+create user 'test'@'localhost' identified by '1234';
+grant all privileges on test.* to 'test'@'localhost';
 
 flush privileges;
+
+
+// 테스트 중
+// 상점 데이터 - 사원번호(개인키) - 거래내역을 위함
+create table trade(
+사원번호 int primary key,
+반차구매수 int default 0,
+뽑기구매수 int default 0,
+가격 int default 0,
+foreign key(사원번호) references user(사원번호));
+
+// user 테이블 사원번호 전체 추가
+ insert into trade(사원번호) select 사원번호 from user;
+
