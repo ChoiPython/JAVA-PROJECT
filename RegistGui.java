@@ -27,7 +27,7 @@ public class RegistGui extends JFrame {
    private JTextField nameTextField;	// 사원이름
    private JTextField departTextField;	// 부서
    private JTextField rankTextField;	// 직급
-   private JTextField rewordTextField;	// 상벌점
+   private JTextField pointTextField;	// 상벌점->포인트로 변경
    private JTextField halfwayTextField;	// 반차
 
    public static void main(String[] args) {
@@ -77,10 +77,10 @@ public class RegistGui extends JFrame {
       halfwayLabel.setBounds(216, 278, 80, 15);
       contentPane.add(halfwayLabel);
       
-      // 상벌점 라벨
-      JLabel rewordLabel = new JLabel("포인트");
-      rewordLabel.setBounds(206, 323, 50, 15);
-      contentPane.add(rewordLabel);
+      // 상벌점 라벨->포인트 라벨
+      JLabel pointLabel = new JLabel("포인트");
+      pointLabel.setBounds(206, 323, 50, 15);
+      contentPane.add(pointLabel);
       
       // 사원번호 텍필
       idTextField = new JTextField();
@@ -112,11 +112,11 @@ public class RegistGui extends JFrame {
       halfwayTextField.setColumns(10);
       contentPane.add(halfwayTextField);
       
-      // 상벌점 텍필
-      rewordTextField = new JTextField();
-      rewordTextField.setBounds(257, 320, 360, 21);
-      rewordTextField.setColumns(10);
-      contentPane.add(rewordTextField);
+      // 상벌점 텍필 ->포인트 텍필
+      pointTextField = new JTextField();
+      pointTextField.setBounds(257, 320, 360, 21);
+      pointTextField.setColumns(10);
+      contentPane.add(pointTextField);
       
       
       JLabel imgLabel = new JLabel("");
@@ -137,15 +137,15 @@ public class RegistGui extends JFrame {
          public void actionPerformed(ActionEvent e) {
             if(e.getSource()==registButton) {
             	DBA db=new DBA();
-            	int id, halfway, reword;
+            	int id, halfway, point;
             	String name,depart,rank;
             	id=Integer.parseInt(idTextField.getText());
             	halfway=Integer.parseInt(halfwayTextField.getText());
-            	reword=Integer.parseInt(rewordTextField.getText());
+            	point=Integer.parseInt(pointTextField.getText());
             	name=nameTextField.getText();
             	depart=departTextField.getText();
             	rank=rankTextField.getText();
-            	db.insertData(id,name,depart,rank,halfway,reword,0,imgaddr);
+            	db.insertData(id,name,depart,rank,halfway,point,imgaddr);
                JOptionPane.showMessageDialog(null,"등록되었습니다"); //버튼1 클릭시 "등록되었습니다" 메세지창 출력
             }
             dispose();
