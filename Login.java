@@ -47,7 +47,7 @@ public class Login extends JFrame implements ActionListener {
 		btnNewButton.addActionListener(this);
 		getContentPane().add(btnNewButton);
 		
-		pwtextField = new JTextField();
+		pwtextField = new JPasswordField();
 		pwtextField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -57,6 +57,7 @@ public class Login extends JFrame implements ActionListener {
 			}
 		});
 		pwtextField.setBounds(261, 240, 183, 21);
+
 		getContentPane().add(pwtextField);
 		pwtextField.setColumns(10);
 		
