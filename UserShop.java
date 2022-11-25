@@ -7,6 +7,7 @@ public class UserShop extends JFrame{
 	private JLabel coinLabel;
 	private DBA db=new DBA();
 	private User user;
+	private int price;
 	
 	public UserShop(User u) {
 		user = u;
@@ -35,13 +36,18 @@ public class UserShop extends JFrame{
 		JLabel titleJLabel = new JLabel("사용자 - 상점");
 		SetFont(titleJLabel, 30);
 		titleJLabel.setBounds(400, 5, 200, 80);
+		// 추가
+		usershoppane.add(titleJLabel);
 		
 		
 		// 이미지 라벨 생성 & 이미지 적용 - setIcon
 		JLabel randomboxLabel = new JLabel(randomboxImage, JLabel.CENTER);
 		JLabel vacationLabel = new JLabel(vacationImage, JLabel.CENTER);
 		JLabel halfvactionJLabel = new JLabel(halfvationimage, JLabel.CENTER);
-		
+		// 추가
+		usershoppane.add(vacationLabel);
+		usershoppane.add(halfvactionJLabel);
+		usershoppane.add(randomboxLabel);
 		
 		// 이미지 라벨 설정 setBounds(x, y, w, h) margin - 40
 		vacationLabel.setBounds(90, 80, 200, 400);
@@ -52,8 +58,6 @@ public class UserShop extends JFrame{
 		JLabel vanameLabel = new JLabel("포인트 : 36점");
 		JLabel halfnameLabel = new JLabel("포인트 : 18점");
 		JLabel rannameLabel = new JLabel("포인트 : 1점");
-		
-		
 		// 물품 라벨 설정
 		vanameLabel.setBounds(120, 555, 150, 50);
 		SetFont(vanameLabel, 20);
@@ -63,32 +67,18 @@ public class UserShop extends JFrame{
 		
 		rannameLabel.setBounds(590, 555, 150, 50);
 		SetFont(rannameLabel, 20);
-		
-		
-		// 포인트 현황 라벨
-		coinLabel = new JLabel("포인트 : " + u.getReward());
-
-		
-		// 포인트 라벨 설정
-		coinLabel.setBounds(790, 100, 200,100);
-		SetFont(coinLabel, 20);
-		
-		
-		// 추가
-		// 제목 라벨
-		usershoppane.add(titleJLabel);
-		
-		// 이미지 라벨
-		usershoppane.add(vacationLabel);
-		usershoppane.add(halfvactionJLabel);
-		usershoppane.add(randomboxLabel);
-		
-		// 물품 라벨
+		//추가
 		usershoppane.add(vanameLabel);
 		usershoppane.add(halfnameLabel);
 		usershoppane.add(rannameLabel);
 		
+		
 		// 포인트 현황 라벨
+		coinLabel = new JLabel("포인트 : " + u.getReward());
+		// 포인트 라벨 설정
+		coinLabel.setBounds(790, 100, 200,100);
+		SetFont(coinLabel, 20);
+		// 추가
 		usershoppane.add(coinLabel);
 
 		
@@ -104,25 +94,22 @@ public class UserShop extends JFrame{
 		SetBack(vacationButton);
 		SetDefBut(vacationButton, true, false, false);
 
-		
 		halfvacationButton.setBounds(340, 500, 150, 50);
 		SetBack(halfvacationButton);
 		SetDefBut(halfvacationButton, true, false, false);
 
-		
 		randomBoxButton.setBounds(575, 500, 150, 50);
 		SetBack(randomBoxButton);
 		SetDefBut(randomBoxButton, true, false, false);
 
 		
-		
 		// 구매 버튼 이벤트 설정
 		ShowBuyMessage vacationBuyMessage = new ShowBuyMessage();
-		vacationBuyMessage.SetPrice(8);
+		vacationBuyMessage.SetPrice(36);
 		vacationButton.addActionListener(vacationBuyMessage);
 		
 		ShowBuyMessage halfvacationBuyMessage = new ShowBuyMessage();
-		halfvacationBuyMessage.SetPrice(4);
+		halfvacationBuyMessage.SetPrice(18);
 		halfvacationButton.addActionListener(halfvacationBuyMessage);
 		
 		ShowBuyMessage randomBuyMessage = new ShowBuyMessage();
@@ -165,24 +152,6 @@ public class UserShop extends JFrame{
 		
 		
 		
-		// 상품 정보 확인 버튼 - 확률(1등 1%, 2등 3%, 3등 4%), 각 등수 상품
-//		JButton itemsinfoButton = new JButton("상품 확인");
-//		SetFont(itemsinfoButton, 20);
-//		SetDefBut(itemsinfoButton, false, false, false);
-//		itemsinfoButton.setBounds(750, 500, 150, 50);
-//		itemsinfoButton.addActionListener(new ShowItemsInfo());
-		
-		// 내 가방 생성 & 설정 & 이벤트
-		// 내 가방 생성 시 id인자로 받아오고 user 데이터 생성해야할거같다
-//		JButton invenButton = new JButton("내 가방");
-//		SetBack(invenButton);
-//		SetFont(invenButton, 20);
-//		SetDefBut(invenButton, true, false, false);
-//		invenButton.setBounds(790, 300, 150,50);
-//		invenButton.addActionListener(new OpenMyBack() );
-//		// 추가 
-//		usershoppane.add(invenButton);
-		
 	}
 
 	// 상점 - 메시지 박스 이벤트 처리
@@ -202,15 +171,32 @@ public class UserShop extends JFrame{
 			int select;
 			
 			try {
-			buy = Integer.parseInt(JOptionPane.showInputDialog(null, "몇개 구매하시겠습니까?", "구매개수"));
+				String check = JOptionPane.showInputDialog(null, "몇개 구매하시겠습니까?", "구매개수", JOptionPane.NO_OPTION);
+				// 공백예외
+				if(check.equals("")) {
+					JOptionPane.showMessageDialog(null, "공백입력불가 / 숫자를 입력해주세요!", "구매실패", JOptionPane.ERROR_MESSAGE);
+					buy = -1;
+				}
+				
+				else {					
+					buy = Integer.parseInt(check);
+				}
+				
 			}
+			// 문자열 예외
 			catch (NumberFormatException ex) {
 				System.out.println(ex);
+				System.out.println(buy);
 				JOptionPane.showMessageDialog(null, "숫자를 입력하세요!", "구매실패", JOptionPane.ERROR_MESSAGE);
 				buy = -1;
 			}
+			
+			// cancel
 			catch (Exception e2) {
 				System.out.println("다른 예외");
+				System.out.println(e2);
+				buy = -1;
+
 			}
 			
 			// 구매
@@ -238,9 +224,6 @@ public class UserShop extends JFrame{
 				System.out.println(buy);
 				JOptionPane.showMessageDialog(null, "0개는 구매할 수 없습니다.", "구매 실패", JOptionPane.INFORMATION_MESSAGE);
 			}
-			
-			
-
 		}
 	}
 	
