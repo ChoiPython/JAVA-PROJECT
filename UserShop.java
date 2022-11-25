@@ -7,13 +7,14 @@ public class UserShop extends JFrame{
 	private JLabel coinLabel;
 	private DBA db=new DBA();
 	private User user;
+	private Container usershoppane;
 	private int price=18; // 물품 가격 - db로 관리자에서 수정가능하게?
 	
 	public UserShop(User u) {
 		user = u;
 		setTitle("상점");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		Container usershoppane = getContentPane();
+		usershoppane = getContentPane();
 		
 		
 		usershoppane.setLayout(null);
@@ -172,10 +173,10 @@ public class UserShop extends JFrame{
 			int select;
 			
 			try {
-				String check = JOptionPane.showInputDialog(null, "몇개 구매하시겠습니까?", "구매개수", JOptionPane.NO_OPTION);
+				String check = JOptionPane.showInputDialog(usershoppane, "몇개 구매하시겠습니까?", "구매개수", JOptionPane.NO_OPTION);
 				// 공백예외
 				if(check.equals("")) {
-					JOptionPane.showMessageDialog(null, "공백입력불가 / 숫자를 입력해주세요!", "구매실패", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(usershoppane, "공백입력불가 / 숫자를 입력해주세요!", "구매실패", JOptionPane.ERROR_MESSAGE);
 					buy = -1;
 				}
 				
@@ -188,7 +189,7 @@ public class UserShop extends JFrame{
 			catch (NumberFormatException ex) {
 				System.out.println(ex);
 				System.out.println(buy);
-				JOptionPane.showMessageDialog(null, "숫자를 입력하세요!", "구매실패", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(usershoppane, "숫자를 입력하세요!", "구매실패", JOptionPane.ERROR_MESSAGE);
 				buy = -1;
 			}
 			
@@ -203,13 +204,13 @@ public class UserShop extends JFrame{
 			// 구매
 			if (buy >= 1) { 
 				if (coin < price*buy) {
-					JOptionPane.showMessageDialog(null, "보유 포인트가 부족합니다.", "구매 실패", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(usershoppane, "보유 포인트가 부족합니다.", "구매 실패", JOptionPane.INFORMATION_MESSAGE);
 				}
 				else {
 					coin -= price*buy;
 					user.setReward(coin);
 					
-					JOptionPane.showMessageDialog(null, "구매되었습니다. \n현재 보유 코인 : " + coin, "구매 성공", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(usershoppane, "구매되었습니다. \n현재 보유 코인 : " + coin, "구매 성공", JOptionPane.INFORMATION_MESSAGE);
 					db.updatecoin(user.getId(), user.getReward());
 					coinLabel.setText("포인트 : " + user.getReward());
 				
@@ -223,7 +224,7 @@ public class UserShop extends JFrame{
 			}
 			else if (buy == 0) {
 				System.out.println(buy);
-				JOptionPane.showMessageDialog(null, "0개는 구매할 수 없습니다.", "구매 실패", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(usershoppane, "0개는 구매할 수 없습니다.", "구매 실패", JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
 	}
