@@ -7,7 +7,7 @@ public class UserShop extends JFrame{
 	private JLabel coinLabel;
 	private DBA db=new DBA();
 	private User user;
-	private int price;
+	private int price=18; // 물품 가격 - db로 관리자에서 수정가능하게?
 	
 	public UserShop(User u) {
 		user = u;
@@ -104,14 +104,15 @@ public class UserShop extends JFrame{
 
 		
 		// 구매 버튼 이벤트 설정
+		// 휴가
 		ShowBuyMessage vacationBuyMessage = new ShowBuyMessage();
-		vacationBuyMessage.SetPrice(36);
+		vacationBuyMessage.SetPrice(price*2);
 		vacationButton.addActionListener(vacationBuyMessage);
-		
+		// 반차
 		ShowBuyMessage halfvacationBuyMessage = new ShowBuyMessage();
-		halfvacationBuyMessage.SetPrice(18);
+		halfvacationBuyMessage.SetPrice(price);
 		halfvacationButton.addActionListener(halfvacationBuyMessage);
-		
+		// 랜덤뽑기
 		ShowBuyMessage randomBuyMessage = new ShowBuyMessage();
 		randomBuyMessage.SetPrice(1);
 		randomBoxButton.addActionListener(randomBuyMessage);
@@ -266,7 +267,7 @@ public class UserShop extends JFrame{
 	
 	public static void main(String[] args) {
 		User user = new User();
-		user.setReward(20);
+		user.setReward(200);
 		new UserShop(user);
 	}
 }
