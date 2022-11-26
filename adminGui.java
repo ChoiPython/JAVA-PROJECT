@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 public class adminGui extends JFrame implements ActionListener {
 	JTextField searchText;
-	
 	JButton searchBtn;	// 검색버튼
 	JButton insertBtn;	// 등록버튼
 	JButton shopBtn;	// 상점버튼
