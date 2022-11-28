@@ -8,8 +8,8 @@ public class DBA {
 	private Connection conn;
 	//DB 접속을 위한 주소, 아이디, 비밀번호
 	private static String dburl= "jdbc:mysql://localhost:3306/test?serverTimezone=UTC";;
-	private static String dbUser= "root";
-	private static String dbpw="tjrdnjs3381";
+	private static String dbUser= "test";
+	private static String dbpw="1234";
 	
 	
 	//모든 유저 조회 : 관리자 페이지의 리스트에 들어갈 예정 //유저클래스는 유저클래스네임으로 바꿀것
