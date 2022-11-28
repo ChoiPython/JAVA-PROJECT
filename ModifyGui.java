@@ -29,15 +29,23 @@ public class ModifyGui extends JFrame {
    private JTextField partField;	// 부서
    private JTextField rankField;	// 직급
    private JTextField idField;		// 사원번호
-   private JTextField pointField;	// 상벌점
+   private JTextField pointField;	// 포인트
+   private User user;
 
 
    public static void main(String[] args) {
-	   new ModifyGui();
+//	   User user = new User();
+//	   user.setName("최주영");
+//	   user.setDepart("a");
+//	   user.setId(123);
+//	   user.setPoint(20);
+//	   user.setRank("학생");
+//	   new ModifyGui(user);
    }
 
 
-   public ModifyGui() {
+   public ModifyGui(User user) {
+	   this.user = user;
       setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
       setBounds(100, 100, 704, 428);
       contentPane = new JPanel();
@@ -69,42 +77,42 @@ public class ModifyGui extends JFrame {
       contentPane.add(rankLabel);
       
       // 사원번호 라벨
-      JLabel idLabel = new JLabel("사원번호");
-      idLabel.setBounds(195, 230, 50, 15);
-      contentPane.add(idLabel);
+//      JLabel idLabel = new JLabel("사원번호");
+//      idLabel.setBounds(195, 230, 50, 15);
+//      contentPane.add(idLabel);
       
-      // 상벌점 라벨
-      JLabel pointLabel = new JLabel("상/벌점");
-      pointLabel.setBounds(205, 277, 50, 15);
+      // 포인트 라벨
+      JLabel pointLabel = new JLabel("포인트");
+      pointLabel.setBounds(195, 230, 50, 15);
       contentPane.add(pointLabel);
       
       // 이름 텍스트필드
-      nameField = new JTextField("이름");
+      nameField = new JTextField(user.getName());
       nameField.setBounds(257, 83, 360, 21);
       contentPane.add(nameField);
       nameField.setColumns(10);
       
       // 부서 텍스트 필드
-      partField = new JTextField("부서");
+      partField = new JTextField(user.getDepart());
       partField.setBounds(257, 128, 360, 21);
       partField.setColumns(10);
       contentPane.add(partField);
       
       // 직급 텍스트 필드
-      rankField = new JTextField("직급");
+      rankField = new JTextField(user.getRank());
       rankField.setBounds(257, 176, 360, 21);
       rankField.setColumns(10);
       contentPane.add(rankField);
       
       // 사원번호 텍스트필드
-      idField = new JTextField("사원번호");
-      idField.setBounds(257, 227, 360, 21);
-      idField.setColumns(10);
-      contentPane.add(idField);
+//      idField = new JTextField("사원번호 삭제");
+//      idField.setBounds(257, 227, 360, 21);
+//      idField.setColumns(10);
+//      contentPane.add(idField);
       
-      // 상벌점 텍스트 필드
-      pointField = new JTextField("0");
-      pointField.setBounds(257, 271, 360, 21);
+      // 포인트 텍스트 필드
+      pointField = new JTextField(Integer.toString(user.getPoint()));
+      pointField.setBounds(257, 227, 360, 21);
       pointField.setColumns(10);
       contentPane.add(pointField);
       javax.swing.ImageIcon icon = new javax.swing.ImageIcon(this.getClass().getResource("/employee.jpg")); //이미지 파일명
@@ -120,7 +128,27 @@ public class ModifyGui extends JFrame {
       modiButton.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
             if(e.getSource()==modiButton) {
-               JOptionPane.showMessageDialog(null,"수정되었습니다");  //버튼1 클릭시 "등록되었습니다" 메세지창 출력
+            	DBA db = new DBA();
+            	// set data
+            	int id = user.getId();
+            	String name = nameField.getText();
+            	String depart = partField.getText();
+            	String rank = rankField.getText();
+            	int point = Integer.parseInt(pointField.getText());
+//            	String imgaddr = 
+            	// 수정 진행
+            	db.updateData(id, name, depart, rank, point, null);
+            	// user set
+            	user.setAll(name, depart, rank, point);
+            	JOptionPane.showMessageDialog(null,"수정되었습니다");  //버튼1 클릭시 "등록되었습니다" 메세지창 출력
+            	// 상세보기 다시 띄우기
+            	ViewGui vGui = new ViewGui(user);
+            	vGui.setUser(user);
+            	vGui.setVisible(true);
+            	
+            	
+            	
+               
             }
             dispose();
          }

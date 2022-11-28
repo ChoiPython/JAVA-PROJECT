@@ -8,7 +8,6 @@ create table user(
 사원이름 CHAR(12),
 부서 CHAR(12),
 직급 CHAR(12),
-반차 INT(5),
 포인트 INT(5),
 사진 CHAR(150)
 );
