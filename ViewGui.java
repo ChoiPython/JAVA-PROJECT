@@ -7,13 +7,13 @@ import javax.swing.border.*;
 public class ViewGui extends JFrame {
 
     private JPanel contentPane;
-
+    
 
     public static void main(String[] args) {
-        new ViewGui();
+//        new ViewGui();
     }
 
-    public ViewGui() {
+    public ViewGui(User user) {
         setBackground(UIManager.getColor("CheckBox.background"));
         setTitle("사원 상세보기"); //폼 제목
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -32,8 +32,10 @@ public class ViewGui extends JFrame {
         JButton updateBtn = new JButton("수정");
         updateBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ModifyGui md = new ModifyGui();
+            	dispose();
+                ModifyGui md = new ModifyGui(user);
                 md.setVisible(true);
+                new ViewGui(user).setUser(user);
             }
         });
         updateBtn.setBounds(450, 160, 90, 30);

@@ -1,3 +1,5 @@
+import javax.swing.JTextField;
+
 public class User {
 	private int id;
 	private String name;
@@ -32,12 +34,12 @@ public class User {
 	public void setRank(String rank) {
 		this.rank = rank;
 	}
-	public int getHalfway() {
-		return halfway;
-	}
-	public void setHalfway(int halfway) {
-		this.halfway = halfway;
-	}
+//	public int getHalfway() {
+//		return halfway;
+//	}
+//	public void setHalfway(int halfway) {
+//		this.halfway = halfway;
+//	}
 	public int getReward() {
 		return reward;
 	}
@@ -56,10 +58,22 @@ public class User {
 	public void setImgaddr(String imgaddr) {
 		this.imgaddr = imgaddr;
 	}
+//	private JTextField nameField;	// 사원이름
+//	   private JTextField partField;	// 부서
+//	   private JTextField rankField;	// 직급
+//	   private JTextField idField;		// 사원번호
+//	   private JTextField pointField;	// 포인트
+	public void setAll(String name, String depart, String rank, int point) {
+		this.name = name;
+		this.depart = depart;
+		this.rank = rank;
+		this.point = point;
+		this.imgaddr = null; // 수정예정
+	}
 	
 	@Override
 	public String toString() {
-		return "사번 : "+getId()+" 이름 : "+getName()+" 부서 : "+getDepart()+" 직급 : "+getRank()+" 반차 : "+getHalfway()+" 상벌점 : "+getReward()+" 포인트 : "+getPoint();
+		return "사번 : "+getId()+" 이름 : "+getName()+" 부서 : "+getDepart()+" 직급 : "+getRank()+ " 포인트 : "+getPoint();
 	}
 	
 }
