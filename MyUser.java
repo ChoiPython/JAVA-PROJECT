@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Timer;
+import java.util.*;
 
 public class MyUser extends JFrame implements ActionListener{
 	private JLabel uname;
@@ -8,10 +10,16 @@ public class MyUser extends JFrame implements ActionListener{
 	private JLabel udepartment;
 	private JLabel upoint;
 	private JButton store;
-	private JButton inventory;
+	private JButton vacation;
 	private User user;
 	private JButton refresh;
 	
+    Calendar calendar1 = Calendar.getInstance();
+    int hour = calendar1.get(Calendar.HOUR_OF_DAY);
+    int min = calendar1.get(Calendar.MINUTE);
+    int sec = calendar1.get(Calendar.SECOND);
+	String Am_Pm;
+	String min_str;
 	public MyUser(User u)
 	{
 		user=u;
@@ -19,13 +27,30 @@ public class MyUser extends JFrame implements ActionListener{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Container c = getContentPane();
 		c.setLayout(null);
-		c.setBackground(SystemColor.info);
+		c.setBackground(SystemColor.LIGHT_GRAY);
 		ImageIcon img = new ImageIcon(this.getClass().getResource("/employee.jpg"));
 		JLabel imageLabel = new JLabel(img, JLabel.CENTER);
 		imageLabel.setBounds(30, 30, 150, 187);
 		c.add(imageLabel);
 		
-		JLabel time = new JLabel("시간) 2022-11-14//07-56 (출근시간");
+		if(hour>12)
+		{
+			Am_Pm = "오후";
+			hour = hour - 12;
+		}
+		else
+		{
+			 Am_Pm = "오전";
+		}
+		if(min < 10)
+		{
+			min_str = "0" + min;
+		}
+		else
+		{
+			min_str = "" + min;
+		}
+		JLabel time = new JLabel(Am_Pm + " " + hour + ":" + min_str);
 		time.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		time.setSize(350, 50);
 		time.setLocation(200, 20);
@@ -79,16 +104,16 @@ public class MyUser extends JFrame implements ActionListener{
 		store = new JButton("상점");
 		store.setFont(new Font("돋음", Font.PLAIN, 18));
 		store.setSize(100, 50);
-		store.setLocation(350, 200);
+		store.setLocation(300, 200);
 		store.addActionListener(this);
 		c.add(store);
 		
-		inventory = new JButton("내 가방");
-		inventory.setFont(new Font("돋음", Font.PLAIN, 18));
-		inventory.setSize(100, 50);
-		inventory.setLocation(460, 200);
-		inventory.addActionListener(this);
-		c.add(inventory);
+		vacation = new JButton("휴가/반차");
+		vacation.setFont(new Font("돋음", Font.PLAIN, 18));
+		vacation.setSize(150, 50);
+		vacation.setLocation(410, 200);
+		vacation.addActionListener(this);
+		c.add(vacation);
 		
 		refresh=new JButton("새로고침");
 		refresh.setFont(new Font("돋음", Font.PLAIN, 10));
@@ -109,8 +134,8 @@ public class MyUser extends JFrame implements ActionListener{
 			userShop.setLocation(600, 100);
 			setLocation(200, 100);
 		}
-		else if(e.getSource()==inventory) {
-			new MyInventory();
+		else if(e.getSource()==vacation) {
+			new Vacation();
 		}
 		else if(e.getSource()==refresh) {
 			DBA db=new DBA();
