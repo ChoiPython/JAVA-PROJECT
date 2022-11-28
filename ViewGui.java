@@ -3,6 +3,7 @@ import java.awt.event.*;
 import java.util.Objects;
 import javax.swing.*;
 import javax.swing.border.*;
+import java.util.ArrayList;
 
 public class ViewGui extends JFrame {
 
@@ -45,14 +46,18 @@ public class ViewGui extends JFrame {
         deleteBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == deleteBtn) {
-                    String idstr = JOptionPane.showInputDialog("삭제할 사원번호를 입력하세요.");
-                    if (idstr != null) {
-                        DBA db = new DBA();
-                        int id;
-                        id = Integer.parseInt(idstr);
-                        db.deleteData(id);
-                        JOptionPane.showConfirmDialog(null, "성공적으로 삭제되었습니다.", "확인", JOptionPane.YES_OPTION);
-                    }
+                	int delid = user.getId();
+                	DBA db = new DBA();
+                	db.deleteData(delid);
+                	int result = JOptionPane.showConfirmDialog(null, "삭제하시겠습니까?", "삭제", JOptionPane.YES_NO_OPTION);
+                	// 삭제
+                	if(result == JOptionPane.YES_OPTION) {
+                		JOptionPane.showMessageDialog(null, "성공적으로 삭제되었습니다.");
+                		dispose();  
+//                		System.exit(0);
+                		
+                		
+                	}
                 }
             }
         });

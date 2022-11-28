@@ -88,7 +88,7 @@ public class Login extends JFrame implements ActionListener {
 				ArrayList<User> list=new ArrayList<>();
 				dba.selectAllData(list);
 				this.dispose();
-				new adminGui(list);
+				adminGui adgui = new adminGui(list);
 			}
 			
 			else if (Integer.toString(user.getId())!=null) {
