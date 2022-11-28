@@ -145,7 +145,7 @@ public class RegistGui extends JFrame {
             	name=nameTextField.getText();
             	depart=departTextField.getText();
             	rank=rankTextField.getText();
-            	db.insertData(id,name,depart,rank,halfway,point,imgaddr);
+            	db.insertData(id,name,depart,rank,point,imgaddr);
                JOptionPane.showMessageDialog(null,"등록되었습니다"); //버튼1 클릭시 "등록되었습니다" 메세지창 출력
             }
             dispose();
