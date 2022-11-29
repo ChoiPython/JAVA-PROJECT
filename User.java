@@ -34,12 +34,12 @@ public class User {
 	public void setRank(String rank) {
 		this.rank = rank;
 	}
-//	public int getHalfway() {
-//		return halfway;
-//	}
-//	public void setHalfway(int halfway) {
-//		this.halfway = halfway;
-//	}
+	public int getHalfway() {
+		return halfway;
+	}
+	public void setHalfway(int halfway) {
+		this.halfway = halfway;
+	}
 	public int getReward() {
 		return reward;
 	}
@@ -58,11 +58,7 @@ public class User {
 	public void setImgaddr(String imgaddr) {
 		this.imgaddr = imgaddr;
 	}
-//	private JTextField nameField;	// 사원이름
-//	   private JTextField partField;	// 부서
-//	   private JTextField rankField;	// 직급
-//	   private JTextField idField;		// 사원번호
-//	   private JTextField pointField;	// 포인트
+
 	public void setAll(String name, String depart, String rank, int point) {
 		this.name = name;
 		this.depart = depart;

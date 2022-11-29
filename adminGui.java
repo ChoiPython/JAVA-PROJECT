@@ -67,9 +67,9 @@ public class adminGui extends JFrame implements ActionListener {
                 if (j == 1) s[i][j] = list.get(i).getName();
                 if (j == 2) s[i][j] = list.get(i).getDepart();
                 if (j == 3) s[i][j] = list.get(i).getRank();
-//                if (j == 4) s[i][j] = list.get(i).getHalfway() + "";
-                if (j == 4) s[i][j] = list.get(i).getReward() + "";
-                if (j == 5) s[i][j] = list.get(i).getPoint() + "";
+                if (j == 4) s[i][j] = list.get(i).getHalfway() + "";
+                if (j == 5) s[i][j] = list.get(i).getReward() + "";
+                if (j == 6) s[i][j] = list.get(i).getPoint() + "";
             }
         }
 
@@ -149,9 +149,9 @@ public class adminGui extends JFrame implements ActionListener {
                     s[i][1] = list.get(i).getName();
                     s[i][2] = list.get(i).getDepart();
                     s[i][3] = list.get(i).getRank();
-//                    s[i][4] = list.get(i).getHalfway() + "";
-                    s[i][4] = list.get(i).getReward() + "";
-                    s[i][5] = list.get(i).getPoint() + "";
+                    s[i][4] = list.get(i).getHalfway() + "";
+                    s[i][5] = list.get(i).getReward() + "";
+                    s[i][6] = list.get(i).getPoint() + "";
                 }
 
                 users = new JTable(s, column);
@@ -177,9 +177,9 @@ public class adminGui extends JFrame implements ActionListener {
                 s[i][1] = list.get(i).getName();
                 s[i][2] = list.get(i).getDepart();
                 s[i][3] = list.get(i).getRank();
-//                s[i][4] = list.get(i).getHalfway() + "";
-                s[i][4] = list.get(i).getReward() + "";
-                s[i][5] = list.get(i).getPoint() + "";
+                s[i][4] = list.get(i).getHalfway() + "";
+                s[i][5] = list.get(i).getReward() + "";
+                s[i][6] = list.get(i).getPoint() + "";
             }
 
             tableSetting(column, s);
