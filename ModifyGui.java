@@ -134,12 +134,13 @@ public class ModifyGui extends JFrame {
             	String name = nameField.getText();
             	String depart = partField.getText();
             	String rank = rankField.getText();
+            	int halfway = user.getHalfway();
             	int point = Integer.parseInt(pointField.getText());
 //            	String imgaddr = 
             	// 수정 진행
-            	db.updateData(id, name, depart, rank, point, null);
+            	db.updateData(id, name, depart, rank, halfway, point, null);
             	// user set
-            	user.setAll(name, depart, rank, point);
+            	user.setAll(name, depart, rank, halfway, point);
             	JOptionPane.showMessageDialog(null,"수정되었습니다");  //버튼1 클릭시 "등록되었습니다" 메세지창 출력
             	// 상세보기 다시 띄우기
             	ViewGui vGui = new ViewGui(user);
