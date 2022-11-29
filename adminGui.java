@@ -4,6 +4,7 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.Date;
 import java.util.ArrayList;
 
 public class adminGui extends JFrame implements ActionListener {
@@ -15,9 +16,9 @@ public class adminGui extends JFrame implements ActionListener {
     JButton viewBtn; //상세보기버튼
     JTable users;
     JScrollPane scroll;
-
-
-    public adminGui(ArrayList<User> list) {
+    JComboBox YearBox;
+    JComboBox MonthBox;
+    public adminGui(ArrayList<User2> list) {
         setTitle("관리자");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Container contentpane = getContentPane();
@@ -62,14 +63,11 @@ public class adminGui extends JFrame implements ActionListener {
         String[][] s = new String[100][7];//= {{null,null,null,null,null,null,null}};
         for (int i = 0; i < list.size(); i++) {
             for (int j = 0; j < 7; j++) {
-
                 if (j == 0) s[i][j] = list.get(i).getId() + "";
                 if (j == 1) s[i][j] = list.get(i).getName();
-                if (j == 2) s[i][j] = list.get(i).getDepart();
-                if (j == 3) s[i][j] = list.get(i).getRank();
-                if (j == 4) s[i][j] = list.get(i).getHalfway() + "";
-                if (j == 5) s[i][j] = list.get(i).getReward() + "";
-                if (j == 6) s[i][j] = list.get(i).getPoint() + "";
+                if (j == 2) s[i][j] = list.get(i).getAttendance()+"";
+                if (j == 3) s[i][j] = list.get(i).getTardy()+"";
+                if (j == 4) s[i][j] = list.get(i).getAbsence() + "";
             }
         }
 
@@ -83,13 +81,13 @@ public class adminGui extends JFrame implements ActionListener {
         contentpane.add(scroll);
 
 
-        JComboBox YearBox = new JComboBox();
+        YearBox = new JComboBox();
         YearBox.setModel(new DefaultComboBoxModel(new String[]{"2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030"}));
         YearBox.setBounds(47, 103, 90, 23);
         getContentPane().add(YearBox);
 
 
-        JComboBox MonthBox = new JComboBox();
+        MonthBox = new JComboBox();
         MonthBox.setModel(new DefaultComboBoxModel(new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}));
         MonthBox.setBounds(150, 103, 54, 23);
         getContentPane().add(MonthBox);
@@ -135,23 +133,22 @@ public class adminGui extends JFrame implements ActionListener {
         }
         // 검색이벤트
         else if (e.getSource() == searchBtn) {
+        	String date=YearBox.getSelectedItem().toString()+'-'+MonthBox.getSelectedItem().toString()+"-01";
+        	Date d=Date.valueOf(date);
             if (searchText.getText().equals("")) {
             } else {
                 DBA db = new DBA();
-                ArrayList<User> list = new ArrayList<>();
+                ArrayList<User2> list = new ArrayList<>();
                 scroll.setVisible(false);
-                db.selectNameData(list, searchText.getText());
-
+                db.selectNameData(list, d, searchText.getText());
                 String column[] = {"사원번호", "사원이름", "만근", "지각", "무단결근"};
                 String[][] s = new String[100][7];
                 for (int i = 0; i < list.size(); i++) {
                     s[i][0] = list.get(i).getId() + "";
                     s[i][1] = list.get(i).getName();
-                    s[i][2] = list.get(i).getDepart();
-                    s[i][3] = list.get(i).getRank();
-                    s[i][4] = list.get(i).getHalfway() + "";
-                    s[i][5] = list.get(i).getReward() + "";
-                    s[i][6] = list.get(i).getPoint() + "";
+                    s[i][2] = list.get(i).getAttendance()+"";
+                    s[i][3] = list.get(i).getTardy()+"";
+                    s[i][4] = list.get(i).getAbsence() + "";
                 }
 
                 users = new JTable(s, column);
@@ -164,22 +161,22 @@ public class adminGui extends JFrame implements ActionListener {
         }
         // 새로고침 이벤트
         else if (e.getSource() == refreshBtn) {
+        	String date=YearBox.getSelectedItem().toString()+'-'+MonthBox.getSelectedItem().toString()+"-01";
+        	Date d=Date.valueOf(date);
             searchText.setText("");
             DBA db = new DBA();
-            ArrayList<User> list = new ArrayList<>();
+            ArrayList<User2> list = new ArrayList<>();
             scroll.setVisible(false);
-            db.selectAllData(list);
+            db.selectAllData(list,d);
 
             String column[] = {"사원번호", "사원이름", "만근", "지각", "무단결근"};
             String[][] s = new String[100][7];
             for (int i = 0; i < list.size(); i++) {
-                s[i][0] = list.get(i).getId() + "";
+            	s[i][0] = list.get(i).getId() + "";
                 s[i][1] = list.get(i).getName();
-                s[i][2] = list.get(i).getDepart();
-                s[i][3] = list.get(i).getRank();
-                s[i][4] = list.get(i).getHalfway() + "";
-                s[i][5] = list.get(i).getReward() + "";
-                s[i][6] = list.get(i).getPoint() + "";
+                s[i][2] = list.get(i).getAttendance()+"";
+                s[i][3] = list.get(i).getTardy()+"";
+                s[i][4] = list.get(i).getAbsence() + "";
             }
 
             tableSetting(column, s);

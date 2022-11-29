@@ -8,13 +8,14 @@ import java.util.ArrayList;
 public class ViewGui extends JFrame {
 
     private JPanel contentPane;
-    
+    private User u;
 
     public static void main(String[] args) {
 //        new ViewGui();
     }
 
     public ViewGui(User user) {
+    	u=user;
         setBackground(UIManager.getColor("CheckBox.background"));
         setTitle("사원 상세보기"); //폼 제목
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -34,9 +35,9 @@ public class ViewGui extends JFrame {
         updateBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	dispose();
-                ModifyGui md = new ModifyGui(user);
+                ModifyGui md = new ModifyGui(u);
                 md.setVisible(true);
-                new ViewGui(user).setUser(user);
+                new ViewGui(u).setUser(u);
             }
         });
         updateBtn.setBounds(450, 160, 90, 30);
@@ -46,14 +47,19 @@ public class ViewGui extends JFrame {
         deleteBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == deleteBtn) {
-                	int delid = user.getId();
-                	DBA db = new DBA();
-                	db.deleteData(delid);
+                	int delid = u.getId();
+                	DBA db = new DBA();               	
                 	int result = JOptionPane.showConfirmDialog(null, "삭제하시겠습니까?", "삭제", JOptionPane.YES_NO_OPTION);
                 	// 삭제
                 	if(result == JOptionPane.YES_OPTION) {
-                		JOptionPane.showMessageDialog(null, "성공적으로 삭제되었습니다.");
-                		dispose();  
+                		int res=db.deleteData(delid);
+                		if(res==1) {
+                			JOptionPane.showMessageDialog(null, "성공적으로 삭제되었습니다.");
+                			dispose(); 
+                		}
+                		else
+                			JOptionPane.showMessageDialog(null, "삭제 실패");
+                		 
 //                		System.exit(0);
                 		
                 		

@@ -127,6 +127,7 @@ public class ModifyGui extends JFrame {
       JButton modiButton = new JButton("수정");
       modiButton.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
+        	int result;
             if(e.getSource()==modiButton) {
             	DBA db = new DBA();
             	// set data
@@ -138,10 +139,13 @@ public class ModifyGui extends JFrame {
             	int point = Integer.parseInt(pointField.getText());
 //            	String imgaddr = 
             	// 수정 진행
-            	db.updateData(id, name, depart, rank, halfway, point, null);
+            	result=db.updateData(id, name, depart, rank, halfway, point, null);
             	// user set
             	user.setAll(name, depart, rank, halfway, point);
-            	JOptionPane.showMessageDialog(null,"수정되었습니다");  //버튼1 클릭시 "등록되었습니다" 메세지창 출력
+            	if(result==1)
+            		JOptionPane.showMessageDialog(null,"수정되었습니다");  //버튼1 클릭시 "등록되었습니다" 메세지창 출력
+            	else
+            		JOptionPane.showMessageDialog(null,"수정실패");
             	// 상세보기 다시 띄우기
             	ViewGui vGui = new ViewGui(user);
             	vGui.setUser(user);
