@@ -12,6 +12,16 @@ create table user(
 사진 CHAR(150)
 );
 
+
+create table Attendance(
+날짜 date,
+사원번호 int,
+상태 char(10),
+primary key(날짜,사원번호),
+foreign key(사원번호) references user(사원번호)
+);
+
+
 insert into user values(0,'admin',NULL,NULL,NULL,NULL,NULL);
 
 // 유저 데이터 추가
