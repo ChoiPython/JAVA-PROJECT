@@ -104,7 +104,7 @@ public class DBA {
 		return user;
 	}
 	//유저를 추가 : 관리자 페이지의 추가에 들어갈 예정, 유저 클래스의 필드의 모든 값을 입력받는다.
-	public void insertData(int id,String name, String depart, String rank,int halfway, int point,String imgaddr) {
+	public void insertData(int id,String name, String depart, String rank, int halfway, int point,String imgaddr) {
 		try {
 			System.out.println("db로딩중");
 			conn=DriverManager.getConnection(dburl, dbUser, dbpw);
