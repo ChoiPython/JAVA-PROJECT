@@ -1,6 +1,8 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
+
 import javax.swing.*;
 
 
@@ -12,6 +14,9 @@ public class RandomChoice extends JFrame{
 	int percent = shopdata[0]; // 뽑기 확률
 	int[] randomnum = new int[percent];	// 당첨될 4개 숫자
 	int count; // 뽑기 횟수
+	JButton[] button = new JButton[100];
+	String[] bttext = new String[100];
+	
 	
 	
 	public RandomChoice(int count) {
@@ -24,22 +29,26 @@ public class RandomChoice extends JFrame{
 		
 		// 랜덤 수 지정
 		SetRandom();
+		for(int i=0; i<bttext.length; i++) {
+			bttext[i] = Integer.toString(i);
+		}
 		
 		// 버튼 생성 & set
 		for(int i=0; i < 100; i++) {
-			JButton button = new JButton("" + i);
-			button.setSize(50,60);
-			button.setIcon(img);
-			button.setRolloverIcon(imgchange); // 마우스 선택(포커스)시 이미지 변경
+			button[i] = new JButton(bttext[i]);
+			button[i].setText(Integer.toString(i));
+			button[i].setSize(50,60);
+			button[i].setIcon(img);
+			button[i].setRolloverIcon(imgchange); // 마우스 선택(포커스)시 이미지 변경
 			GetItem get = new GetItem();	// 이벤트 클래스 생성
 			get.GetButNum(i);				// 고유 숫자 설정
-			button.addActionListener(get);	// 이벤트 적용
-			randchoicepane.add(button);		// 버튼 추가
+			button[i].addActionListener(get);	// 이벤트 적용
+			randchoicepane.add(button[i]);		// 버튼 추가
 		}
 		
 
 		// 프레임 set
-		setSize(600, 500);
+		setSize(700, 500);
 		setVisible(true);
 		setResizable(false);
 		setLocationRelativeTo(null);
@@ -57,28 +66,28 @@ public class RandomChoice extends JFrame{
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
-			String[] text = new String[4];
-			JButton button = (JButton) e.getSource();
-			System.out.println(button.getText());
+
+			String[] text = new String[percent];
+			JButton newbutton = (JButton) e.getSource();
+			System.out.println(newbutton.getText());
 			
 			for(int i=0; i<4; i++) {
 				text[i] = Integer.toString(randomnum[i]);
 			}
 			
 			// 당첨
-			if(button.getText().equals(text[0]) || button.getText().equals(text[1]) || button.getText().equals(text[2]) || button.getText().equals(text[3])) {
+			if(newbutton.getText().equals(text[0]) || newbutton.getText().equals(text[1]) || newbutton.getText().equals(text[2]) || newbutton.getText().equals(text[3])) {
 				count -= 1;
 				System.out.println("당첨");
-				JOptionPane.showMessageDialog(button, "당첨!!");
+				JOptionPane.showMessageDialog(newbutton, "당첨!!");
 				
 				// count =0이면 뽑기 종료
 				if(count!=0) {
-					dispose();
+//					dispose();
 					new RandomChoice(count);
 				}
 				else {
-					dispose();
+//					dispose();
 				}
 			}
 			
@@ -88,23 +97,41 @@ public class RandomChoice extends JFrame{
 				count-=1;
 				if(count >= 1) {
 					System.out.println("당첨X");
-					JOptionPane.showMessageDialog(button, "꽝..  잔여횟수 : " + count);
-					dispose();
+					JOptionPane.showMessageDialog(newbutton, "꽝..  잔여횟수 : " + count);
+//					dispose();
 					new RandomChoice(count);
 				}
 				
 				else {
 					System.out.println("당첨X");
-					JOptionPane.showMessageDialog(button, "다음기회에...");
-					dispose();
+					JOptionPane.showMessageDialog(newbutton, "다음기회에...");
+//					dispose();
 				}
 				
 
 				System.out.println(count);
 					
 			}
-				
 			
+
+			String one = Integer.toString(randomnum[0]);
+			String two = Integer.toString(randomnum[1]);
+			String thr = Integer.toString(randomnum[2]);
+			String four = Integer.toString(randomnum[3]);
+			for(int i=0; i<100; i++) {
+				if(button[i].getText().equals(one) | button[i].getText().equals(two) || button[i].getText().equals(thr) || button[i].getText().equals(four)) {
+					button[i].setIcon(null);
+					button[i].setText("당첨");
+				}
+				
+				else {
+					button[i].setIcon(null);
+					button[i].setText("꽝");
+
+				}
+					
+			}
+				
 		}
 		
 	}
