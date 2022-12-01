@@ -33,6 +33,14 @@ grant all privileges on test.* to 'test'@'localhost';
 
 flush privileges;
 
+// 상점 설정
+create table shop(
+뽑기확률 int default 4,
+뽑기가격 int default 1,
+반차가격 int default 18);
+
+insert into shop values();
+
 
 // 테스트 중
 // 상점 데이터 - 사원번호(개인키) - 거래내역을 위함
@@ -42,6 +50,8 @@ create table trade(
 뽑기구매수 int default 0,
 가격 int default 0,
 foreign key(사원번호) references user(사원번호));
+
+
 
 // user 테이블 사원번호 전체 추가
  insert into trade(사원번호) select 사원번호 from user;

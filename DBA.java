@@ -8,7 +8,7 @@ public class DBA {
 	private Connection conn;
 	//DB 접속을 위한 주소, 아이디, 비밀번호
 	private static String dburl= "jdbc:mysql://localhost:3306/test?serverTimezone=UTC";;
-	private static String dbUser= "testjju";
+	private static String dbUser= "test";
 	private static String dbpw="1234";
 	
 	
@@ -304,6 +304,78 @@ public class DBA {
 		}catch(SQLException e) {}
 		return user;
 	}
+	
+	// 상점 데이터 설정
+	int percent;
+	int rprice;
+	int hprice;
+	public void SetShop(int percent, int rprice, int hprice) {
+		this.percent = percent;
+		this.rprice = rprice;
+		this.hprice = hprice;
+		
+		try {
+			System.out.println("db로딩중");
+			conn=DriverManager.getConnection(dburl, dbUser, dbpw);
+		}catch(Exception e) {
+			System.out.println("db로딩 실패");
+		}
+		String sql="update shop set 뽑기확률=?, 뽑기가격=?, 반차가격=?";
+		PreparedStatement pstmt=null;
+		//폼에서 데이터 받아올 코드 작성.
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, percent);
+			pstmt.setInt(2, rprice);
+			pstmt.setInt(3, hprice);
+			
+			int result= pstmt.executeUpdate();
+			if(result==1) {
+				System.out.println("update complete");
+			}
+		}catch(Exception e) {
+			System.out.println("update failed");
+		}finally {
+			try {
+				if(pstmt!=null && !pstmt.isClosed()) {
+					pstmt.close();
+				}
+			}catch (Exception e) {}
+		}
+		try {
+			conn.close();
+		}catch(SQLException e) {}
+
+	}
+	// 상점 데이터 반환
+	public int[] GetShop() {
+		try {
+			System.out.println("db로딩중");
+			conn=DriverManager.getConnection(dburl, dbUser, dbpw);
+		}catch(Exception e) {
+			System.out.println("db로딩 실패");
+		}
+		String sql = "Select * from shop";
+		try {
+			PreparedStatement pstmt=conn.prepareStatement(sql);
+			ResultSet rs=pstmt.executeQuery();
+
+			
+			while(rs.next()) {
+				percent = rs.getInt(1);
+				rprice = rs.getInt(2);
+				hprice = rs.getInt(3);
+			}
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		
+		// 뽑기 확률, 뽑기 가격, 반차 가격
+		System.out.println(percent +"" + rprice + "" + hprice);
+		return new int [] {percent, rprice, hprice};
+	}
+	
 	//메인함수는 폼 입출력에 참고하고 추후에 지울 예정
 //	public static void main(String[] args) {
 //		Scanner sc=new Scanner(System.in);

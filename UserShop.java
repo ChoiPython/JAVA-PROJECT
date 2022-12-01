@@ -8,7 +8,9 @@ public class UserShop extends JFrame{
 	private DBA db=new DBA();
 	private User user;
 	private Container usershoppane;
-	private int price=18; // 물품 가격 - db로 관리자에서 수정가능하게?
+	int[] shopdata = db.GetShop();
+	int rprice = shopdata[1];	// 뽑기 가격
+	private int hprice = shopdata[2]; // 반차 가격 - db로 관리자에서 수정가능하게?
 	
 	public UserShop(User u) {
 		user = u;
@@ -56,9 +58,9 @@ public class UserShop extends JFrame{
 		randomboxLabel.setBounds(550, 80, 200, 400);
 		
 		// 물품가격 라벨 생성
-		JLabel vanameLabel = new JLabel("포인트 : 36점");
-		JLabel halfnameLabel = new JLabel("포인트 : 18점");
-		JLabel rannameLabel = new JLabel("포인트 : 1점");
+		JLabel vanameLabel = new JLabel("포인트 : " + hprice * 2 + "점");
+		JLabel halfnameLabel = new JLabel("포인트 : " + hprice + "점");
+		JLabel rannameLabel = new JLabel("포인트 :" + rprice + "점");
 		// 물품 라벨 설정
 		vanameLabel.setBounds(120, 555, 150, 50);
 		SetFont(vanameLabel, 20);
@@ -107,11 +109,11 @@ public class UserShop extends JFrame{
 		// 구매 버튼 이벤트 설정
 		// 휴가
 		ShowBuyMessage vacationBuyMessage = new ShowBuyMessage();
-		vacationBuyMessage.SetPrice(price*2);
+		vacationBuyMessage.SetPrice(hprice*2);
 		vacationButton.addActionListener(vacationBuyMessage);
 		// 반차
 		ShowBuyMessage halfvacationBuyMessage = new ShowBuyMessage();
-		halfvacationBuyMessage.SetPrice(price);
+		halfvacationBuyMessage.SetPrice(hprice);
 		halfvacationButton.addActionListener(halfvacationBuyMessage);
 		// 랜덤뽑기
 		ShowBuyMessage randomBuyMessage = new ShowBuyMessage();
