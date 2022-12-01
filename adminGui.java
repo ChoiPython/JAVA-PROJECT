@@ -18,6 +18,7 @@ public class adminGui extends JFrame implements ActionListener {
     JScrollPane scroll;
     JComboBox YearBox;
     JComboBox MonthBox;
+
     public adminGui(ArrayList<User2> list) {
         setTitle("관리자");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -59,14 +60,14 @@ public class adminGui extends JFrame implements ActionListener {
         contentpane.add(viewBtn);
 
         //테이블 데이터 set
-        String column[] = {"사원번호", "사원이름", "만근", "지각", "무단결근"};
+        String column[] = {"사원번호", "사원이름", "출근", "지각", "결근"};
         String[][] s = new String[100][7];//= {{null,null,null,null,null,null,null}};
         for (int i = 0; i < list.size(); i++) {
             for (int j = 0; j < 7; j++) {
                 if (j == 0) s[i][j] = list.get(i).getId() + "";
                 if (j == 1) s[i][j] = list.get(i).getName();
-                if (j == 2) s[i][j] = list.get(i).getAttendance()+"";
-                if (j == 3) s[i][j] = list.get(i).getTardy()+"";
+                if (j == 2) s[i][j] = list.get(i).getAttendance() + "";
+                if (j == 3) s[i][j] = list.get(i).getTardy() + "";
                 if (j == 4) s[i][j] = list.get(i).getAbsence() + "";
             }
         }
@@ -99,8 +100,8 @@ public class adminGui extends JFrame implements ActionListener {
     }
 
     private void tableSetting(String[] column, String[][] s) {   //table 선택가능하지만 수정불가 
-        TableModel model = new DefaultTableModel(s, column) { 
-            public boolean isCellEditable(int row, int column) { 
+        TableModel model = new DefaultTableModel(s, column) {
+            public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
@@ -114,11 +115,15 @@ public class adminGui extends JFrame implements ActionListener {
         // 등록
         if (e.getSource() == insertBtn) {
             new RegistGui();
-        } else if(e.getSource()==viewBtn){
+        } else if (e.getSource() == viewBtn) {
 //            ViewGui viewgui = new ViewGui(); // 무조건 화면 열림
-            if (!users.getSelectionModel().isSelectionEmpty()&&users.getSelectedRows().length==1) { //users 테이블 1개만 선택
+            if (!users.getSelectionModel().isSelectionEmpty() && users.getSelectedRows().length == 1) { //users 테이블 1개만 선택
                 int row = users.getSelectedRow();
                 DBA db = new DBA();
+                if (users.getModel().getValueAt(row, 0) == null) {
+                    JOptionPane.showMessageDialog(null, "빈데이터는 조회할수없습니다.", "ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
                 User user = db.selectIdData(Integer.parseInt((String) users.getModel().getValueAt(row, 0)));
                 ViewGui viewgui = new ViewGui(user);
                 viewgui.setUser(user);
@@ -126,28 +131,28 @@ public class adminGui extends JFrame implements ActionListener {
             } else {
                 JOptionPane.showMessageDialog(null, "셀을 한개만 선택해주세요", "ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);
             }
-        }else if (e.getSource() == shopBtn) {
+        } else if (e.getSource() == shopBtn) {
             AdminShop adminShop = new AdminShop();
             adminShop.setLocation(600, 100);
             setLocation(200, 100);
         }
         // 검색이벤트
         else if (e.getSource() == searchBtn) {
-        	String date=YearBox.getSelectedItem().toString()+'-'+MonthBox.getSelectedItem().toString()+"-01";
-        	Date d=Date.valueOf(date);
+            String date = YearBox.getSelectedItem().toString() + '-' + MonthBox.getSelectedItem().toString() + "-01";
+            Date d = Date.valueOf(date);
             if (searchText.getText().equals("")) {
             } else {
                 DBA db = new DBA();
                 ArrayList<User2> list = new ArrayList<>();
                 scroll.setVisible(false);
                 db.selectNameData(list, d, searchText.getText());
-                String column[] = {"사원번호", "사원이름", "만근", "지각", "무단결근"};
+                String column[] = {"사원번호", "사원이름", "출근", "지각", "결근"};
                 String[][] s = new String[100][7];
                 for (int i = 0; i < list.size(); i++) {
                     s[i][0] = list.get(i).getId() + "";
                     s[i][1] = list.get(i).getName();
-                    s[i][2] = list.get(i).getAttendance()+"";
-                    s[i][3] = list.get(i).getTardy()+"";
+                    s[i][2] = list.get(i).getAttendance() + "";
+                    s[i][3] = list.get(i).getTardy() + "";
                     s[i][4] = list.get(i).getAbsence() + "";
                 }
 
@@ -161,21 +166,21 @@ public class adminGui extends JFrame implements ActionListener {
         }
         // 새로고침 이벤트
         else if (e.getSource() == refreshBtn) {
-        	String date=YearBox.getSelectedItem().toString()+'-'+MonthBox.getSelectedItem().toString()+"-01";
-        	Date d=Date.valueOf(date);
+            String date = YearBox.getSelectedItem().toString() + '-' + MonthBox.getSelectedItem().toString() + "-01";
+            Date d = Date.valueOf(date);
             searchText.setText("");
             DBA db = new DBA();
             ArrayList<User2> list = new ArrayList<>();
             scroll.setVisible(false);
-            db.selectAllData(list,d);
+            db.selectAllData(list, d);
 
-            String column[] = {"사원번호", "사원이름", "만근", "지각", "무단결근"};
+            String column[] = {"사원번호", "사원이름", "출근", "지각", "결근"};
             String[][] s = new String[100][7];
             for (int i = 0; i < list.size(); i++) {
-            	s[i][0] = list.get(i).getId() + "";
+                s[i][0] = list.get(i).getId() + "";
                 s[i][1] = list.get(i).getName();
-                s[i][2] = list.get(i).getAttendance()+"";
-                s[i][3] = list.get(i).getTardy()+"";
+                s[i][2] = list.get(i).getAttendance() + "";
+                s[i][3] = list.get(i).getTardy() + "";
                 s[i][4] = list.get(i).getAbsence() + "";
             }
 
