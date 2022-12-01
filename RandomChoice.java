@@ -7,7 +7,10 @@ import javax.swing.*;
 public class RandomChoice extends JFrame{
 	ImageIcon img = new ImageIcon(this.getClass().getResource("/일반뽑기버튼.png"));
 	ImageIcon imgchange = new ImageIcon(this.getClass().getResource("/뽑기선택.jpg"));
-	int[] randomnum = {0, 0, 0, 0};	// 당첨될 4개 숫자
+	DBA dba = new DBA();
+	int[] shopdata = dba.GetShop();
+	int percent = shopdata[0]; // 뽑기 확률
+	int[] randomnum = new int[percent];	// 당첨될 4개 숫자
 	int count; // 뽑기 횟수
 	
 	
@@ -118,7 +121,7 @@ public class RandomChoice extends JFrame{
 		// 모두 다른지 확인
 		for(int i=1; i < randomnum.length; i++) {
 			int num = randomnum[i-1];
-			int[] copy = Arrays.copyOfRange(randomnum, i, 4);	// 배열 지정 범위 복사
+			int[] copy = Arrays.copyOfRange(randomnum, i, percent);	// 배열 지정 범위 복사
 			
 			// 로직
 			while(Arrays.stream(copy).anyMatch(a -> a == num)) {
