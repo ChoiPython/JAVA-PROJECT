@@ -2,11 +2,16 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.StringTokenizer;
+
 import javax.swing.*;
 
 class CalendarDataManager extends JFrame{
+	User user;
 	static final int CAL_WIDTH = 7;
 	final static int CAL_HEIGHT = 6;
 	int calDates[][] = new int[CAL_HEIGHT][CAL_WIDTH];
@@ -83,11 +88,11 @@ public class Vacation extends CalendarDataManager{
 
 	String WEEK_DAY_NAME[] = { "일", "월", "화", "수", "목", "금", "토" };
 
-	public Vacation(){
-		
+	public Vacation(User u){
+		this.user=u;
 		JFrame mainFrame = new JFrame();
 		mainFrame.setTitle("휴가/반차 사용 화면");
-		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		mainFrame.setSize(420,450);
 		mainFrame.setLocationRelativeTo(null);
 		mainFrame.setResizable(false);
@@ -102,7 +107,7 @@ public class Vacation extends CalendarDataManager{
 			lMonBut.setToolTipText("Previous Month");
 			lMonBut.addActionListener(lForCalOpButtons);
 			
-			curMMYYYYLab = new JLabel("<html><table width=100><tr><th><font size=5>"+((calMonth+1)<10?"&nbsp;":"")+(calMonth+1)+" / "+calYear+"</th></tr></table></html>");
+			curMMYYYYLab = new JLabel("<html><table width=100><tr><th><font size=5>\r"+((calMonth+1)<10?"&nbsp;":"")+(calMonth+1)+"\r / \r"+calYear+"\r</th></tr></table></html>");
 		
 			nMonBut = new JButton(">");
 			nMonBut.setToolTipText("Next Month");
@@ -176,8 +181,22 @@ public class Vacation extends CalendarDataManager{
 			JButton AppBtn = new JButton("신청");
 			AppBtn.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					String ss[]=new String[10];
+					String day="1";									//일 가져오기
 					if(e.getSource() == AppBtn)
 					{
+						String s=curMMYYYYLab.getText();
+						StringTokenizer st=new StringTokenizer(s,"\r &nbsp;");
+						int count=st.countTokens();
+						for(int i=0;i<count;i++) {
+							ss[i]=st.nextToken();//index 5==m 7==y
+						}
+						String date=ss[7]+"-"+ss[5]+"-"+day;
+						Date d=Date.valueOf(date);
+						System.out.println(user.getId());
+						System.out.println(d);
+						DBA db=new DBA();
+						db.leaveApplication(user.getId(), d);
 						n--;
 						JOptionPane.showMessageDialog(null, "신청되었습니다.");
 					}
@@ -267,7 +286,7 @@ public class Vacation extends CalendarDataManager{
 			else if(e.getSource() == nMonBut) moveMonth(1);
 			else if(e.getSource() == nYearBut) moveMonth(12);
 			
-			curMMYYYYLab.setText("<html><table width=100><tr><th><font size=5>"+((calMonth+1)<10?"&nbsp;":"")+(calMonth+1)+" / "+calYear+"</th></tr></table></html>");
+			curMMYYYYLab.setText("<html><table width=100><tr><th><font size=5>\r"+((calMonth+1)<10?"&nbsp;":"")+(calMonth+1)+"\r / \r"+calYear+"\r</th></tr></table></html>");
 			showCal();
 		}
 	}
@@ -298,7 +317,7 @@ public class Vacation extends CalendarDataManager{
 		}
 	}
 	public static void main(String[] args){
-		new Vacation();
+		
 	}
 }
 

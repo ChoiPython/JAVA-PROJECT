@@ -77,7 +77,7 @@ public class UserShop extends JFrame{
 		
 		
 		// 포인트 현황 라벨
-		coinLabel = new JLabel("포인트 : " + u.getReward());
+		coinLabel = new JLabel("포인트 : " + user.getPoint());
 		// 포인트 라벨 설정
 		coinLabel.setBounds(790, 100, 200,100);
 		SetFont(coinLabel, 20);
@@ -170,7 +170,7 @@ public class UserShop extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			JButton button = (JButton) e.getSource();
-			coin = user.getReward();
+			coin = user.getPoint();
 			int buy = 0;
 			int select;
 			
@@ -210,11 +210,11 @@ public class UserShop extends JFrame{
 				}
 				else {
 					coin -= price*buy;
-					user.setReward(coin);
+					user.setPoint(coin);
 					
 					JOptionPane.showMessageDialog(usershoppane, "구매되었습니다. \n현재 보유 코인 : " + coin, "구매 성공", JOptionPane.INFORMATION_MESSAGE);
-					db.updatecoin(user.getId(), user.getReward());
-					coinLabel.setText("포인트 : " + user.getReward());
+					db.updatecoin(user.getId(), user.getPoint());
+					coinLabel.setText("포인트 : " + user.getPoint());
 				
 					// 카드 뒤집기 이벤트
 					if(button.getText().equals("뽑기 - 구매")) {
@@ -270,7 +270,7 @@ public class UserShop extends JFrame{
 	
 	public static void main(String[] args) {
 		User user = new User();
-		user.setReward(200);
+		user.setPoint(200);
 		new UserShop(user);
 	}
 }

@@ -304,6 +304,39 @@ public class DBA {
 		}catch(SQLException e) {}
 		return user;
 	}
+	public void leaveApplication(int id,Date d) {
+		try {
+			System.out.println("db로딩중");
+			conn=DriverManager.getConnection(dburl, dbUser, dbpw);
+		}catch(Exception e) {
+			System.out.println("db로딩 실패");
+		}
+		String sql="insert into Attendance values(?,?,'휴가')";
+		PreparedStatement pstmt=null;
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setDate(1, d);
+			pstmt.setInt(2, id);
+			
+			
+			int result= pstmt.executeUpdate();
+			if(result==1) {
+				System.out.println("insert complete");
+			}
+		}catch(Exception e) {
+			System.out.println("insert failed");
+		}finally {
+			try {
+				if(pstmt!=null && !pstmt.isClosed()) {
+					pstmt.close();
+				}
+			}catch (Exception e) {}
+		}
+		try {
+			conn.close();
+		}catch(SQLException e) {}
+	}
 	
 	// 상점 데이터 설정
 	int percent;
@@ -373,6 +406,9 @@ public class DBA {
 		
 		// 뽑기 확률, 뽑기 가격, 반차 가격
 		System.out.println(percent +"" + rprice + "" + hprice);
+		try {
+			conn.close();
+		}catch(SQLException e) {}
 		return new int [] {percent, rprice, hprice};
 	}
 	

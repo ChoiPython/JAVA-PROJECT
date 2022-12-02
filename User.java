@@ -6,7 +6,6 @@ public class User {
 	private String depart;
 	private String rank;
 	private int halfway;
-	private int reward;
 	private int point;
 	private String imgaddr;
 	
@@ -39,12 +38,6 @@ public class User {
 	}
 	public void setHalfway(int halfway) {
 		this.halfway = halfway;
-	}
-	public int getReward() {
-		return reward;
-	}
-	public void setReward(int reward) {
-		this.reward = reward;
 	}
 	public int getPoint() {
 		return point;

@@ -95,7 +95,7 @@ public class MyUser extends JFrame implements ActionListener{
 		point.setSize(150, 50);
 		point.setLocation(180, 160);
 		c.add(point);
-		upoint=new JLabel(user.getReward()+"");
+		upoint=new JLabel(user.getPoint()+"");
 		upoint.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
 		upoint.setSize(150, 50);
 		upoint.setLocation(260, 160);
@@ -135,7 +135,8 @@ public class MyUser extends JFrame implements ActionListener{
 			setLocation(200, 100);
 		}
 		else if(e.getSource()==vacation) {
-			new Vacation();
+			User u=user;
+			new Vacation(u);
 		}
 		else if(e.getSource()==refresh) {
 			DBA db=new DBA();
@@ -146,7 +147,7 @@ public class MyUser extends JFrame implements ActionListener{
 			uname.setText(user.getName());
 			uposition.setText(user.getRank());
 			udepartment.setText(user.getDepart());
-			upoint.setText(user.getReward()+"");
+			upoint.setText(user.getPoint()+"");
 		}
 	}
 }
