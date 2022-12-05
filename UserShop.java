@@ -32,7 +32,7 @@ public class UserShop extends JFrame{
 		// 반차 - 0.5
 		ImageIcon halfvationimage = new ImageIcon(this.getClass().getResource("/휴가권.jpg"));
 		
-		//랜덤박스
+		//랜덤박스 
 		ImageIcon randomboxImage = new ImageIcon(this.getClass().getResource("/선물상자.jpg"));
 		
 		// 타이틀 라벨 생성
@@ -218,7 +218,7 @@ public class UserShop extends JFrame{
 				
 					// 카드 뒤집기 이벤트
 					if(button.getText().equals("뽑기 - 구매")) {
-						new RandomChoice(buy);
+						new RandomChoice(buy, user.getId());
 					}
 				
 				}

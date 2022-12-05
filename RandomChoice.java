@@ -16,14 +16,17 @@ public class RandomChoice extends JFrame{
 	int count; // 뽑기 횟수
 	JButton[] button = new JButton[100];
 	String[] bttext = new String[100];
+	Container randchoicepane;
+	GetItem get;
+	int id;
 	
 	
-	
-	public RandomChoice(int count) {
+	public RandomChoice(int count, int id) {
+		this.id = id;
 		this.count = count;
 		setTitle("뽑기창");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		Container randchoicepane = getContentPane();
+		randchoicepane = getContentPane();
 		// 그리드 레이아웃 사용
 		randchoicepane.setLayout(new GridLayout(10, 10));
 		
@@ -37,10 +40,10 @@ public class RandomChoice extends JFrame{
 		for(int i=0; i < 100; i++) {
 			button[i] = new JButton(bttext[i]);
 			button[i].setText(Integer.toString(i));
-			button[i].setSize(50,60);
+			button[i].setSize(70,50);
 			button[i].setIcon(img);
 			button[i].setRolloverIcon(imgchange); // 마우스 선택(포커스)시 이미지 변경
-			GetItem get = new GetItem();	// 이벤트 클래스 생성
+			get = new GetItem();	// 이벤트 클래스 생성
 			get.GetButNum(i);				// 고유 숫자 설정
 			button[i].addActionListener(get);	// 이벤트 적용
 			randchoicepane.add(button[i]);		// 버튼 추가
@@ -80,14 +83,15 @@ public class RandomChoice extends JFrame{
 				count -= 1;
 				System.out.println("당첨");
 				JOptionPane.showMessageDialog(newbutton, "당첨!!");
+				dba.Buyhalf(id, 1);
+				
 				
 				// count =0이면 뽑기 종료
 				if(count!=0) {
-//					dispose();
-					new RandomChoice(count);
+
+					new RandomChoice(count, id);
 				}
 				else {
-//					dispose();
 				}
 			}
 			
@@ -98,14 +102,13 @@ public class RandomChoice extends JFrame{
 				if(count >= 1) {
 					System.out.println("당첨X");
 					JOptionPane.showMessageDialog(newbutton, "꽝..  잔여횟수 : " + count);
-//					dispose();
-					new RandomChoice(count);
+					new RandomChoice(count, id);
 				}
 				
 				else {
 					System.out.println("당첨X");
 					JOptionPane.showMessageDialog(newbutton, "다음기회에...");
-//					dispose();
+
 				}
 				
 
@@ -118,22 +121,53 @@ public class RandomChoice extends JFrame{
 			String two = Integer.toString(randomnum[1]);
 			String thr = Integer.toString(randomnum[2]);
 			String four = Integer.toString(randomnum[3]);
+//			dispose();
 			for(int i=0; i<100; i++) {
 				if(button[i].getText().equals(one) | button[i].getText().equals(two) || button[i].getText().equals(thr) || button[i].getText().equals(four)) {
 					button[i].setIcon(null);
+					button[i].setBackground(Color.red);
 					button[i].setText("당첨");
+					// 내 선택
+					if(button[i] == newbutton) {
+						
+					}
 				}
 				
 				else {
+					ImageIcon boom = new ImageIcon(this.getClass().getResource("/꽝이미지.png"));
+					button[i].setRolloverIcon(null);
 					button[i].setIcon(null);
 					button[i].setText("꽝");
+					// 내 선택
+					if (button[i] == newbutton) {
+
+					}
+					
+					
 
 				}
-					
+				
+				button[i].setEnabled(false);	// 버튼 비활성화
+//				button[i].addActionListener(new OverEvent());
 			}
+			
+			// 결과 버튼 클릭 시
+			newbutton.setBackground(Color.white); // 내 선택
+			
+			setLocation(200, 100);
+			
+			
 				
 		}
 		
+		
+	}
+	
+	public class OverEvent implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			dispose();
+		}
 	}
 	
 	
