@@ -108,17 +108,17 @@ public class UserShop extends JFrame{
 		
 		// 구매 버튼 이벤트 설정
 		// 휴가
-		ShowBuyMessage vacationBuyMessage = new ShowBuyMessage();
-		vacationBuyMessage.SetPrice(hprice*2);
-		vacationButton.addActionListener(vacationBuyMessage);
+		BuyVac vacationBuy = new BuyVac();
+		vacationBuy.SetPrice(hprice*2);
+		vacationButton.addActionListener(vacationBuy);
 		// 반차
-		ShowBuyMessage halfvacationBuyMessage = new ShowBuyMessage();
-		halfvacationBuyMessage.SetPrice(hprice);
-		halfvacationButton.addActionListener(halfvacationBuyMessage);
+		BuyVac halfvacationBuy = new BuyVac();
+		halfvacationBuy.SetPrice(hprice);
+		halfvacationButton.addActionListener(halfvacationBuy);
 		// 랜덤뽑기
-		ShowBuyMessage randomBuyMessage = new ShowBuyMessage();
-		randomBuyMessage.SetPrice(1);
-		randomBoxButton.addActionListener(randomBuyMessage);
+		BuyRandom randomBuy = new BuyRandom();
+		randomBuy.SetPrice(1);
+		randomBoxButton.addActionListener(randomBuy);
 		
 		// 구매 버튼 추가
 		usershoppane.add(vacationButton);
@@ -158,8 +158,8 @@ public class UserShop extends JFrame{
 		
 	}
 
-	// 상점 - 메시지 박스 이벤트 처리
-	class ShowBuyMessage implements ActionListener {
+	// 상점 - 뽑기 이벤트
+	class BuyRandom implements ActionListener {
 		int price;
 		public void SetPrice(int price) {
 			this.price = price;
@@ -171,7 +171,7 @@ public class UserShop extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			JButton button = (JButton) e.getSource();
 			coin = user.getPoint();
-			int buy = 0;
+			int buy = 0;	// 구매 개수
 			int select;
 			
 			try {
@@ -230,6 +230,89 @@ public class UserShop extends JFrame{
 			}
 		}
 	}
+	
+	
+	// 상점 - 휴가 & 반차 구매
+	class BuyVac implements ActionListener {
+		int price;
+		public void SetPrice(int price) {
+			this.price = price;
+			
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JButton button = (JButton) e.getSource();
+			coin = user.getPoint();
+			int buy = 0;	// 구매 개수
+			
+			try {
+				String check = JOptionPane.showInputDialog(usershoppane, "몇개 구매하시겠습니까?", "구매개수", JOptionPane.NO_OPTION);
+				// 공백예외
+				if(check.equals("")) {
+					JOptionPane.showMessageDialog(usershoppane, "공백입력불가 / 숫자를 입력해주세요!", "구매실패", JOptionPane.ERROR_MESSAGE);
+					buy = -1;
+				}
+				
+				else {					
+					buy = Integer.parseInt(check);
+				}
+				
+			}
+			
+			// 문자열 예외
+			catch (NumberFormatException ex) {
+				System.out.println(ex);
+				System.out.println(buy);
+				JOptionPane.showMessageDialog(usershoppane, "숫자를 입력하세요!", "구매실패", JOptionPane.ERROR_MESSAGE);
+				buy = -1;
+			}
+
+			// cancel
+			catch (Exception e2) {
+				System.out.println("다른 예외");
+				System.out.println(e2);
+				buy = -1;
+
+			}
+			System.out.println(buy);
+			if (buy >= 1) { 
+				if (coin < price*buy) {
+					JOptionPane.showMessageDialog(usershoppane, "보유 포인트가 부족합니다.", "구매 실패", JOptionPane.INFORMATION_MESSAGE);
+				}
+				else {
+					coin -= price*buy;
+					user.setPoint(coin);
+					
+					JOptionPane.showMessageDialog(usershoppane, "구매되었습니다. \n현재 보유 코인 : " + coin, "구매 성공", JOptionPane.INFORMATION_MESSAGE);
+					db.updatecoin(user.getId(), user.getPoint());
+					coinLabel.setText("포인트 : " + user.getPoint());
+				
+					// 반차 구매 이벤트
+					if(button.getText().equals("반차 - 구매")) {
+						// update 반차
+						db.Buyhalf(user.getId(), buy);
+					}
+					
+					// 휴가 구매 이벤트
+					else {
+						// update 휴가
+						db.Buyhalf(user.getId(), buy*2);
+					}
+				
+				}
+				
+			}
+			else if (buy == 0) {
+				System.out.println(buy);
+				JOptionPane.showMessageDialog(usershoppane, "0개는 구매할 수 없습니다.", "구매 실패", JOptionPane.INFORMATION_MESSAGE);
+			}
+			
+			
+			
+		}
+	}
+	
 	
 	// 닫기 - 이벤트 처리
 	class CloseFrame implements ActionListener {

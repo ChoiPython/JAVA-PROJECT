@@ -42,17 +42,3 @@ create table shop(
 insert into shop values();
 
 
-// 테스트 중
-// 상점 데이터 - 사원번호(개인키) - 거래내역을 위함
-create table trade(
-사원번호 int primary key,
-반차구매수 int default 0,
-뽑기구매수 int default 0,
-가격 int default 0,
-foreign key(사원번호) references user(사원번호));
-
-
-
-// user 테이블 사원번호 전체 추가
- insert into trade(사원번호) select 사원번호 from user;
-
