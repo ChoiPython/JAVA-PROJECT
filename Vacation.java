@@ -185,6 +185,7 @@ public class Vacation extends CalendarDataManager{
 					String day="1";									//일 가져오기
 					if(e.getSource() == AppBtn)
 					{
+						int res;
 						String s=curMMYYYYLab.getText();
 						StringTokenizer st=new StringTokenizer(s,"\r &nbsp;");
 						int count=st.countTokens();
@@ -196,9 +197,15 @@ public class Vacation extends CalendarDataManager{
 						System.out.println(user.getId());
 						System.out.println(d);
 						DBA db=new DBA();
-						db.leaveApplication(user.getId(), d);
+						res=db.leaveApplication(user.getId(), d);
 						n--;
-						JOptionPane.showMessageDialog(null, "신청되었습니다.");
+						if(res==1) {
+							int h=user.getHalfway()-2;
+							db.updatehalfway(user.getId(), h);
+							JOptionPane.showMessageDialog(null, "신청되었습니다.");
+						}
+						else 
+							JOptionPane.showMessageDialog(null, "신청 실패");
 					}
 				}
 			});

@@ -120,7 +120,12 @@ public class ViewGui extends JFrame {
         JLabel imageLabel = new JLabel("");
 	      imageLabel.setBounds(30, 30, 150, 187);
 	      contentPane.add(imageLabel);
-	      javax.swing.ImageIcon icon = new javax.swing.ImageIcon(this.getClass().getResource("/employee.jpg")); //이미지 파일명
+	      javax.swing.ImageIcon icon;// = new javax.swing.ImageIcon(this.getClass().getResource("/employee.jpg")); //이미지 파일명
+	      if(user.getImgaddr()==null) {
+	    	  icon = new ImageIcon(this.getClass().getResource("/employee.jpg"));
+			}else {
+				icon = new ImageIcon(user.getImgaddr());
+			}
 	      imageLabel.setIcon(icon);
 
     }

@@ -31,7 +31,7 @@ public class ModifyGui extends JFrame {
    private JTextField idField;		// 사원번호
    private JTextField pointField;	// 포인트
    private User user;
-
+   ImageIcon imageIcon;
 
    public static void main(String[] args) {
 //	   User user = new User();
@@ -115,7 +115,7 @@ public class ModifyGui extends JFrame {
       pointField.setBounds(257, 227, 360, 21);
       pointField.setColumns(10);
       contentPane.add(pointField);
-      javax.swing.ImageIcon icon = new javax.swing.ImageIcon(this.getClass().getResource("/employee.jpg")); //이미지 파일명
+      javax.swing.ImageIcon icon = new javax.swing.ImageIcon(user.getImgaddr()); //이미지 파일명
       empytyLabel.setIcon(icon);
       
       // 사진선택 버튼
@@ -137,11 +137,13 @@ public class ModifyGui extends JFrame {
             	String rank = rankField.getText();
             	int halfway = user.getHalfway();
             	int point = Integer.parseInt(pointField.getText());
+            	
 //            	String imgaddr = 
             	// 수정 진행
-            	result=db.updateData(id, name, depart, rank, halfway, point, null);
+            	result=db.updateData(id, name, depart, rank, halfway, point, imageIcon.toString());
             	// user set
             	user.setAll(name, depart, rank, halfway, point);
+            	user.setImgaddr(imageIcon.toString());
             	if(result==1)
             		JOptionPane.showMessageDialog(null,"수정되었습니다");  //버튼1 클릭시 "등록되었습니다" 메세지창 출력
             	else
@@ -172,7 +174,6 @@ public class ModifyGui extends JFrame {
 
 
         FileDialog image = new FileDialog(this,"사진 선택", FileDialog.LOAD); //이미지 파일 읽기
-        
         ImagePanel imagePanel = new ImagePanel();
         imagePanel.setBounds(0, 0, 0, 0);
         contentPane.add(imagePanel);
@@ -191,7 +192,7 @@ public class ModifyGui extends JFrame {
         selectimg.addActionListener(e -> {  //버튼을 클릭했을때 이미지 디렉토리 경로와 파일이름 가져오기
             image.setVisible(true);
             if (image.getFile() != null) {
-                ImageIcon imageIcon = new ImageIcon(image.getDirectory() + image.getFile());
+                imageIcon = new ImageIcon(image.getDirectory() + image.getFile());
                 empytyLabel.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(156, 161, Image.SCALE_SMOOTH)));//getScaledInstance 를 사용하여 사진을 크기에 맞춰서 출력
             }
             imagePanel.repaint(); //repaint 메소드 호출

@@ -8,7 +8,7 @@ public class DBA {
 	private Connection conn;
 	//DB 접속을 위한 주소, 아이디, 비밀번호
 	private static String dburl= "jdbc:mysql://localhost:3306/test?serverTimezone=UTC";;
-	private static String dbUser= "test";
+	private static String dbUser= "testjju";
 	private static String dbpw="1234";
 	
 	
@@ -94,6 +94,7 @@ public class DBA {
 				user.setRank(rs.getString("직급"));
 				user.setHalfway(rs.getInt("반차"));
 				user.setPoint(rs.getInt("포인트"));
+				user.setImgaddr(rs.getString("사진"));
 			}
 		} catch (SQLException e1) {
 			e1.printStackTrace();
@@ -183,6 +184,39 @@ public class DBA {
 			conn.close();
 		}catch(SQLException e) {}
 		return result;
+	}
+	public void updatehalfway(int id, int halfway) {
+		try {
+			System.out.println("db로딩중");
+			conn=DriverManager.getConnection(dburl, dbUser, dbpw);
+		}catch(Exception e) {
+			System.out.println("db로딩 실패");
+		}
+		String sql="update user set 반차=? where 사원번호=?";
+		PreparedStatement pstmt=null;
+		//폼에서 데이터 받아올 코드 작성.
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, halfway);
+			pstmt.setInt(2, id);
+			
+			int result= pstmt.executeUpdate();
+			if(result==1) {
+				System.out.println("update complete");
+			}
+		}catch(Exception e) {
+			System.out.println("update failed");
+		}finally {
+			try {
+				if(pstmt!=null && !pstmt.isClosed()) {
+					pstmt.close();
+				}
+			}catch (Exception e) {}
+		}
+		try {
+			conn.close();
+		}catch(SQLException e) {}
 	}
 	public void updatecoin(int id, int point) {
 		try {
@@ -330,7 +364,7 @@ public class DBA {
 				user.setRank(rs.getString("직급"));
 				user.setHalfway(rs.getInt("반차"));
 				user.setPoint(rs.getInt("포인트"));
-				user.setRank(rs.getString("사진"));
+				user.setImgaddr(rs.getString("사진"));
 			}
 		} catch (SQLException e1) {
 			e1.printStackTrace();
@@ -340,7 +374,8 @@ public class DBA {
 		}catch(SQLException e) {}
 		return user;
 	}
-	public void leaveApplication(int id,Date d) {
+	public int leaveApplication(int id,Date d) {
+		int result=0;
 		try {
 			System.out.println("db로딩중");
 			conn=DriverManager.getConnection(dburl, dbUser, dbpw);
@@ -356,7 +391,7 @@ public class DBA {
 			pstmt.setInt(2, id);
 			
 			
-			int result= pstmt.executeUpdate();
+			result= pstmt.executeUpdate();
 			if(result==1) {
 				System.out.println("insert complete");
 			}
@@ -372,6 +407,7 @@ public class DBA {
 		try {
 			conn.close();
 		}catch(SQLException e) {}
+		return result;
 	}
 	
 	// 상점 데이터 설정

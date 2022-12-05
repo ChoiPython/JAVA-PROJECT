@@ -13,6 +13,7 @@ public class MyUser extends JFrame implements ActionListener{
 	private JButton vacation;
 	private User user;
 	private JButton refresh;
+	private ImageIcon img;
 	
     Calendar calendar1 = Calendar.getInstance();
     int hour = calendar1.get(Calendar.HOUR_OF_DAY);
@@ -28,7 +29,11 @@ public class MyUser extends JFrame implements ActionListener{
 		Container c = getContentPane();
 		c.setLayout(null);
 		c.setBackground(SystemColor.LIGHT_GRAY);
-		ImageIcon img = new ImageIcon(this.getClass().getResource("/employee.jpg"));
+		if(user.getImgaddr()==null) {
+			img = new ImageIcon(this.getClass().getResource("/employee.jpg"));
+		}else {
+			img = new ImageIcon(user.getImgaddr());
+		}
 		JLabel imageLabel = new JLabel(img, JLabel.CENTER);
 		imageLabel.setBounds(30, 30, 150, 187);
 		c.add(imageLabel);
@@ -148,6 +153,11 @@ public class MyUser extends JFrame implements ActionListener{
 			uposition.setText(user.getRank());
 			udepartment.setText(user.getDepart());
 			upoint.setText(user.getPoint()+"");
+			if(user.getImgaddr()==null) {
+				img = new ImageIcon(this.getClass().getResource("/employee.jpg"));
+			}else {
+				img = new ImageIcon(user.getImgaddr());
+			}
 		}
 	}
 }
