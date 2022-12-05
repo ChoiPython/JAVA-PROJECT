@@ -8,7 +8,7 @@ public class DBA {
 	private Connection conn;
 	//DB 접속을 위한 주소, 아이디, 비밀번호
 	private static String dburl= "jdbc:mysql://localhost:3306/test?serverTimezone=UTC";;
-	private static String dbUser= "testjju";
+	private static String dbUser= "test";
 	private static String dbpw="1234";
 	
 	
