@@ -83,15 +83,24 @@ public class adminGui extends JFrame implements ActionListener {
 
 
         YearBox = new JComboBox();
-        YearBox.setModel(new DefaultComboBoxModel(new String[]{"2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030"}));
         YearBox.setBounds(47, 103, 90, 23);
+        YearBox.setModel(new DefaultComboBoxModel(new String[]{"2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030"}));
         getContentPane().add(YearBox);
 
 
         MonthBox = new JComboBox();
-        MonthBox.setModel(new DefaultComboBoxModel(new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}));
         MonthBox.setBounds(150, 103, 54, 23);
+        MonthBox.setModel(new DefaultComboBoxModel(new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}));
         getContentPane().add(MonthBox);
+        
+        //퇴근 버튼
+        JButton getoffBtn = new JButton("퇴근");
+        getoffBtn.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        getoffBtn.setBounds(650, 495, 67, 23);
+        getContentPane().add(getoffBtn);
 
         setSize(800, 600);
         setVisible(true);
