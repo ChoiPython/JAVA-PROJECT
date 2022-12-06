@@ -27,18 +27,28 @@ public class UserShop extends JFrame{
 		
 		// 이미지
 		// 휴가권 - 1
-		ImageIcon vacationImage = new ImageIcon(this.getClass().getResource("/휴가권.jpg"));
+		ImageIcon vicon = new ImageIcon(this.getClass().getResource("/휴가권.jpg"));
+		Image getvimg = vicon.getImage();
+		Image vimg = getvimg.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+		ImageIcon vacationImage = new ImageIcon(vimg);
 		
 		// 반차 - 0.5
-		ImageIcon halfvationimage = new ImageIcon(this.getClass().getResource("/휴가권.jpg"));
+		ImageIcon hicon = new ImageIcon(this.getClass().getResource("/휴가권.jpg"));
+		Image gethimg = vicon.getImage();
+		Image himg = getvimg.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+		ImageIcon halfvationimage = new ImageIcon(himg);
 		
 		//랜덤박스 
-		ImageIcon randomboxImage = new ImageIcon(this.getClass().getResource("/선물상자.jpg"));
+		ImageIcon ricon = new ImageIcon(this.getClass().getResource("/선물상자.jpg"));
+		Image getrimg = ricon.getImage();
+		Image rimg = getrimg.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+		ImageIcon randomboxImage = new ImageIcon(rimg);
+		
 		
 		// 타이틀 라벨 생성
 		JLabel titleJLabel = new JLabel("사용자 - 상점");
 		SetFont(titleJLabel, 30);
-		titleJLabel.setBounds(400, 5, 200, 80);
+		titleJLabel.setBounds(300, 5, 200, 80);
 		// 추가
 		usershoppane.add(titleJLabel);
 		
@@ -53,22 +63,22 @@ public class UserShop extends JFrame{
 		usershoppane.add(randomboxLabel);
 		
 		// 이미지 라벨 설정 setBounds(x, y, w, h) margin - 40
-		vacationLabel.setBounds(90, 80, 200, 400);
-		halfvactionJLabel.setBounds(320, 80, 200, 400);		
-		randomboxLabel.setBounds(550, 80, 200, 400);
+		vacationLabel.setBounds(40, 80, 200, 200);
+		halfvactionJLabel.setBounds(260, 80, 200, 200);		
+		randomboxLabel.setBounds(480, 80, 200, 200);
 		
 		// 물품가격 라벨 생성
 		JLabel vanameLabel = new JLabel("포인트 : " + hprice * 2 + "점");
 		JLabel halfnameLabel = new JLabel("포인트 : " + hprice + "점");
 		JLabel rannameLabel = new JLabel("포인트 :" + rprice + "점");
 		// 물품 라벨 설정
-		vanameLabel.setBounds(120, 555, 150, 50);
+		vanameLabel.setBounds(70, 355, 150, 50);
 		SetFont(vanameLabel, 20);
 		
-		halfnameLabel.setBounds(350, 555, 150, 50);
+		halfnameLabel.setBounds(290, 355, 150, 50);
 		SetFont(halfnameLabel, 20);
 		
-		rannameLabel.setBounds(590, 555, 150, 50);
+		rannameLabel.setBounds(510, 355, 150, 50);
 		SetFont(rannameLabel, 20);
 		//추가
 		usershoppane.add(vanameLabel);
@@ -79,7 +89,7 @@ public class UserShop extends JFrame{
 		// 포인트 현황 라벨
 		coinLabel = new JLabel("포인트 : " + user.getPoint());
 		// 포인트 라벨 설정
-		coinLabel.setBounds(790, 100, 200,100);
+		coinLabel.setBounds(700, 100, 150,100);
 		SetFont(coinLabel, 20);
 		// 추가
 		usershoppane.add(coinLabel);
@@ -93,15 +103,15 @@ public class UserShop extends JFrame{
 		
 //		vacationButton.setContentAreaFilled(false); - 배경 유무
 		// 구매 버튼 설정
-		vacationButton.setBounds(110, 500, 150, 50);
+		vacationButton.setBounds(65, 300, 150, 50);
 		SetBack(vacationButton);
 		SetDefBut(vacationButton, true, false, false);
 
-		halfvacationButton.setBounds(340, 500, 150, 50);
+		halfvacationButton.setBounds(285, 300, 150, 50);
 		SetBack(halfvacationButton);
 		SetDefBut(halfvacationButton, true, false, false);
 
-		randomBoxButton.setBounds(575, 500, 150, 50);
+		randomBoxButton.setBounds(505, 300, 150, 50);
 		SetBack(randomBoxButton);
 		SetDefBut(randomBoxButton, true, false, false);
 
@@ -132,7 +142,7 @@ public class UserShop extends JFrame{
 		SetFont(closeButton, 14);
 		SetDefBut(closeButton, true, false, false);
 //		closeButton.setForeground(Color.white); // 글자 색상
-		closeButton.setBounds(880, 600, 80, 40);
+		closeButton.setBounds(740, 400, 80, 40);
 		closeButton.addActionListener(new CloseFrame());
 		// 닫기 버튼 추가
 		usershoppane.add(closeButton);
@@ -145,7 +155,7 @@ public class UserShop extends JFrame{
 		
 		
 		// 창 사이즈 및 보임 여부
-		setSize(1000, 700);
+		setSize(860, 500);
 		setVisible(true);
 		
 		// 창이 가운데 나오게 함.
