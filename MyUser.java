@@ -10,11 +10,13 @@ public class MyUser extends JFrame implements ActionListener {
     private JLabel uposition;
     private JLabel udepartment;
     private JLabel upoint;
+    private JLabel uhalf;
     private JButton store;
     private JButton vacation;
     private User user;
     private JButton refresh;
     private ImageIcon img;
+    private JButton logout;
 
     Calendar calendar1 = Calendar.getInstance();
     int hour = calendar1.get(Calendar.HOUR_OF_DAY);
@@ -55,66 +57,84 @@ public class MyUser extends JFrame implements ActionListener {
         JLabel time = new JLabel(Am_Pm + " " + hour + ":" + min_str);
         time.setFont(new Font("맑은 고딕", Font.BOLD, 20));
         time.setSize(350, 50);
-        time.setLocation(200, 20);
+        time.setLocation(220, 0);
         c.add(time);
 
         JLabel name = new JLabel("이름 |");
         name.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
         name.setSize(133, 50);
-        name.setLocation(200, 70);
+        name.setLocation(210, 40);
         c.add(name);
         uname = new JLabel(user.getName());
         uname.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
         uname.setSize(133, 50);
-        uname.setLocation(260, 70);
+        uname.setLocation(270, 40);
         c.add(uname);
 
         JLabel position = new JLabel("직급 |");
         position.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
         position.setSize(100, 50);
-        position.setLocation(200, 100);
+        position.setLocation(210, 70);
         c.add(position);
         uposition = new JLabel(user.getRank());
         uposition.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
         uposition.setSize(100, 50);
-        uposition.setLocation(260, 100);
+        uposition.setLocation(270, 70);
         c.add(uposition);
 
         JLabel department = new JLabel("부서 |");
         department.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
         department.setSize(133, 50);
-        department.setLocation(200, 130);
+        department.setLocation(210, 100);
         c.add(department);
         udepartment = new JLabel(user.getDepart());
         udepartment.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
         udepartment.setSize(133, 50);
-        udepartment.setLocation(260, 130);
+        udepartment.setLocation(270, 100);
         c.add(udepartment);
 
-        JLabel point = new JLabel("상벌점 |");
+        JLabel point = new JLabel("포인트 |");
         point.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
         point.setSize(150, 50);
-        point.setLocation(180, 160);
+        point.setLocation(190, 130);
         c.add(point);
         upoint = new JLabel(user.getPoint() + "");
         upoint.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
         upoint.setSize(150, 50);
-        upoint.setLocation(260, 160);
+        upoint.setLocation(270, 130);
         c.add(upoint);
+        
+        JLabel half = new JLabel("반차 |");
+		half.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
+		half.setSize(133, 50);
+		half.setLocation(210, 160);
+		c.add(half);
+		uhalf = new JLabel(user.getHalfway()+"");
+		uhalf.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
+		uhalf.setSize(150, 50);
+		uhalf.setLocation(270, 160);
+		c.add(uhalf);
 
         store = new JButton("상점");
         store.setFont(new Font("돋음", Font.PLAIN, 18));
         store.setSize(100, 50);
-        store.setLocation(300, 200);
+        store.setLocation(300, 220);
         store.addActionListener(this);
         c.add(store);
 
         vacation = new JButton("휴가/반차");
         vacation.setFont(new Font("돋음", Font.PLAIN, 18));
         vacation.setSize(150, 50);
-        vacation.setLocation(410, 200);
+        vacation.setLocation(410, 220);
         vacation.addActionListener(this);
         c.add(vacation);
+        
+        logout = new JButton("로그아웃");
+		logout.setFont(new Font("돋음", Font.PLAIN, 10));
+		logout.setSize(100, 30);
+		logout.setLocation(30, 240);
+		logout.addActionListener(this);
+		c.add(logout);
 
         refresh = new JButton("새로고침");
         refresh.setFont(new Font("돋음", Font.PLAIN, 10));
@@ -123,7 +143,7 @@ public class MyUser extends JFrame implements ActionListener {
         refresh.addActionListener(this);
         c.add(refresh);
 
-        setSize(600, 300);
+        setSize(600, 320);
         setVisible(true);
         setLocationRelativeTo(null);    // 화면중간출력
         setResizable(false);            // 크기조절
