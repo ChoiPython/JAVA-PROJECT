@@ -11,13 +11,16 @@ public class UserShop extends JFrame{
 	int[] shopdata = db.GetShop();
 	int rprice = shopdata[1];	// 뽑기 가격
 	private int hprice = shopdata[2]; // 반차 가격 - db로 관리자에서 수정가능하게?
+	private JButton vacationButton;
+	private JButton halfvacationButton;
+	private JButton randomBoxButton;
 	
 	public UserShop(User u) {
 		user = u;
 		setTitle("상점");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		usershoppane = getContentPane();
-		
+		usershoppane.setBackground(Color.LIGHT_GRAY);
 		
 		usershoppane.setLayout(null);
 			
@@ -71,14 +74,14 @@ public class UserShop extends JFrame{
 		JLabel vanameLabel = new JLabel("포인트 : " + hprice * 2 + "점");
 		JLabel halfnameLabel = new JLabel("포인트 : " + hprice + "점");
 		JLabel rannameLabel = new JLabel("포인트 :" + rprice + "점");
-		// 물품 라벨 설정
-		vanameLabel.setBounds(70, 355, 150, 50);
+		// 물품 라벨  폰트 & 크기 & 위치 설정
+		vanameLabel.setBounds(80, 355, 150, 50);
 		SetFont(vanameLabel, 20);
 		
-		halfnameLabel.setBounds(290, 355, 150, 50);
+		halfnameLabel.setBounds(300, 355, 150, 50);
 		SetFont(halfnameLabel, 20);
 		
-		rannameLabel.setBounds(510, 355, 150, 50);
+		rannameLabel.setBounds(520, 355, 150, 50);
 		SetFont(rannameLabel, 20);
 		//추가
 		usershoppane.add(vanameLabel);
@@ -93,12 +96,12 @@ public class UserShop extends JFrame{
 		SetFont(coinLabel, 20);
 		// 추가
 		usershoppane.add(coinLabel);
-
+		
 		
 		// 구매 버튼
-		JButton vacationButton= new JButton("휴가 - 구매");
-		JButton halfvacationButton = new JButton("반차 - 구매");
-		JButton randomBoxButton = new JButton("뽑기 - 구매");
+		vacationButton= new JButton();
+		halfvacationButton = new JButton();
+		randomBoxButton = new JButton();
 		
 		
 //		vacationButton.setContentAreaFilled(false); - 배경 유무
@@ -114,7 +117,20 @@ public class UserShop extends JFrame{
 		randomBoxButton.setBounds(505, 300, 150, 50);
 		SetBack(randomBoxButton);
 		SetDefBut(randomBoxButton, true, false, false);
-
+		
+		// 버튼 이미지 설정
+		ImageIcon buyimg = new ImageIcon(this.getClass().getResource("/구매버튼이미지.png"));
+		Image getbuyimg = buyimg.getImage();
+		getbuyimg = getbuyimg.getScaledInstance(150, 50, Image.SCALE_SMOOTH);
+		ImageIcon setbuyimg = new ImageIcon(getbuyimg);
+		vacationButton.setIcon(setbuyimg);
+		vacationButton.setContentAreaFilled(false);
+		
+		halfvacationButton.setIcon(setbuyimg);
+		halfvacationButton.setContentAreaFilled(false);
+		
+		randomBoxButton.setIcon(setbuyimg);
+		randomBoxButton.setContentAreaFilled(false);
 		
 		// 구매 버튼 이벤트 설정
 		// 휴가
@@ -146,6 +162,15 @@ public class UserShop extends JFrame{
 		closeButton.addActionListener(new CloseFrame());
 		// 닫기 버튼 추가
 		usershoppane.add(closeButton);
+		
+		// 닫기 버튼 이미지
+//		ImageIcon closeimg = new ImageIcon(this.getClass().getResource("/닫기버튼.png"));
+//		Image getcloseimg = closeimg.getImage();
+//		getcloseimg = getcloseimg.getScaledInstance(80, 40, Image.SCALE_SMOOTH);
+//		ImageIcon setcloseimg = new ImageIcon(getcloseimg);
+//		closeButton.setIcon(setcloseimg);
+//		closeButton.setContentAreaFilled(false);
+		
 
 		
 		// 폰트설정
@@ -179,13 +204,12 @@ public class UserShop extends JFrame{
 		// 구매 조건
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JButton button = (JButton) e.getSource();
 			coin = user.getPoint();
 			int buy = 0;	// 구매 개수
 			int select;
 			
 			try {
-				String check = JOptionPane.showInputDialog(usershoppane, "몇개 구매하시겠습니까?", "구매개수", JOptionPane.NO_OPTION);
+				String check = JOptionPane.showInputDialog(usershoppane, "몇개 구매하시겠습니까?", "뽑기 구매", JOptionPane.NO_OPTION);
 				// 공백예외
 				if(check.equals("")) {
 					JOptionPane.showMessageDialog(usershoppane, "공백입력불가 / 숫자를 입력해주세요!", "구매실패", JOptionPane.ERROR_MESSAGE);
@@ -227,9 +251,8 @@ public class UserShop extends JFrame{
 					coinLabel.setText("포인트 : " + user.getPoint());
 				
 					// 카드 뒤집기 이벤트
-					if(button.getText().equals("뽑기 - 구매")) {
-						new RandomChoice(buy, user.getId());
-					}
+					new RandomChoice(buy, user.getId());
+					
 				
 				}
 				
@@ -252,12 +275,19 @@ public class UserShop extends JFrame{
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JButton button = (JButton) e.getSource();
+			String text;
+			if(e.getSource() == halfvacationButton) {
+				text = "반차 구매";
+			}
+			else {
+				text = "휴가 구매";
+			}
+			
 			coin = user.getPoint();
 			int buy = 0;	// 구매 개수
 			
 			try {
-				String check = JOptionPane.showInputDialog(usershoppane, "몇개 구매하시겠습니까?", "구매개수", JOptionPane.NO_OPTION);
+				String check = JOptionPane.showInputDialog(usershoppane, "몇개 구매하시겠습니까?", text, JOptionPane.NO_OPTION);
 				// 공백예외
 				if(check.equals("")) {
 					JOptionPane.showMessageDialog(usershoppane, "공백입력불가 / 숫자를 입력해주세요!", "구매실패", JOptionPane.ERROR_MESSAGE);
@@ -299,7 +329,7 @@ public class UserShop extends JFrame{
 					coinLabel.setText("포인트 : " + user.getPoint());
 				
 					// 반차 구매 이벤트
-					if(button.getText().equals("반차 - 구매")) {
+					if(e.getSource() == halfvacationButton) {
 						// update 반차
 						db.Buyhalf(user.getId(), buy);
 					}
@@ -341,7 +371,7 @@ public class UserShop extends JFrame{
 	}
 	
 	public void SetFont(JLabel label, int size) {
-		Font font = new Font("궁서", Font.BOLD, size);
+		Font font = new Font("Sanserif", Font.BOLD, size);
 		label.setFont(font);
 	}
 
