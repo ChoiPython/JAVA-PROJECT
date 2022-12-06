@@ -1,0 +1,91 @@
+//발표용 -> 발표전 DBA파일에서 아이디, 비번, 데이터베이스 이름 변경하기(db.txt 맨밑에 예시있음)
+아이디 비번 : part23
+
+use part23db;
+
+create table user(
+사원번호 INT(10) not null primary key,
+사원이름 CHAR(12),
+부서 CHAR(12),
+직급 CHAR(12),
+반차 INT,
+포인트 INT,
+사진 CHAR(150)
+);
+
+create table Attendance(
+날짜 date,
+사원번호 int,
+상태 char(10),
+primary key(날짜,사원번호),
+foreign key(사원번호) references user(사원번호)
+);
+
+create table shop(
+뽑기확률 int default 4,
+뽑기가격 int default 1,
+반차가격 int default 18
+);
+
+
+
+
+//사원 데이터
+insert into user values(0,'admin',NULL,NULL,NULL,NULL,NULL);
+
+insert user into values(20212950,'이창건','자바','학생',12,34,null);
+insert user into values(20172261,'정지운','자바','학생',12,34,null);
+insert user into values(20212877,'이형록','자바','학생',12,34,null);
+insert user into values(20212503,'최주영','자바','학생',12,34,null);
+insert user into values(20212934,'최원석','자바','학생',12,34,null);
+
+
+
+//출근 데이터
+insert Attendance into values('2022-12-01', 20212950, '출근');
+insert Attendance into values('2022-12-01', 20172261, '지각');
+insert Attendance into values('2022-12-01', 20212877, '출근');
+insert Attendance into values('2022-12-01', 20212503, '출근');
+insert Attendance into values('2022-12-01', 20212934, '출근');
+
+insert Attendance into values('2022-12-02', 20212950, '출근');
+insert Attendance into values('2022-12-02', 20172261, '지각');
+insert Attendance into values('2022-12-02', 20212877, '출근');
+insert Attendance into values('2022-12-02', 20212503, '출근');
+insert Attendance into values('2022-12-02', 20212934, '지각');
+
+insert Attendance into values('2022-12-03', 20212950, '출근');
+insert Attendance into values('2022-12-03', 20172261, '출근');
+insert Attendance into values('2022-12-03', 20212877, '출근');
+insert Attendance into values('2022-12-03', 20212503, '결근');
+insert Attendance into values('2022-12-03', 20212934, '출근');
+
+insert Attendance into values('2022-12-04', 20212950, '출근');
+insert Attendance into values('2022-12-04', 20172261, '출근');
+insert Attendance into values('2022-12-04', 20212877, '출근');
+insert Attendance into values('2022-12-04', 20212503, '출근');
+insert Attendance into values('2022-12-04', 20212934, '출근');
+
+insert Attendance into values('2022-12-05', 20212950, '출근');
+insert Attendance into values('2022-12-05', 20172261, '출근');
+insert Attendance into values('2022-12-05', 20212877, '출근');
+insert Attendance into values('2022-12-05', 20212503, '출근');
+insert Attendance into values('2022-12-05', 20212934, '출근');
+
+insert Attendance into values('2022-12-06', 20212950, '출근');
+insert Attendance into values('2022-12-06', 20172261, '출근');
+insert Attendance into values('2022-12-06', 20212877, '출근');
+insert Attendance into values('2022-12-06', 20212503, '출근');
+insert Attendance into values('2022-12-06', 20212934, '출근');
+
+insert Attendance into values('2022-12-07', 20212950, '출근');
+insert Attendance into values('2022-12-07', 20172261, '결근');
+insert Attendance into values('2022-12-07', 20212877, '출근');
+insert Attendance into values('2022-12-07', 20212503, '출근');
+insert Attendance into values('2022-12-07', 20212934, '출근');
+
+insert Attendance into values('2022-12-08', 20212950, '출근');
+insert Attendance into values('2022-12-08', 20172261, '출근');
+insert Attendance into values('2022-12-08', 20212877, '출근');
+insert Attendance into values('2022-12-08', 20212503, '출근');
+insert Attendance into values('2022-12-08', 20212934, '출근');
