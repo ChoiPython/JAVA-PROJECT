@@ -2,9 +2,12 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableModel;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class adminGui extends JFrame implements ActionListener {
@@ -18,6 +21,8 @@ public class adminGui extends JFrame implements ActionListener {
     JScrollPane scroll;
     JComboBox YearBox;
     JComboBox MonthBox;
+
+    private LocalDate nowDate;
 
     public adminGui(ArrayList<User2> list) {
         setTitle("관리자");
@@ -64,11 +69,16 @@ public class adminGui extends JFrame implements ActionListener {
         String[][] s = new String[100][7];//= {{null,null,null,null,null,null,null}};
         for (int i = 0; i < list.size(); i++) {
             for (int j = 0; j < 7; j++) {
-                if (j == 0) s[i][j] = list.get(i).getId() + "";
-                if (j == 1) s[i][j] = list.get(i).getName();
-                if (j == 2) s[i][j] = list.get(i).getAttendance() + "";
-                if (j == 3) s[i][j] = list.get(i).getTardy() + "";
-                if (j == 4) s[i][j] = list.get(i).getAbsence() + "";
+                if (j == 0)
+                    s[i][j] = list.get(i).getId() + "";
+                if (j == 1)
+                    s[i][j] = list.get(i).getName();
+                if (j == 2)
+                    s[i][j] = list.get(i).getAttendance() + "";
+                if (j == 3)
+                    s[i][j] = list.get(i).getTardy() + "";
+                if (j == 4)
+                    s[i][j] = list.get(i).getAbsence() + "";
             }
         }
 
@@ -81,23 +91,23 @@ public class adminGui extends JFrame implements ActionListener {
         scroll.setBounds(40, 172, 580, 358);
         contentpane.add(scroll);
 
-
         YearBox = new JComboBox();
         YearBox.setBounds(47, 103, 90, 23);
-        YearBox.setModel(new DefaultComboBoxModel(new String[]{"2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030"}));
+        YearBox.setModel(new DefaultComboBoxModel(
+            new String[] {"2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030"}));
         getContentPane().add(YearBox);
-
 
         MonthBox = new JComboBox();
         MonthBox.setBounds(150, 103, 54, 23);
-        MonthBox.setModel(new DefaultComboBoxModel(new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}));
+        MonthBox.setModel(
+            new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}));
         getContentPane().add(MonthBox);
-        
+
         //퇴근 버튼
         JButton getoffBtn = new JButton("퇴근");
-        getoffBtn.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        	}
+        getoffBtn.addActionListener(e -> {
+            nowDate = LocalDate.now();
+            System.out.println("nowDate = " + nowDate);
         });
         getoffBtn.setBounds(650, 495, 67, 23);
         getContentPane().add(getoffBtn);
@@ -106,9 +116,16 @@ public class adminGui extends JFrame implements ActionListener {
         setVisible(true);
         setLocationRelativeTo(null);    // 화면중간출력
         setResizable(false);            // 크기조절
+
+        YearBox.addActionListener(e -> {
+            refreshBtn.doClick();
+        });
+        MonthBox.addActionListener(e -> {
+            refreshBtn.doClick();
+        });
     }
 
-    private void tableSetting(String[] column, String[][] s) {   //table 선택가능하지만 수정불가 
+    private void tableSetting(String[] column, String[][] s) {   //table 선택가능하지만 수정불가
         TableModel model = new DefaultTableModel(s, column) {
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -125,15 +142,16 @@ public class adminGui extends JFrame implements ActionListener {
         if (e.getSource() == insertBtn) {
             new RegistGui();
         } else if (e.getSource() == viewBtn) {
-//            ViewGui viewgui = new ViewGui(); // 무조건 화면 열림
-            if (!users.getSelectionModel().isSelectionEmpty() && users.getSelectedRows().length == 1) { //users 테이블 1개만 선택
+            //            ViewGui viewgui = new ViewGui(); // 무조건 화면 열림
+            if (!users.getSelectionModel().isSelectionEmpty()
+                && users.getSelectedRows().length == 1) { //users 테이블 1개만 선택
                 int row = users.getSelectedRow();
                 DBA db = new DBA();
                 if (users.getModel().getValueAt(row, 0) == null) {
                     JOptionPane.showMessageDialog(null, "빈데이터는 조회할수없습니다.", "ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                User user = db.selectIdData(Integer.parseInt((String) users.getModel().getValueAt(row, 0)));
+                User user = db.selectIdData(Integer.parseInt((String)users.getModel().getValueAt(row, 0)));
                 ViewGui viewgui = new ViewGui(user);
                 viewgui.setUser(user);
                 viewgui.setVisible(true);

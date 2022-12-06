@@ -32,38 +32,34 @@ public class ViewGui extends JFrame {
 
 
         JButton updateBtn = new JButton("수정");
-        updateBtn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	dispose();
-                ModifyGui md = new ModifyGui(u);
-                md.setVisible(true);
-                new ViewGui(u).setUser(u);
-            }
+        updateBtn.addActionListener(e -> {
+            dispose();
+            ModifyGui md = new ModifyGui(u);
+            md.setVisible(true);
+            new ViewGui(u).setUser(u);
         });
         updateBtn.setBounds(450, 160, 90, 30);
         contentPane.add(updateBtn);
 
         JButton deleteBtn = new JButton("삭제");
-        deleteBtn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == deleteBtn) {
-                	int delid = u.getId();
-                	DBA db = new DBA();               	
-                	int result = JOptionPane.showConfirmDialog(null, "삭제하시겠습니까?", "삭제", JOptionPane.YES_NO_OPTION);
-                	// 삭제
-                	if(result == JOptionPane.YES_OPTION) {
-                		int res=db.deleteData(delid);
-                		if(res==1) {
-                			JOptionPane.showMessageDialog(null, "성공적으로 삭제되었습니다.");
-                			dispose(); 
-                		}
-                		else
-                			JOptionPane.showMessageDialog(null, "삭제 실패");
-                		 
+        deleteBtn.addActionListener(e -> {
+            if (e.getSource() == deleteBtn) {
+                int delid = u.getId();
+                DBA db = new DBA();
+                int result = JOptionPane.showConfirmDialog(null, "삭제하시겠습니까?", "삭제", JOptionPane.YES_NO_OPTION);
+                // 삭제
+                if(result == JOptionPane.YES_OPTION) {
+                    int res=db.deleteData(delid);
+                    if(res==1) {
+                        JOptionPane.showMessageDialog(null, "성공적으로 삭제되었습니다.");
+                        dispose();
+                    }
+                    else
+                        JOptionPane.showMessageDialog(null, "삭제 실패");
+
 //                		System.exit(0);
-                		
-                		
-                	}
+
+
                 }
             }
         });
@@ -124,7 +120,8 @@ public class ViewGui extends JFrame {
 	      if(user.getImgaddr()==null) {
 	    	  icon = new ImageIcon(this.getClass().getResource("/employee.jpg"));
 			}else {
-				icon = new ImageIcon(user.getImgaddr());
+				icon =  new ImageIcon(
+                    new ImageIcon(user.getImgaddr()).getImage().getScaledInstance(156, 161, Image.SCALE_SMOOTH));
 			}
 	      imageLabel.setIcon(icon);
 
