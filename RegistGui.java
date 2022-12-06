@@ -1,6 +1,10 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.lang.reflect.Field;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -31,11 +35,14 @@ public class RegistGui extends JFrame {
     private JTextField pointTextField;    // 상벌점->포인트로 변경
     private JTextField halfwayTextField;    // 반차
 
+    private final List<JTextField> fieldList;
+
     public static void main(String[] args) {
         new RegistGui();
     }
 
     public RegistGui() {
+
         setTitle("사원정보 등록창"); //폼 제목
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 679, 440);
@@ -51,6 +58,7 @@ public class RegistGui extends JFrame {
         titleLabel.setForeground(Color.BLUE);
         titleLabel.setFont(new Font("궁서체", Font.BOLD | Font.ITALIC, 30));
         contentPane.add(titleLabel);
+
 
         // 사원번호 라벨
         JLabel idLabel = new JLabel("사번");
@@ -86,36 +94,42 @@ public class RegistGui extends JFrame {
         idTextField = new JTextField();
         idTextField.setBounds(257, 83, 360, 21);
         contentPane.add(idTextField);
+        idTextField.setName("사원번호");
         idTextField.setColumns(10);
 
         // 사원이름 텍필
         nameTextField = new JTextField();
         nameTextField.setBounds(257, 128, 360, 21);
         nameTextField.setColumns(10);
+        nameTextField.setName("사원이름");
         contentPane.add(nameTextField);
 
         // 부서 텍필
         departTextField = new JTextField();
         departTextField.setBounds(257, 176, 360, 21);
         departTextField.setColumns(10);
+        departTextField.setName("부서");
         contentPane.add(departTextField);
 
         // 직급 텍필
         rankTextField = new JTextField();
         rankTextField.setBounds(257, 227, 360, 21);
         rankTextField.setColumns(10);
+        rankTextField.setName("직급");
         contentPane.add(rankTextField);
 
         // 반차 텍필
         halfwayTextField = new JTextField();
         halfwayTextField.setBounds(257, 274, 360, 21);
         halfwayTextField.setColumns(10);
+        halfwayTextField.setName("반차");
         contentPane.add(halfwayTextField);
 
         // 상벌점 텍필 ->포인트 텍필
         pointTextField = new JTextField();
         pointTextField.setBounds(257, 320, 360, 21);
         pointTextField.setColumns(10);
+        pointTextField.setName("포인트");
         contentPane.add(pointTextField);
 
         JLabel imgLabel = new JLabel("");
@@ -129,34 +143,40 @@ public class RegistGui extends JFrame {
         selecimg.setBounds(61, 279, 91, 30);
         contentPane.add(selecimg);
 
+        fieldList=Arrays.asList(idTextField,nameTextField,departTextField,rankTextField,pointTextField,halfwayTextField);
         // 등록 버튼
         JButton registButton = new JButton("등록");
         registButton.setBounds(526, 361, 91, 30);
-        registButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == registButton) {
-                    DBA db = new DBA();
-                    int id, halfway, point;
-                    String name, depart, rank;
-                    id = Integer.parseInt(idTextField.getText());
-                    halfway = Integer.parseInt(halfwayTextField.getText());
-                    point = Integer.parseInt(pointTextField.getText());
-                    name = nameTextField.getText();
-                    depart = departTextField.getText();
-                    rank = rankTextField.getText();
-                    try {
-                        db.insertData(id, name, depart, rank, halfway, point, imgaddr);
-                    } catch (RuntimeException ex) {
-                        Throwable cause = ex.getCause();
-                        if (cause instanceof SQLIntegrityConstraintViolationException) {
-                            JOptionPane.showMessageDialog(null, "이미 존재하는 사원번호 입니다.");
-                        }
-                        return;
-                    }
-                    JOptionPane.showMessageDialog(null, "등록되었습니다"); //버튼1 클릭시 "등록되었습니다" 메세지창 출력
+        registButton.addActionListener(e -> {
+            if (e.getSource() == registButton) {
+                List<String> fieldNames = fieldList.stream()
+                    .filter(i -> i.getText().equals("")).map(Component::getName)
+                    .collect(Collectors.toList());
+                if (fieldNames.size() > 0) {
+                    JOptionPane.showMessageDialog(null, String.join(",",fieldNames)+" 필드값이 비어있습니다.", "로그인 실패", JOptionPane.WARNING_MESSAGE);
+                    return;
                 }
-                dispose();
+                DBA db = new DBA();
+                int id, halfway, point;
+                String name, depart, rank;
+                id = Integer.parseInt(idTextField.getText());
+                halfway = Integer.parseInt(halfwayTextField.getText());
+                point = Integer.parseInt(pointTextField.getText());
+                name = nameTextField.getText();
+                depart = departTextField.getText();
+                rank = rankTextField.getText();
+                try {
+                    db.insertData(id, name, depart, rank, halfway, point, imgaddr);
+                } catch (RuntimeException ex) {
+                    Throwable cause = ex.getCause();
+                    if (cause instanceof SQLIntegrityConstraintViolationException) {
+                        JOptionPane.showMessageDialog(null, "이미 존재하는 사원번호 입니다.");
+                    }
+                    return;
+                }
+                JOptionPane.showMessageDialog(null, "등록되었습니다"); //버튼1 클릭시 "등록되었습니다" 메세지창 출력
             }
+            dispose();
         });
         contentPane.add(registButton);
 
