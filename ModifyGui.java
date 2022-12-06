@@ -137,13 +137,16 @@ public class ModifyGui extends JFrame {
             	String rank = rankField.getText();
             	int halfway = user.getHalfway();
             	int point = Integer.parseInt(pointField.getText());
-            	
-//            	String imgaddr = 
+            	String imgaddr;
+            	if(imageIcon!=null) {
+            		imgaddr = imageIcon.toString();
+            	}
+            	else imgaddr = user.getImgaddr();
             	// 수정 진행
-            	result=db.updateData(id, name, depart, rank, halfway, point, imageIcon.toString());
+            	result=db.updateData(id, name, depart, rank, halfway, point, imgaddr);
             	// user set
             	user.setAll(name, depart, rank, halfway, point);
-            	user.setImgaddr(imageIcon.toString());
+            	user.setImgaddr(imgaddr);
             	if(result==1)
             		JOptionPane.showMessageDialog(null,"수정되었습니다");  //버튼1 클릭시 "등록되었습니다" 메세지창 출력
             	else
