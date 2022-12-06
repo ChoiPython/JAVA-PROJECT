@@ -28,7 +28,8 @@ public class MyUser extends JFrame implements ActionListener {
     public MyUser(User u) {
         user = u;
         setTitle("이용자 화면");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // x로 안꺼지게
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         Container c = getContentPane();
         c.setLayout(null);
         c.setBackground(SystemColor.LIGHT_GRAY);
@@ -142,6 +143,7 @@ public class MyUser extends JFrame implements ActionListener {
         refresh.setLocation(500, 3);
         refresh.addActionListener(this);
         c.add(refresh);
+        
 
         setSize(600, 320);
         setVisible(true);
@@ -174,5 +176,10 @@ public class MyUser extends JFrame implements ActionListener {
                 img = new ImageIcon(user.getImgaddr());
             }
         }
+        else if (e.getSource() == logout)
+        {
+        	System.exit(0);
+        }
     }
+    
 }
