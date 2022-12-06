@@ -4,6 +4,8 @@ import java.awt.event.*;
 import java.sql.Date;
 import java.util.ArrayList;
 
+
+
 public class Login extends JFrame implements ActionListener {
 	DBA dba=new DBA();	// db 생성
 	private JTextField idtextField;	// id 입력 박스
@@ -75,15 +77,19 @@ public class Login extends JFrame implements ActionListener {
 		User user=new User();
 		JButton b=(JButton)e.getSource();
 		if(pwtextField.getText().equals("")||idtextField.getText().equals("")) {
-			JOptionPane.showMessageDialog(null, "아이디 또는 비밀번호가 다릅니다.","로그인 실패",JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, "필드값이 비어있습니다.","로그인 실패",JOptionPane.WARNING_MESSAGE);
 		}
 		else {
+			if (!isNumeric(pwtextField.getText())) {
+				JOptionPane.showMessageDialog(null, "비밀번호는 숫자로만 입력해주세요","로그인 실패",JOptionPane.WARNING_MESSAGE);
+				return;
+			}
 			user=dba.login(pwtextField.getText(),idtextField.getText());
-			
+
 			if(user.getName()==null||Integer.toString(user.getId())==null) {
 				JOptionPane.showMessageDialog(null, "아이디 또는 비밀번호가 다릅니다.","로그인 실패",JOptionPane.WARNING_MESSAGE);
 			}
-			
+
 			else if(user.getId()==0&&user.getName().equals("admin")) {
 				//user=dba.login(textField_1.getText(),textField.getText());
 				ArrayList<User2> list=new ArrayList<>();
@@ -92,7 +98,7 @@ public class Login extends JFrame implements ActionListener {
 				this.dispose();
 				adminGui adgui = new adminGui(list);
 			}
-			
+
 			else if (Integer.toString(user.getId())!=null) {
 				//user=dba.login(textField_1.getText(),textField.getText());
 				this.dispose();
@@ -104,10 +110,29 @@ public class Login extends JFrame implements ActionListener {
 			}
 		}
 	}
-	
+
+
+	public static boolean isNumeric(String str) {
+		try {
+			Integer.parseInt(str);
+			return true;
+		} catch(NumberFormatException e){
+			return false;
+		}
+	}
 	
 	public static void main(String args[]) {
 		// 로그인 화면
-		new Login("로그인창", 500, 500, true);
+		Login login = new Login("로그인창", 500, 500, true);
+		login.idtextField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER){
+					login.pwtextField.requestFocus();
+				}
+			}
+		});
 	}
 }
+
+

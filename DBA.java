@@ -105,43 +105,45 @@ public class DBA {
 		return user;
 	}
 	//유저를 추가 : 관리자 페이지의 추가에 들어갈 예정, 유저 클래스의 필드의 모든 값을 입력받는다.
-	public void insertData(int id,String name, String depart, String rank, int halfway, int point,String imgaddr) {
-		try {
-			System.out.println("db로딩중");
-			conn=DriverManager.getConnection(dburl, dbUser, dbpw);
-		}catch(Exception e) {
-			System.out.println("db로딩 실패");
-		}
-		String sql="insert into user values(?,?,?,?,?,?,?)";
-		PreparedStatement pstmt=null;
-		
-		try {
-			pstmt=conn.prepareStatement(sql);
-			pstmt.setInt(1, id);
-			pstmt.setString(2, name);
-			pstmt.setString(3, depart);
-			pstmt.setString(4, rank);
-			pstmt.setInt(5, halfway);
-			pstmt.setInt(6, point);
-			pstmt.setString(7, imgaddr);
-			
-			int result= pstmt.executeUpdate();
-			if(result==1) {
-				System.out.println("insert complete");
-			}
-		}catch(Exception e) {
-			System.out.println("insert failed");
-		}finally {
-			try {
-				if(pstmt!=null && !pstmt.isClosed()) {
-					pstmt.close();
-				}
-			}catch (Exception e) {}
-		}
-		try {
-			conn.close();
-		}catch(SQLException e) {}
-	}
+	 public void insertData(int id,String name, String depart, String rank, int halfway, int point,String imgaddr) {
+	      try {
+	         System.out.println("db로딩중");
+	         conn=DriverManager.getConnection(dburl, dbUser, dbpw);
+	      }catch(Exception e) {
+	         System.out.println("db로딩 실패");
+	      }
+	      String sql="insert into user values(?,?,?,?,?,?,?)";
+	      PreparedStatement pstmt=null;
+	      
+	      try {
+	         pstmt=conn.prepareStatement(sql);
+	         pstmt.setInt(1, id);
+	         pstmt.setString(2, name);
+	         pstmt.setString(3, depart);
+	         pstmt.setString(4, rank);
+	         pstmt.setInt(5, halfway);
+	         pstmt.setInt(6, point);
+	         pstmt.setString(7, imgaddr);
+	         
+	         int result= pstmt.executeUpdate();
+	         if(result==1) {
+	            System.out.println("insert complete");
+	         }
+	      }catch(SQLIntegrityConstraintViolationException e) {
+	         throw new RuntimeException(e);
+	      }catch(Exception e) {
+	         System.out.println("insert failed");
+	      }finally {
+	         try {
+	            if(pstmt!=null && !pstmt.isClosed()) {
+	               pstmt.close();
+	            }
+	         }catch (Exception e) {}
+	      }
+	      try {
+	         conn.close();
+	      }catch(SQLException e) {}
+	   }
 	//유저 클래스를 수정 : 관리자 페이지의 수정에 들어갈 예정, id는 수정할 수 없다. id가 수정을 위한 고유한 키이기 때문
 	//추가와 마찬가지로 모든 데이터를 입력 받는다.
 	//수정을 위한 기존 데이터 불러오기 추가하여 폼 불러올때 기본값 입력되게 한 후 변경할 수 있게 하면 될듯
