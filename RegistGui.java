@@ -56,15 +56,16 @@ public class RegistGui extends JFrame {
         contentPane.setLayout(null);
 
         // 제목 라벨
-        JLabel titleLabel = new JLabel("관리자");
-        titleLabel.setBounds(274, 20, 99, 36);
-        titleLabel.setForeground(Color.BLUE);
-        titleLabel.setFont(new Font("궁서체", Font.BOLD | Font.ITALIC, 30));
+        JLabel titleLabel = new JLabel("사용자 등록");
+        titleLabel.setBounds(274, 20, 300, 36);
+//        titleLabel.setForeground(Color.BLUE);
+        titleLabel.setFont(new Font("Sanserif", Font.BOLD, 30));
         contentPane.add(titleLabel);
 
 
         // 사원번호 라벨
         JLabel idLabel = new JLabel("사번");
+        idLabel.setFont(new Font("Sanserif", Font.BOLD, 12));
         idLabel.setBounds(216, 86, 50, 15);
         contentPane.add(idLabel);
 
@@ -224,5 +225,6 @@ public class RegistGui extends JFrame {
 	public void Butset(JButton button) {
 		button.setBackground(Color.black);
 		button.setForeground(Color.white);
+		button.setFocusPainted(false);
 	}
 }

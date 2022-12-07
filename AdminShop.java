@@ -63,6 +63,7 @@ public class AdminShop extends JFrame{
 			// 확률 라벨
 			percentLabel =  new JLabel("뽑기 설정 확률 : " + percent.getValue());
 			percentLabel.setBounds(10, 0, 120, 100);
+			SetFont(percentLabel, 12);
 			adminShoppane.add(percentLabel);
 			
 			// 상품 가격 지정
@@ -91,11 +92,13 @@ public class AdminShop extends JFrame{
 			// 뽑기
 			rpriceLabel =  new JLabel("뽑기 설정 가격 : " + rprice.getValue());
 			rpriceLabel.setBounds(10, 80, 120, 100);
+			SetFont(rpriceLabel, 12);
 			adminShoppane.add(rpriceLabel);
 			
 			// 반차
 			hpriceLabel =  new JLabel("반차 설정 가격 : " + hprice.getValue());
 			hpriceLabel.setBounds(10, 160, 120, 100);
+			SetFont(hpriceLabel, 12);
 			adminShoppane.add(hpriceLabel);
 			
 			
@@ -163,12 +166,12 @@ public class AdminShop extends JFrame{
 
 		// 폰트 설정
 		public void SetFont(JButton button, int size) {
-			Font font = new Font("돋움", Font.BOLD, size);
+			Font font = new Font("Sanserif", Font.BOLD, size);
 			button.setFont(font);
 		}
 		
 		public void SetFont(JLabel label, int size) {
-			Font font = new Font("궁서", Font.BOLD, size);
+			Font font = new Font("Sanserif", Font.BOLD, size);
 			label.setFont(font);
 		}
 
