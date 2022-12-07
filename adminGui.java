@@ -37,7 +37,7 @@ public class adminGui extends JFrame implements ActionListener {
         //검색
         JLabel searchLabel = new JLabel("이름 :");
         searchLabel.setBounds(70, 40, 67, 25);
-        searchLabel.setFont(new Font("", Font.BOLD, 15));
+        searchLabel.setFont(new Font("Sanserif", Font.BOLD, 15));
         contentpane.add(searchLabel);
         searchText = new JTextField();
         searchText.setBounds(130, 40, 280, 25);
@@ -46,8 +46,10 @@ public class adminGui extends JFrame implements ActionListener {
         searchBtn.setBounds(430, 40, 67, 25);
         Butset(searchBtn);
         searchBtn.addActionListener(this);
+        searchBtn.setFont(new Font("Sanserif", Font.BOLD, 15));
         contentpane.add(searchBtn);
         refreshBtn = new JButton("새로고침");
+        searchBtn.setFont(new Font("Sanserif", Font.BOLD, 15));
         refreshBtn.setBounds(530, 40, 90, 25);
         Butset(refreshBtn);
         refreshBtn.addActionListener(this);
@@ -55,6 +57,7 @@ public class adminGui extends JFrame implements ActionListener {
 
         //등록,수정,삭제 버튼, 상점 버튼
         insertBtn = new JButton("등록");
+        insertBtn.setFont(new Font("Sanserif", Font.BOLD, 15));
         insertBtn.setBounds(650, 357, 110, 30);
         Butset(insertBtn);
         insertBtn.addActionListener(this);
@@ -62,12 +65,14 @@ public class adminGui extends JFrame implements ActionListener {
 
         shopBtn = new JButton("상점");
         shopBtn.setBounds(650, 416, 110, 30);
+        shopBtn.setFont(new Font("Sanserif", Font.BOLD, 15));
         Butset(shopBtn);
         shopBtn.addActionListener(this);
         contentpane.add(shopBtn);
 
         viewBtn = new JButton("상세보기");
         viewBtn.setBounds(650, 294, 110, 30);
+        viewBtn.setFont(new Font("Sanserif", Font.BOLD, 15));
         Butset(viewBtn);
         viewBtn.addActionListener(this);
         contentpane.add(viewBtn);
@@ -128,6 +133,7 @@ public class adminGui extends JFrame implements ActionListener {
 
         //퇴근 버튼
         JButton getoffBtn = new JButton("퇴근");
+        getoffBtn.setFont(new Font("Sanserif", Font.BOLD, 12));
         Butset(getoffBtn);
         getoffBtn.addActionListener(e -> {
         	nowDate = LocalDate.now();
@@ -168,6 +174,7 @@ public class adminGui extends JFrame implements ActionListener {
 	public void Butset(JButton button) {
 		button.setBackground(Color.black);
 		button.setForeground(Color.white);
+		button.setFocusPainted(false);
 	}
 
     @Override

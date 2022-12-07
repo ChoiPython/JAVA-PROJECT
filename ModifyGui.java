@@ -62,10 +62,10 @@ public class ModifyGui extends JFrame {
         contentPane.setLayout(null);
 
         // 제목 라벨
-        JLabel titleLabel = new JLabel("관리자");
-        titleLabel.setBounds(274, 20, 99, 36);
-        titleLabel.setForeground(Color.BLUE);
-        titleLabel.setFont(new Font("궁서체", Font.BOLD | Font.ITALIC, 30));
+        JLabel titleLabel = new JLabel("사용자 수정");
+        titleLabel.setBounds(274, 20, 200, 36);
+//        titleLabel.setForeground(Color.BLUE);
+        titleLabel.setFont(new Font("Sanserif", Font.BOLD, 30));
         contentPane.add(titleLabel);
 
         // 공백?
@@ -90,7 +90,7 @@ public class ModifyGui extends JFrame {
 
         // 포인트 라벨
         JLabel pointLabel = new JLabel("포인트");
-        pointLabel.setBounds(195, 230, 50, 15);
+        pointLabel.setBounds(205, 230, 50, 15);
         contentPane.add(pointLabel);
 
         // 이름 텍스트필드
@@ -231,6 +231,7 @@ public class ModifyGui extends JFrame {
 	public void Butset(JButton button) {
 		button.setBackground(Color.black);
 		button.setForeground(Color.white);
+		button.setFocusPainted(false);
 	}
 
 }

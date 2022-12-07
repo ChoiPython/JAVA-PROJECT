@@ -129,6 +129,7 @@ public class Login extends JFrame implements ActionListener {
 	public void Butset(JButton button) {
 		button.setBackground(Color.black);
 		button.setForeground(Color.white);
+		button.setFocusPainted(false);
 	}
 		
 	public static void main(String args[]) {
