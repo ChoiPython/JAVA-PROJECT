@@ -15,8 +15,8 @@ public class Login extends JFrame implements ActionListener {
 	private JLabel pwJLabel;	// pw 라벨 생성
 	
 	public  Login(String title, int xsize, int ysize, Boolean visible)   {
-		getContentPane().setBackground(Color.GRAY);
-		setTitle("xx회사 로그인 창");	// 화면 제목
+		getContentPane().setBackground(Color.lightGray);
+		setTitle("JAVA 로그인 창");	// 화면 제목
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		Container loginPane = getContentPane();
 		//test
@@ -25,7 +25,7 @@ public class Login extends JFrame implements ActionListener {
 		
 		
 		loginPane.setLayout(null);
-		JLabel test = new JLabel("XX회사");
+		JLabel test = new JLabel("JAVA");
 		test.setLocation(210, 20);
 		test.setSize(200, 200);
 		test.setFont(font);
@@ -49,6 +49,7 @@ public class Login extends JFrame implements ActionListener {
 		JButton btnNewButton = new JButton("로그인");
 		btnNewButton.setBounds(468, 239, 100, 23);
 		btnNewButton.addActionListener(this);
+		Butset(btnNewButton);
 		Font btfont = new Font("Sanserif", Font.BOLD, 20);
 		btnNewButton.setFont(btfont);
 		getContentPane().add(btnNewButton);
@@ -124,6 +125,12 @@ public class Login extends JFrame implements ActionListener {
 		}
 	}
 	
+	// 버튼 설정 - 기본
+	public void Butset(JButton button) {
+		button.setBackground(Color.black);
+		button.setForeground(Color.white);
+	}
+		
 	public static void main(String args[]) {
 		// 로그인 화면
 		Login login = new Login("로그인창", 500, 500, true);

@@ -143,12 +143,14 @@ public class RegistGui extends JFrame {
 
         // 사진선택 버튼
         JButton selecimg = new JButton("사진 선택\r\n");
+        Butset(selecimg);
         selecimg.setBounds(61, 279, 91, 30);
         contentPane.add(selecimg);
 
         fieldList=Arrays.asList(idTextField,nameTextField,departTextField,rankTextField,pointTextField,halfwayTextField);
         // 등록 버튼
         JButton registButton = new JButton("등록");
+        Butset(registButton);
         registButton.setBounds(526, 361, 91, 30);
         registButton.addActionListener(e -> {
             if (e.getSource() == registButton) {
@@ -217,4 +219,10 @@ public class RegistGui extends JFrame {
         setVisible(true);
         setLocationRelativeTo(null);    // 화면 중간 출력
     }
+    
+	// 버튼 설정 - 기본
+	public void Butset(JButton button) {
+		button.setBackground(Color.black);
+		button.setForeground(Color.white);
+	}
 }

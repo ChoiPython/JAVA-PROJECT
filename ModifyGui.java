@@ -133,12 +133,14 @@ public class ModifyGui extends JFrame {
 
         // 사진선택 버튼
         JButton selectimg = new JButton("사진 선택\r\n");
+        Butset(selectimg);
         selectimg.setBounds(61, 279, 91, 30);
         contentPane.add(selectimg);
 
         fieldList= Arrays.asList(nameField,partField,rankField,pointField);
         // 수정 버튼
         JButton modiButton = new JButton("수정");
+        Butset(modiButton);
         modiButton.addActionListener(e -> {
             int result;
             if(e.getSource()==modiButton) {
@@ -224,5 +226,11 @@ public class ModifyGui extends JFrame {
         setResizable(false);
         setTitle("사원정보 수정창");
     }
+    
+	// 버튼 설정 - 기본
+	public void Butset(JButton button) {
+		button.setBackground(Color.black);
+		button.setForeground(Color.white);
+	}
 
 }

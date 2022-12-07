@@ -44,26 +44,31 @@ public class adminGui extends JFrame implements ActionListener {
         contentpane.add(searchText);
         searchBtn = new JButton("검색");
         searchBtn.setBounds(430, 40, 67, 25);
+        Butset(searchBtn);
         searchBtn.addActionListener(this);
         contentpane.add(searchBtn);
         refreshBtn = new JButton("새로고침");
         refreshBtn.setBounds(530, 40, 90, 25);
+        Butset(refreshBtn);
         refreshBtn.addActionListener(this);
         contentpane.add(refreshBtn);
 
         //등록,수정,삭제 버튼, 상점 버튼
         insertBtn = new JButton("등록");
         insertBtn.setBounds(650, 357, 110, 30);
+        Butset(insertBtn);
         insertBtn.addActionListener(this);
         contentpane.add(insertBtn);
 
         shopBtn = new JButton("상점");
         shopBtn.setBounds(650, 416, 110, 30);
+        Butset(shopBtn);
         shopBtn.addActionListener(this);
         contentpane.add(shopBtn);
 
         viewBtn = new JButton("상세보기");
         viewBtn.setBounds(650, 294, 110, 30);
+        Butset(viewBtn);
         viewBtn.addActionListener(this);
         contentpane.add(viewBtn);
 
@@ -123,6 +128,7 @@ public class adminGui extends JFrame implements ActionListener {
 
         //퇴근 버튼
         JButton getoffBtn = new JButton("퇴근");
+        Butset(getoffBtn);
         getoffBtn.addActionListener(e -> {
         	nowDate = LocalDate.now();
         	Date d=Date.valueOf(nowDate.toString());
@@ -157,6 +163,12 @@ public class adminGui extends JFrame implements ActionListener {
         // 테이블 생성
         users = new JTable(model);
     }
+    
+	// 버튼 설정 - 기본
+	public void Butset(JButton button) {
+		button.setBackground(Color.black);
+		button.setForeground(Color.white);
+	}
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -183,7 +195,6 @@ public class adminGui extends JFrame implements ActionListener {
         } else if (e.getSource() == shopBtn) {
             AdminShop adminShop = new AdminShop();
             adminShop.setLocation(600, 100);
-            setLocation(200, 100);
         }
         // 검색이벤트
         else if (e.getSource() == searchBtn) {
