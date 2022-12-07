@@ -143,7 +143,63 @@ public class DBA {
 	      try {
 	         conn.close();
 	      }catch(SQLException e) {}
-	   }
+	 }
+	 //결근체크
+	 public void insertAbsence(Date date) {
+			ArrayList<Integer> list=new ArrayList<>();
+			try {
+				System.out.println("db로딩중");
+				conn=DriverManager.getConnection(dburl, dbUser, dbpw);
+			}catch(Exception e) {
+				System.out.println("db로딩 실패");
+			}
+			String sql="select 사원번호 from user";
+			PreparedStatement pstmt=null;
+			try {
+				pstmt=conn.prepareStatement(sql);
+				ResultSet rs=pstmt.executeQuery();
+				while(rs.next()) {
+					int n=rs.getInt("사원번호");
+					list.add(n);
+				}
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			insertAbsence2(date,list);
+	 }
+	 public void insertAbsence2(Date d,ArrayList<Integer> list) {
+	      try {
+	         System.out.println("db로딩중");
+	         conn=DriverManager.getConnection(dburl, dbUser, dbpw);
+	      }catch(Exception e) {
+	         System.out.println("db로딩 실패");
+	      }
+	      String sql="insert into Attendance values(?,?,'결근')";
+	      PreparedStatement pstmt=null;
+	      
+	      for(int i=1;i<list.size();i++) {
+				try {
+					int n=list.get(i);
+					pstmt=conn.prepareStatement(sql);
+					pstmt.setDate(1,d);
+					pstmt.setInt(2,n);
+					int result= pstmt.executeUpdate();
+			         if(result==1) {
+			            System.out.println("insert complete");
+			         }
+				} catch (SQLException e1) {
+					//e1.printStackTrace();
+				}
+			}
+	        try {
+	            if(pstmt!=null && !pstmt.isClosed()) {
+	               pstmt.close();
+	            }
+	         }catch (Exception e) {}
+	      try {
+	         conn.close();
+	      }catch(SQLException e) {}
+	 }
 	//유저 클래스를 수정 : 관리자 페이지의 수정에 들어갈 예정, id는 수정할 수 없다. id가 수정을 위한 고유한 키이기 때문
 	//추가와 마찬가지로 모든 데이터를 입력 받는다.
 	//수정을 위한 기존 데이터 불러오기 추가하여 폼 불러올때 기본값 입력되게 한 후 변경할 수 있게 하면 될듯

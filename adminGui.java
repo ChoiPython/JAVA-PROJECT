@@ -125,7 +125,11 @@ public class adminGui extends JFrame implements ActionListener {
         JButton getoffBtn = new JButton("퇴근");
         getoffBtn.addActionListener(e -> {
         	nowDate = LocalDate.now();
-            System.out.println("nowDate = " + nowDate);
+        	Date d=Date.valueOf(nowDate.toString());
+            System.out.println("nowDate = " + d);
+            DBA db=new DBA();
+            db.insertAbsence(d);
+            dispose();
         });
         getoffBtn.setBounds(650, 495, 67, 23);
         getContentPane().add(getoffBtn);
