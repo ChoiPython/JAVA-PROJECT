@@ -32,7 +32,7 @@ public class AdminShop extends JFrame{
 			// 닫기(확인) 버튼 생성 & 설정 & 이벤트
 			JButton closeButton = new JButton("닫기");
 			SetBack(closeButton);
-			SetFont(closeButton, 14);
+			SetFont(closeButton, 18);
 			SetDefBut(closeButton, true, false, false);
 //			closeButton.setForeground(Color.white); // 글자 색상
 			closeButton.setBounds(580, 300, 80, 40);
@@ -42,7 +42,7 @@ public class AdminShop extends JFrame{
 			// 설정 완료 버튼
 			JButton setButton = new JButton("설정");
 			SetBack(setButton);
-			SetFont(setButton, 14);
+			SetFont(setButton, 18);
 			SetDefBut(setButton, true, false, false);
 			setButton.setBounds(480, 300, 80, 40);
 			setButton.addActionListener(new SetClear());

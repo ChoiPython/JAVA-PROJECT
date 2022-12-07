@@ -35,6 +35,7 @@ public class ViewGui extends JFrame {
 
 
         JButton updateBtn = new JButton("수정");
+        Butset(updateBtn);
         updateBtn.addActionListener(e -> {
             dispose();
             ModifyGui md = new ModifyGui(u);
@@ -45,6 +46,7 @@ public class ViewGui extends JFrame {
         contentPane.add(updateBtn);
 
         JButton deleteBtn = new JButton("삭제");
+        Butset(deleteBtn);
         deleteBtn.addActionListener(e -> {
             if (e.getSource() == deleteBtn) {
                 int delid = u.getId();
@@ -129,4 +131,10 @@ public class ViewGui extends JFrame {
 	      imageLabel.setIcon(icon);
 
     }
+    
+	// 버튼 설정 - 기본
+	public void Butset(JButton button) {
+		button.setBackground(Color.black);
+		button.setForeground(Color.white);
+	}
 }
