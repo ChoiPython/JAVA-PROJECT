@@ -23,6 +23,9 @@ public class ViewGui extends JFrame {
         contentPane = new JPanel();
         contentPane.setBackground(UIManager.getColor("scrollbar"));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        
+     // 창 크기 변환x
+     		setResizable(false);
 
         setContentPane(contentPane);
         contentPane.setLayout(null);

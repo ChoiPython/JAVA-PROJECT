@@ -222,6 +222,7 @@ public class ModifyGui extends JFrame {
         setVisible(true);
         setLocationRelativeTo(null);
         setResizable(false);
+        setTitle("사원정보 수정창");
     }
 
 }

@@ -48,6 +48,9 @@ public class RegistGui extends JFrame {
         setBounds(100, 100, 679, 440);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        
+     // 창 크기 변환x
+     		setResizable(false);
 
         setContentPane(contentPane);
         contentPane.setLayout(null);
