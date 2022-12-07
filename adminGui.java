@@ -3,12 +3,15 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableModel;
 
+import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.time.Month;
+import java.util.*;
 
 public class adminGui extends JFrame implements ActionListener {
     JTextField searchText;
@@ -22,7 +25,7 @@ public class adminGui extends JFrame implements ActionListener {
     JComboBox YearBox;
     JComboBox MonthBox;
 
-    private LocalDate nowDate;
+    private LocalDate nowDate = LocalDate.now();;
 
     public adminGui(ArrayList<User2> list) {
         setTitle("관리자");
@@ -93,20 +96,35 @@ public class adminGui extends JFrame implements ActionListener {
 
         YearBox = new JComboBox();
         YearBox.setBounds(47, 103, 90, 23);
-        YearBox.setModel(new DefaultComboBoxModel(
-            new String[] {"2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030"}));
+        String[] year = new String[] {"2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030"};
+        YearBox.setModel(new DefaultComboBoxModel(year));
         getContentPane().add(YearBox);
 
         MonthBox = new JComboBox();
         MonthBox.setBounds(150, 103, 54, 23);
-        MonthBox.setModel(
-            new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}));
+        String [] month = new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
+        MonthBox.setModel(new DefaultComboBoxModel(month));
         getContentPane().add(MonthBox);
+        
+        // 콤보박스 디폴트 선택 - 현재 월 선택
+        int intmon = nowDate.getMonthValue();
+        String nowmonth = Integer.toString(intmon);
+        if(Arrays.stream(month).anyMatch(str -> str.equals(nowmonth))) {
+        	MonthBox.setSelectedIndex(intmon-1);
+        }
+        
+        // 년 선택
+        int nowyear = nowDate.getYear();
+        String stryear = Integer.toString(nowyear);
+        if(Arrays.stream(year).anyMatch(str -> str.equals(stryear))) {
+        	YearBox.setSelectedIndex(nowyear - 2022);
+        }
+        
 
         //퇴근 버튼
         JButton getoffBtn = new JButton("퇴근");
         getoffBtn.addActionListener(e -> {
-            nowDate = LocalDate.now();
+        	nowDate = LocalDate.now();
             System.out.println("nowDate = " + nowDate);
         });
         getoffBtn.setBounds(650, 495, 67, 23);
