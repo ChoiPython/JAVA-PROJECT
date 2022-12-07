@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 
@@ -94,8 +95,8 @@ public class Login extends JFrame implements ActionListener {
 
 			else if(user.getId()==0&&user.getName().equals("admin")) {
 				//user=dba.login(textField_1.getText(),textField.getText());
-				ArrayList<User2> list=new ArrayList<>();
-				Date d=Date.valueOf("2022-01-01");
+				ArrayList<User2> list=new ArrayList<>();				
+				Date d=Date.valueOf(LocalDate.now().toString());
 				dba.selectAllData(list,d);
 				this.dispose();
 				adminGui adgui = new adminGui(list);
