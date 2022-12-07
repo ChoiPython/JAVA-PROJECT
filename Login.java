@@ -20,7 +20,7 @@ public class Login extends JFrame implements ActionListener {
 		Container loginPane = getContentPane();
 		//test
 		// 폰트 지정 - PLAIN-기본, BOLD - 굵게, ITALIC - 기울임
-		Font font = new Font("돋움", Font.BOLD, 50);
+		Font font = new Font("Sanserif", Font.BOLD, 50);
 		
 		
 		loginPane.setLayout(null);
@@ -31,13 +31,13 @@ public class Login extends JFrame implements ActionListener {
 		loginPane.add(test);
 		
 		idLabel = new JLabel(" 아이디(이름)");
-		idLabel.setFont(new Font("굴림", Font.PLAIN, 15));
+		idLabel.setFont(new Font("Sanserif", Font.BOLD, 15));
 		idLabel.setBounds(144, 180, 119, 40);
 		getContentPane().add(idLabel);
 		
 		pwJLabel = new JLabel("패스워드(사원번호)");
-		pwJLabel.setFont(new Font("굴림", Font.PLAIN, 15));
-		pwJLabel.setBounds(108, 230, 132, 40);
+		pwJLabel.setFont(new Font("Sanserif", Font.BOLD, 15));
+		pwJLabel.setBounds(108, 230, 140, 40);
 		getContentPane().add(pwJLabel);
 		
 		idtextField = new JTextField();
@@ -46,8 +46,10 @@ public class Login extends JFrame implements ActionListener {
 		idtextField.setColumns(10);
 		
 		JButton btnNewButton = new JButton("로그인");
-		btnNewButton.setBounds(468, 239, 91, 23);
+		btnNewButton.setBounds(468, 239, 100, 23);
 		btnNewButton.addActionListener(this);
+		Font btfont = new Font("Sanserif", Font.BOLD, 20);
+		btnNewButton.setFont(btfont);
 		getContentPane().add(btnNewButton);
 		
 		pwtextField = new JPasswordField();
