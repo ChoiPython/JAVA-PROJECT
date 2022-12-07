@@ -24,6 +24,7 @@ public class MyUser extends JFrame implements ActionListener {
     int sec = calendar1.get(Calendar.SECOND);
     String Am_Pm;
     String min_str;
+    private JLabel imageLabel;
 
     public MyUser(User u) {
         user = u;
@@ -40,7 +41,7 @@ public class MyUser extends JFrame implements ActionListener {
             img = new ImageIcon(
                 new ImageIcon(user.getImgaddr()).getImage().getScaledInstance(156, 161, Image.SCALE_SMOOTH));
         }
-        JLabel imageLabel = new JLabel(img, JLabel.CENTER);
+        imageLabel = new JLabel(img, JLabel.CENTER);
         imageLabel.setBounds(30, 30, 150, 187);
         c.add(imageLabel);
 
@@ -55,91 +56,96 @@ public class MyUser extends JFrame implements ActionListener {
         } else {
             min_str = "" + min;
         }
+        Font font = new Font("맑은 고딕", Font.BOLD, 20);
         JLabel time = new JLabel(Am_Pm + " " + hour + ":" + min_str);
-        time.setFont(new Font("맑은 고딕", Font.BOLD, 20));
+        time.setFont(font);
         time.setSize(350, 50);
         time.setLocation(220, 0);
         c.add(time);
 
         JLabel name = new JLabel("이름 |");
-        name.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
+        name.setFont(font);
         name.setSize(133, 50);
         name.setLocation(210, 40);
         c.add(name);
         uname = new JLabel(user.getName());
-        uname.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
+        uname.setFont(font);
         uname.setSize(133, 50);
         uname.setLocation(270, 40);
         c.add(uname);
 
         JLabel position = new JLabel("직급 |");
-        position.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
+        position.setFont(font);
         position.setSize(100, 50);
         position.setLocation(210, 70);
         c.add(position);
         uposition = new JLabel(user.getRank());
-        uposition.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
+        uposition.setFont(font);
         uposition.setSize(100, 50);
         uposition.setLocation(270, 70);
         c.add(uposition);
 
         JLabel department = new JLabel("부서 |");
-        department.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
+        department.setFont(font);
         department.setSize(133, 50);
         department.setLocation(210, 100);
         c.add(department);
         udepartment = new JLabel(user.getDepart());
-        udepartment.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
+        udepartment.setFont(font);
         udepartment.setSize(133, 50);
         udepartment.setLocation(270, 100);
         c.add(udepartment);
 
         JLabel point = new JLabel("포인트 |");
-        point.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
+        point.setFont(font);
         point.setSize(150, 50);
         point.setLocation(190, 130);
         c.add(point);
         upoint = new JLabel(user.getPoint() + "");
-        upoint.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
+        upoint.setFont(font);
         upoint.setSize(150, 50);
         upoint.setLocation(270, 130);
         c.add(upoint);
         
         JLabel half = new JLabel("반차 |");
-		half.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
+		half.setFont(font);
 		half.setSize(133, 50);
 		half.setLocation(210, 160);
 		c.add(half);
 		uhalf = new JLabel(user.getHalfway()+"");
-		uhalf.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
+		uhalf.setFont(font);
 		uhalf.setSize(150, 50);
 		uhalf.setLocation(270, 160);
 		c.add(uhalf);
 
         store = new JButton("상점");
-        store.setFont(new Font("돋음", Font.PLAIN, 18));
+        store.setFont(new Font("Sanserif", Font.BOLD, 18));
         store.setSize(100, 50);
-        store.setLocation(300, 220);
+        store.setLocation(30, 220);
+        Butset(store);
         store.addActionListener(this);
         c.add(store);
 
         vacation = new JButton("휴가/반차");
-        vacation.setFont(new Font("돋음", Font.PLAIN, 18));
+        vacation.setFont(new Font("Sanserif", Font.BOLD, 18));
         vacation.setSize(150, 50);
-        vacation.setLocation(410, 220);
+        vacation.setLocation(160, 220);
+        Butset(vacation);
         vacation.addActionListener(this);
         c.add(vacation);
         
-        logout = new JButton("로그아웃");
-		logout.setFont(new Font("돋음", Font.PLAIN, 10));
-		logout.setSize(100, 30);
-		logout.setLocation(30, 240);
+        logout = new JButton();
+        Butimg(logout, "/종료.png", 50, 50);
+        Butset(logout, false, false, false);
+		logout.setSize(50, 50);
+		logout.setLocation(510, 220);
 		logout.addActionListener(this);
 		c.add(logout);
 
-        refresh = new JButton("새로고침");
-        refresh.setFont(new Font("돋음", Font.PLAIN, 10));
-        refresh.setSize(80, 20);
+        refresh = new JButton();
+        Butimg(refresh, "/새로고침.png", 60, 60);
+		Butset(refresh, false, false, false);
+        refresh.setSize(60, 60);
         refresh.setLocation(500, 3);
         refresh.addActionListener(this);
         c.add(refresh);
@@ -150,6 +156,28 @@ public class MyUser extends JFrame implements ActionListener {
         setLocationRelativeTo(null);    // 화면중간출력
         setResizable(false);            // 크기조절
     }
+    
+    // 버튼 포커스 시 보이는 테두리, 버튼 테두리, 버튼 배경 유무
+    public void Butset(JButton button, boolean a, boolean b, boolean c) {
+    	button.setFocusPainted(a);
+    	button.setBorderPainted(b);
+    	button.setContentAreaFilled(c);
+    }
+    
+    // 이미지
+    public void Butimg(JButton button, String imgadd, int xsize, int ysize) {
+    	ImageIcon img = new ImageIcon(this.getClass().getResource(imgadd));
+		Image getimg = img.getImage();
+		Image getimg1 = getimg.getScaledInstance(xsize, ysize, Image.SCALE_SMOOTH);
+		ImageIcon setimg = new ImageIcon(getimg1);
+		button.setIcon(setimg);
+    	
+    }
+    
+    public void Butset(JButton button) {
+		button.setBackground(Color.black);
+		button.setForeground(Color.white);
+	}
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -173,7 +201,9 @@ public class MyUser extends JFrame implements ActionListener {
             if (user.getImgaddr() == null) {
                 img = new ImageIcon(this.getClass().getResource("/employee.jpg"));
             } else {
-                img = new ImageIcon(user.getImgaddr());
+            	img = new ImageIcon(
+                        new ImageIcon(user.getImgaddr()).getImage().getScaledInstance(156, 161, Image.SCALE_SMOOTH));
+            	imageLabel.setIcon(img);
             }
         }
         else if (e.getSource() == logout)

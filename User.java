@@ -63,7 +63,7 @@ public class User {
 	
 	@Override
 	public String toString() {
-		return "사번 : "+getId()+" 이름 : "+getName()+" 부서 : "+getDepart()+" 직급 : "+getRank()+ " 포인트 : "+getPoint();
+		return "사번 : "+getId()+" 이름 : "+getName()+" 부서 : "+getDepart()+" 직급 : "+getRank()+ " 포인트 : "+getPoint() + " 사진 : " + getImgaddr();
 	}
 	
 }
