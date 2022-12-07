@@ -57,10 +57,10 @@ public class MyUser extends JFrame implements ActionListener {
             min_str = "" + min;
         }
         Font font = new Font("맑은 고딕", Font.BOLD, 20);
-        JLabel time = new JLabel(Am_Pm + " " + hour + ":" + min_str);
+        JLabel time = new JLabel("출근 시간 : " + Am_Pm + " " + hour + ":" + min_str);
         time.setFont(font);
         time.setSize(350, 50);
-        time.setLocation(220, 0);
+        time.setLocation(200, 0);
         c.add(time);
 
         JLabel name = new JLabel("이름 |");
