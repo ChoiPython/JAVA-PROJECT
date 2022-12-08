@@ -89,3 +89,8 @@ insert Attendance into values('2022-12-08', 20172261, '출근');
 insert Attendance into values('2022-12-08', 20212877, '출근');
 insert Attendance into values('2022-12-08', 20212503, '출근');
 insert Attendance into values('2022-12-08', 20212934, '출근');
+
+//12-10일에 티오가 꽉 차서 신청 못하는 모습 보여주기
+insert Attendance into values('2022-12-10', 20212950, '휴가');
+insert Attendance into values('2022-12-10', 20212877, '반차');
+insert Attendance into values('2022-12-08', 20212934, '휴가');
