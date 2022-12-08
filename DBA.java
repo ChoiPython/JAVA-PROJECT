@@ -104,6 +104,31 @@ public class DBA {
 		}catch(SQLException e) {}
 		return user;
 	}
+	public int TOCount(Date d) {
+		int to=0;
+		try {
+			System.out.println("db로딩중");
+			conn=DriverManager.getConnection(dburl, dbUser, dbpw);
+		}catch(Exception e) {
+			System.out.println("db로딩 실패");
+		}
+		User user=new User();
+		String sql="select count(*) as 'TO' from Attendance where 날짜=? and (상태='휴가' or 상태='반차')";
+		try {
+			PreparedStatement pstmt=conn.prepareStatement(sql);
+			pstmt.setDate(1,d);
+			ResultSet rs=pstmt.executeQuery();
+			while(rs.next()) {
+				to=rs.getInt("TO");
+			}
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		try {
+			conn.close();
+		}catch(SQLException e) {}
+		return to;
+	}
 	//유저를 추가 : 관리자 페이지의 추가에 들어갈 예정, 유저 클래스의 필드의 모든 값을 입력받는다.
 	 public void insertData(int id,String name, String depart, String rank, int halfway, int point,String imgaddr) {
 	      try {
@@ -447,7 +472,7 @@ public class DBA {
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setDate(1, d);
 			pstmt.setInt(2, id);
-			pstmt.setString(2, s);
+			pstmt.setString(3, s);
 			
 			
 			result= pstmt.executeUpdate();

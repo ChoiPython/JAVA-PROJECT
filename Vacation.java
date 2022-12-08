@@ -4,6 +4,7 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
@@ -25,7 +26,7 @@ class CalendarDataManager extends JFrame{
 	Calendar cal;
 	Calendar now;
 	Container c = getContentPane();
-	static int n = 3;
+	int to;
 	
 	public CalendarDataManager(){ 
 		setToday(); 
@@ -189,8 +190,19 @@ public class Vacation extends CalendarDataManager{
 								{
 									if(e.getSource() == dateButs[a][b])
 									{
-										JOptionPane.showMessageDialog(null, "남은 인원 " + n + "/3");
+										String ss[]=new String[10];
+										String s=curMMYYYYLab.getText();
+										StringTokenizer st=new StringTokenizer(s,"\r &nbsp;");
+										int count=st.countTokens();
+										for(int i=0;i<count;i++) {
+											ss[i]=st.nextToken();//index 5==m 7==y
+										}
 										day = dateButs[a][b].getText();	//일 가져오기
+										String date=ss[7]+"-"+ss[5]+"-"+day;
+										Date d=Date.valueOf(date);
+										DBA db=new DBA();
+										to=db.TOCount(d);
+										JOptionPane.showMessageDialog(null, "남은 인원 " + (3-to) + "/3");
 									}
 								}
 							}
@@ -233,103 +245,109 @@ public class Vacation extends CalendarDataManager{
 						if(todaymonth == 13)
 							todaymonth = 1;
 						int todayday = today.get(Calendar.DAY_OF_MONTH);
+						if(to>=3) {
+							JOptionPane.showMessageDialog(null, "TO가 가득 찼습니다.");
+						}
+						else{
+							if(Integer.parseInt(ss[7]) > todayyear)	//올해 이후
+							{
+								if(index == 0)	//휴학/반차 선택
+					            	JOptionPane.showMessageDialog(null, "휴가와 반차중 하나 선택하십시오.");
+					            else if(index == 1)	//휴가 선택
+					            {
+					            	res=db.leaveApplication(user.getId(), d,"휴가");
+					            	if(res==1) {
+						            	int h=user.getHalfway()-2;
+										db.updatehalfway(user.getId(), h);
+										JOptionPane.showMessageDialog(null, "신청되었습니다.");
+										
+					            	}
+					            	else {
+					            		JOptionPane.showMessageDialog(null, "신청 실패");
+					            	}
+					            }
+					            else if(index == 2)	//반차 선택
+					            {
+					            	res=db.leaveApplication(user.getId(), d,"반차");
+					            	if(res==1) {
+						            	int h=user.getHalfway()-1;
+										db.updatehalfway(user.getId(), h);
+										JOptionPane.showMessageDialog(null, "신청되었습니다.");
+										
+					            	}
+					            	else {
+					            		JOptionPane.showMessageDialog(null, "신청 실패");
+					            	}
+					            }
+							}
+							else if(Integer.parseInt(ss[7]) == todayyear && Integer.parseInt(ss[5]) > todaymonth)	//올해, 이번달 이후
+							{
+								if(index == 0)	//휴학/반차 선택
+					            	JOptionPane.showMessageDialog(null, "휴가와 반차중 하나 선택하십시오.");
+					            else if(index == 1)	//휴가 선택
+					            {
+					            	res=db.leaveApplication(user.getId(), d,"휴가");
+					            	if(res==1) {
+						            	int h=user.getHalfway()-2;
+										db.updatehalfway(user.getId(), h);
+										JOptionPane.showMessageDialog(null, "신청되었습니다.");
+										
+					            	}
+					            	else {
+					            		JOptionPane.showMessageDialog(null, "신청 실패");
+					            	}
+					            }
+					            else if(index == 2)	//반차 선택
+					            {
+					            	res=db.leaveApplication(user.getId(), d,"반차");
+					            	if(res==1) {
+						            	int h=user.getHalfway()-1;
+										db.updatehalfway(user.getId(), h);
+										JOptionPane.showMessageDialog(null, "신청되었습니다.");
+										
+					            	}
+					            	else {
+					            		JOptionPane.showMessageDialog(null, "신청 실패");
+					            	}
+					            }
+								
+							else if(Integer.parseInt(ss[7]) == todayyear && Integer.parseInt(ss[5]) == todaymonth && Integer.parseInt(day) > todayday)	//올해, 이번달, 오늘 이후
+							{
+								if(index == 0)	//휴학/반차 선택
+					            	JOptionPane.showMessageDialog(null, "휴가와 반차중 하나 선택하십시오.");
+					            else if(index == 1)	//휴가 선택
+					            {
+					            	res=db.leaveApplication(user.getId(), d,"휴가");
+					            	if(res==1) {
+						            	int h=user.getHalfway()-2;
+										db.updatehalfway(user.getId(), h);
+										JOptionPane.showMessageDialog(null, "신청되었습니다.");
+										
+					            	}
+					            	else {
+					            		JOptionPane.showMessageDialog(null, "신청 실패");
+					            	}
+					            }
+					            else if(index == 2)	//반차 선택
+					            {
+					            	res=db.leaveApplication(user.getId(), d,"반차");
+					            	if(res==1) {
+						            	int h=user.getHalfway()-1;
+										db.updatehalfway(user.getId(), h);
+										JOptionPane.showMessageDialog(null, "신청되었습니다.");
+										
+					            	}
+					            	else {
+					            		JOptionPane.showMessageDialog(null, "신청 실패");
+					            	}
+					            }
+							}
 						
-						if(Integer.parseInt(ss[7]) > todayyear)	//올해 이후
-						{
-							if(index == 0)	//휴학/반차 선택
-				            	JOptionPane.showMessageDialog(null, "휴가와 반차중 하나 선택하십시오.");
-				            else if(index == 1)	//휴가 선택
-				            {
-				            	res=db.leaveApplication(user.getId(), d,"휴가");
-				            	if(res==1) {
-					            	int h=user.getHalfway()-2;
-									db.updatehalfway(user.getId(), h);
-									JOptionPane.showMessageDialog(null, "신청되었습니다.");
-									n--;
-				            	}
-				            	else {
-				            		JOptionPane.showMessageDialog(null, "신청 실패");
-				            	}
-				            }
-				            else if(index == 2)	//반차 선택
-				            {
-				            	res=db.leaveApplication(user.getId(), d,"반차");
-				            	if(res==1) {
-					            	int h=user.getHalfway()-1;
-									db.updatehalfway(user.getId(), h);
-									JOptionPane.showMessageDialog(null, "신청되었습니다.");
-									n--;
-				            	}
-				            	else {
-				            		JOptionPane.showMessageDialog(null, "신청 실패");
-				            	}
-				            }
+							}
+							else {
+								JOptionPane.showMessageDialog(null, "휴가와 반차신청은 내일부터 신청가능합니다.");								
+							}
 						}
-						else if(Integer.parseInt(ss[7]) == todayyear && Integer.parseInt(ss[5]) > todaymonth)	//올해, 이번달 이후
-						{
-							if(index == 0)	//휴학/반차 선택
-				            	JOptionPane.showMessageDialog(null, "휴가와 반차중 하나 선택하십시오.");
-				            else if(index == 1)	//휴가 선택
-				            {
-				            	res=db.leaveApplication(user.getId(), d,"휴가");
-				            	if(res==1) {
-					            	int h=user.getHalfway()-2;
-									db.updatehalfway(user.getId(), h);
-									JOptionPane.showMessageDialog(null, "신청되었습니다.");
-									n--;
-				            	}
-				            	else {
-				            		JOptionPane.showMessageDialog(null, "신청 실패");
-				            	}
-				            }
-				            else if(index == 2)	//반차 선택
-				            {
-				            	res=db.leaveApplication(user.getId(), d,"반차");
-				            	if(res==1) {
-					            	int h=user.getHalfway()-1;
-									db.updatehalfway(user.getId(), h);
-									JOptionPane.showMessageDialog(null, "신청되었습니다.");
-									n--;
-				            	}
-				            	else {
-				            		JOptionPane.showMessageDialog(null, "신청 실패");
-				            	}
-				            }
-						else if(Integer.parseInt(ss[7]) == todayyear && Integer.parseInt(ss[5]) == todaymonth && Integer.parseInt(day) > todayday)	//올해, 이번달, 오늘 이후
-						{
-							if(index == 0)	//휴학/반차 선택
-				            	JOptionPane.showMessageDialog(null, "휴가와 반차중 하나 선택하십시오.");
-				            else if(index == 1)	//휴가 선택
-				            {
-				            	res=db.leaveApplication(user.getId(), d,"휴가");
-				            	if(res==1) {
-					            	int h=user.getHalfway()-2;
-									db.updatehalfway(user.getId(), h);
-									JOptionPane.showMessageDialog(null, "신청되었습니다.");
-									n--;
-				            	}
-				            	else {
-				            		JOptionPane.showMessageDialog(null, "신청 실패");
-				            	}
-				            }
-				            else if(index == 2)	//반차 선택
-				            {
-				            	res=db.leaveApplication(user.getId(), d,"반차");
-				            	if(res==1) {
-					            	int h=user.getHalfway()-1;
-									db.updatehalfway(user.getId(), h);
-									JOptionPane.showMessageDialog(null, "신청되었습니다.");
-									n--;
-				            	}
-				            	else {
-				            		JOptionPane.showMessageDialog(null, "신청 실패");
-				            	}
-				            }
-						}
-					
-						}
-						else
-							JOptionPane.showMessageDialog(null, "휴가와 반차신청은 내일부터 신청가능합니다.");
 					}
 				}
 			});
