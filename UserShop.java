@@ -143,7 +143,7 @@ public class UserShop extends JFrame{
 		halfvacationButton.addActionListener(halfvacationBuy);
 		// 랜덤뽑기
 		BuyRandom randomBuy = new BuyRandom();
-		randomBuy.SetPrice(1);
+		randomBuy.SetPrice(rprice);
 		randomBoxButton.addActionListener(randomBuy);
 		
 		// 구매 버튼 추가
