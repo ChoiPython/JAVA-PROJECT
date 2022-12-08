@@ -261,6 +261,9 @@ public class UserShop extends JFrame{
 				System.out.println(buy);
 				JOptionPane.showMessageDialog(usershoppane, "0개는 구매할 수 없습니다.", "구매 실패", JOptionPane.INFORMATION_MESSAGE);
 			}
+			else {
+				JOptionPane.showMessageDialog(usershoppane, "1개 이상을 선택해주세요", "구매 실패", JOptionPane.INFORMATION_MESSAGE);
+			}
 		}
 	}
 	
@@ -346,6 +349,10 @@ public class UserShop extends JFrame{
 			else if (buy == 0) {
 				System.out.println(buy);
 				JOptionPane.showMessageDialog(usershoppane, "0개는 구매할 수 없습니다.", "구매 실패", JOptionPane.INFORMATION_MESSAGE);
+			}
+			
+			else {
+				JOptionPane.showMessageDialog(usershoppane, "1개 이상을 선택해주세요", "구매 실패", JOptionPane.INFORMATION_MESSAGE);
 			}
 			
 			
