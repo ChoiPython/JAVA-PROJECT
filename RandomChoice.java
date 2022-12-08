@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
@@ -72,26 +73,32 @@ public class RandomChoice extends JFrame{
 
 			String[] text = new String[percent];
 			JButton newbutton = (JButton) e.getSource();
-			System.out.println(newbutton.getText());
+			int good=0; // 당첨여부
+
+//			String [] winnum = new String[percent];
 			
-			for(int i=0; i<4; i++) {
+			for(int i=0; i<percent; i++) {
 				text[i] = Integer.toString(randomnum[i]);
+				System.out.println(text[i]);
 			}
 			
+			for(int i=0; i<percent; i++) {
+				if(newbutton.getText().equals(text[i])) {
+					good = 1;
+				}
+			}
 			// 당첨
-			if(newbutton.getText().equals(text[0]) || newbutton.getText().equals(text[1]) || newbutton.getText().equals(text[2]) || newbutton.getText().equals(text[3])) {
+			if (good == 1) {
 				count -= 1;
 				System.out.println("당첨");
 				JOptionPane.showMessageDialog(newbutton, "당첨!!");
 				dba.Buyhalf(id, 1);
-				
-				
+
 				// count =0이면 뽑기 종료
-				if(count!=0) {
+				if (count != 0) {
 
 					new RandomChoice(count, id);
-				}
-				else {
+				} else {
 				}
 			}
 			
@@ -110,57 +117,32 @@ public class RandomChoice extends JFrame{
 					JOptionPane.showMessageDialog(newbutton, "다음기회에...");
 
 				}
-				
-
-				System.out.println(count);
-					
 			}
-			
-
-			String one = Integer.toString(randomnum[0]);
-			String two = Integer.toString(randomnum[1]);
-			String thr = Integer.toString(randomnum[2]);
-			String four = Integer.toString(randomnum[3]);
-//			dispose();
+			ArrayList<String> winnum = new ArrayList<String>(Arrays.asList(text));
+;			// 결과
 			for(int i=0; i<100; i++) {
-				if(button[i].getText().equals(one) | button[i].getText().equals(two) || button[i].getText().equals(thr) || button[i].getText().equals(four)) {
+
+				if (winnum.contains(button[i].getText())) {
 					button[i].setIcon(null);
 					button[i].setBackground(Color.red);
 					button[i].setText("당첨");
-					// 내 선택
-					if(button[i] == newbutton) {
-						
-					}
 				}
-				
+
 				else {
-					ImageIcon boom = new ImageIcon(this.getClass().getResource("/꽝이미지.png"));
 					button[i].setRolloverIcon(null);
 					button[i].setIcon(null);
 					button[i].setText("꽝");
-					// 내 선택
-					if (button[i] == newbutton) {
-
-					}
-					
-					
 
 				}
 				
+
 				button[i].setEnabled(false);	// 버튼 비활성화
-//				button[i].addActionListener(new OverEvent());
 			}
 			
-			// 결과 버튼 클릭 시
 			newbutton.setBackground(Color.white); // 내 선택
-			
 			setLocation(200, 100);
-			
-			
 				
 		}
-		
-		
 	}
 	
 	public class OverEvent implements ActionListener{
@@ -183,17 +165,19 @@ public class RandomChoice extends JFrame{
 		for(int i=1; i < randomnum.length; i++) {
 			int num = randomnum[i-1];
 			int[] copy = Arrays.copyOfRange(randomnum, i, percent);	// 배열 지정 범위 복사
-			
+
 			// 로직
 			while(Arrays.stream(copy).anyMatch(a -> a == num)) {
+				count += 1;
 				System.out.print("동일 값 발생 : ");
 
 				// 다시 바꿔주기
-				for(int j = i; j <= 3; j++) {
+				for(int j = i; j <= percent-1; j++) {
 					randomnum[j] = (int) (Math.random() * 99);
-					copy = Arrays.copyOfRange(randomnum, i, 5);
+					copy = Arrays.copyOfRange(randomnum, i, percent);
 				}
 				System.out.println(Arrays.toString(randomnum));
+				
 			}
 			
 
