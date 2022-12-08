@@ -310,7 +310,7 @@ public class Vacation extends CalendarDataManager{
 					            		JOptionPane.showMessageDialog(null, "신청 실패");
 					            	}
 					            }
-								
+							}	
 							else if(Integer.parseInt(ss[7]) == todayyear && Integer.parseInt(ss[5]) == todaymonth && Integer.parseInt(day) > todayday)	//올해, 이번달, 오늘 이후
 							{
 								if(index == 0)	//휴학/반차 선택
@@ -341,8 +341,6 @@ public class Vacation extends CalendarDataManager{
 					            		JOptionPane.showMessageDialog(null, "신청 실패");
 					            	}
 					            }
-							}
-						
 							}
 							else {
 								JOptionPane.showMessageDialog(null, "휴가와 반차신청은 내일부터 신청가능합니다.");								
