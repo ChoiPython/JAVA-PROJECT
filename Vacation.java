@@ -237,7 +237,7 @@ public class Vacation extends CalendarDataManager{
 						if(Integer.parseInt(ss[7]) > todayyear)
 						{
 							if(index == 0)	//휴학/반차 선택
-				            	JOptionPane.showMessageDialog(null, "휴학과 반차중 하나 선택하십시오.");
+				            	JOptionPane.showMessageDialog(null, "휴가와 반차중 하나 선택하십시오.");
 				            else if(index == 1)	//휴가 선택
 				            {
 				            	res=db.leaveApplication(user.getId(), d,"휴가");
@@ -268,7 +268,7 @@ public class Vacation extends CalendarDataManager{
 						else if(Integer.parseInt(ss[7]) == todayyear && Integer.parseInt(ss[5]) >= todaymonth && Integer.parseInt(day) > todayday)
 						{
 							if(index == 0)	//휴학/반차 선택
-				            	JOptionPane.showMessageDialog(null, "휴학과 반차중 하나 선택하십시오.");
+				            	JOptionPane.showMessageDialog(null, "휴가와 반차중 하나 선택하십시오.");
 				            else if(index == 1)	//휴가 선택
 				            {
 				            	res=db.leaveApplication(user.getId(), d,"휴가");
