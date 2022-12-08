@@ -432,7 +432,7 @@ public class DBA {
 		}catch(SQLException e) {}
 		return user;
 	}
-	public int leaveApplication(int id,Date d) {
+	public int leaveApplication(int id,Date d,String s) {
 		int result=0;
 		try {
 			System.out.println("db로딩중");
@@ -440,13 +440,14 @@ public class DBA {
 		}catch(Exception e) {
 			System.out.println("db로딩 실패");
 		}
-		String sql="insert into Attendance values(?,?,'휴가')";
+		String sql="insert into Attendance values(?,?,?)";
 		PreparedStatement pstmt=null;
 		
 		try {
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setDate(1, d);
 			pstmt.setInt(2, id);
+			pstmt.setString(2, s);
 			
 			
 			result= pstmt.executeUpdate();

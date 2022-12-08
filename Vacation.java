@@ -227,29 +227,41 @@ public class Vacation extends CalendarDataManager{
 						System.out.println(user.getId());
 						System.out.println(d);
 						DBA db=new DBA();
-						res=db.leaveApplication(user.getId(), d);
-						if(res==1) {
-							if(Integer.parseInt(day) <= calDayOfMon)	//내일부터 신청가능
-								JOptionPane.showMessageDialog(null, "휴가와 반차신청은 내일부터 신청가능합니다.");
-							else if(Integer.parseInt(day) > calDayOfMon)
-							{
-								if(index == 0)	//휴학/반차 선택
-					            	JOptionPane.showMessageDialog(null, "휴학과 반차중 하나 선택하십시오.");
-					            else if(index == 1)	//휴가 선택
-					            {
+						
+						if(Integer.parseInt(day) <= calDayOfMon) {	//내일부터 신청가능
+							System.out.println(calDayOfMon);
+							JOptionPane.showMessageDialog(null, "휴가와 반차신청은 내일부터 신청가능합니다.");
+						}
+						else if(Integer.parseInt(day) > calDayOfMon)
+						{
+							if(index == 0)	//휴학/반차 선택
+				            	JOptionPane.showMessageDialog(null, "휴학과 반차중 하나 선택하십시오.");
+				            else if(index == 1)	//휴가 선택
+				            {
+				            	res=db.leaveApplication(user.getId(), d,"휴가");
+				            	if(res==1) {
 					            	int h=user.getHalfway()-2;
 									db.updatehalfway(user.getId(), h);
 									JOptionPane.showMessageDialog(null, "신청되었습니다.");
 									n--;
-					            }
-					            else if(index == 2)	//반차 선택
-					            {
+				            	}
+				            	else {
+				            		JOptionPane.showMessageDialog(null, "신청 실패");
+				            	}
+				            }
+				            else if(index == 2)	//반차 선택
+				            {
+				            	res=db.leaveApplication(user.getId(), d,"반차");
+				            	if(res==1) {
 					            	int h=user.getHalfway()-1;
 									db.updatehalfway(user.getId(), h);
 									JOptionPane.showMessageDialog(null, "신청되었습니다.");
 									n--;
-					            }
-							}
+				            	}
+				            	else {
+				            		JOptionPane.showMessageDialog(null, "신청 실패");
+				            	}
+				            }
 						}
 						else 
 							JOptionPane.showMessageDialog(null, "신청 실패");
