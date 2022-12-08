@@ -61,7 +61,7 @@ public class AdminShop extends JFrame{
 			adminShoppane.add(percent);
 			
 			// 확률 라벨
-			percentLabel =  new JLabel("뽑기 설정 확률 : " + percent.getValue());
+			percentLabel =  new JLabel("뽑기 확률 설정 : " + percent.getValue());
 			percentLabel.setBounds(10, 0, 120, 100);
 			SetFont(percentLabel, 12);
 			adminShoppane.add(percentLabel);
@@ -90,13 +90,13 @@ public class AdminShop extends JFrame{
 			
 			// 가격 라벨
 			// 뽑기
-			rpriceLabel =  new JLabel("뽑기 설정 가격 : " + rprice.getValue());
+			rpriceLabel =  new JLabel("뽑기 가격 설정 : " + rprice.getValue());
 			rpriceLabel.setBounds(10, 80, 120, 100);
 			SetFont(rpriceLabel, 12);
 			adminShoppane.add(rpriceLabel);
 			
 			// 반차
-			hpriceLabel =  new JLabel("반차 설정 가격 : " + hprice.getValue());
+			hpriceLabel =  new JLabel("반차 가격 설정 : " + hprice.getValue());
 			hpriceLabel.setBounds(10, 160, 120, 100);
 			SetFont(hpriceLabel, 12);
 			adminShoppane.add(hpriceLabel);
@@ -125,14 +125,14 @@ public class AdminShop extends JFrame{
 
 			public void stateChanged(ChangeEvent e) {
 				if(e.getSource() == percent) {
-					percentLabel.setText("뽑기 설정 확률 : " + percent.getValue());
+					percentLabel.setText("뽑기 확률 설정 : " + percent.getValue());
 					
 				}
 				else if(e.getSource() == hprice) {
-					hpriceLabel.setText("반차 설정 가격 : " + hprice.getValue());
+					hpriceLabel.setText("반차 가격 설정 : " + hprice.getValue());
 				}
 				else if (e.getSource() == rprice) {
-					rpriceLabel.setText("뽑기 설정 가격 : " + rprice.getValue());
+					rpriceLabel.setText("뽑기 가격 설정 : " + rprice.getValue());
 					
 				}
 				
