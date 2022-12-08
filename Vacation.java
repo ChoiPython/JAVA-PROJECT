@@ -12,6 +12,7 @@ import javax.swing.*;
 
 class CalendarDataManager extends JFrame{
 	User user;
+	static int index;
 	static final int CAL_WIDTH = 7;
 	final static int CAL_HEIGHT = 6;
 	int calDates[][] = new int[CAL_HEIGHT][CAL_WIDTH];
@@ -37,8 +38,8 @@ class CalendarDataManager extends JFrame{
 	}
 	private void makeCalData(Calendar cal){
 		int calStartingPos = (cal.get(Calendar.DAY_OF_WEEK)+7-(cal.get(Calendar.DAY_OF_MONTH))%7)%7;
-		if(calMonth == 1) calLastDate = calLastDateOfMonth[calMonth] + leapCheck(calYear);
-		else calLastDate = calLastDateOfMonth[calMonth];
+		if(calMonth == 1) calLastDate = calLastDateOfMonth[calMonth] + leapCheck(calYear);	//2월달의 경우
+		else calLastDate = calLastDateOfMonth[calMonth];	//2월달 제외
 		for(int i = 0 ; i<CAL_HEIGHT ; i++){
 			for(int j = 0 ; j<CAL_WIDTH ; j++){
 				calDates[i][j] = 0;
@@ -73,6 +74,9 @@ class CalendarDataManager extends JFrame{
 public class Vacation extends CalendarDataManager{
 	
 	String date = new String();
+	String day;	//일 가져오기
+	JComboBox vac_half;	//휴가/반차 콤보박스
+	JLabel vac_num;	//남은 반차 개수
 	JPanel calOpPanel;
 		JButton todayBut;
 		JLabel todayLab;
@@ -85,7 +89,7 @@ public class Vacation extends CalendarDataManager{
 	
 		JButton dateButs[][] = new JButton[6][7];
 		listenForDateButs lForDateButs = new listenForDateButs(); 
-
+		String vacation_halfvac[] = new String[] {"휴가/반차", "휴가", "반차"};
 	String WEEK_DAY_NAME[] = { "일", "월", "화", "수", "목", "금", "토" };
 
 	public Vacation(User u){
@@ -97,6 +101,11 @@ public class Vacation extends CalendarDataManager{
 		mainFrame.setLocationRelativeTo(null);
 		mainFrame.setResizable(false);
 		
+		vac_half = new JComboBox(vacation_halfvac);
+		vac_half.setEnabled(true);
+		
+		vac_num = new JLabel("반차: " + u.getHalfway());
+		vac_num.setFont(new Font("맑은 고딕", Font.PLAIN, 10));
 		
 		calOpPanel = new JPanel();
 			lYearBut = new JButton("<<");
@@ -121,6 +130,14 @@ public class Vacation extends CalendarDataManager{
 			GridBagConstraints calOpGC = new GridBagConstraints();
 		
 			calOpGC.anchor = GridBagConstraints.CENTER;
+			calOpGC.gridwidth = 2;
+			calOpGC.gridx = 6;
+			calOpGC.gridy = 0;
+			calOpPanel.add(vac_num,calOpGC);
+			calOpGC.gridwidth = 1;
+			calOpGC.gridx = 4;
+			calOpGC.gridy = 3;
+			calOpPanel.add(vac_half,calOpGC);
 			calOpGC.gridwidth = 1;
 			calOpGC.gridx = 1;
 			calOpGC.gridy = 2;
@@ -164,25 +181,38 @@ public class Vacation extends CalendarDataManager{
 					dateButs[i][j].setBackground(Color.WHITE);
 					dateButs[i][j].setOpaque(true);
 					dateButs[i][j].addActionListener(lForDateButs);
-//					dateButs[i][j].addActionListener(new ActionListener() {
-//						public void actionPerformed(ActionEvent e) {
-//							if(e.getSource() == dateButs[i][j])
-//							{
-//								JOptionPane.showMessageDialog(null, "남은 인원 " + n + "/3");
-//								date = calYear + "년 " + calMonth + "월 " + calDates + "일";
-//							}
-//						}
-//					});
+					dateButs[i][j].addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							for(int a = 0;a<CAL_HEIGHT;a++)
+							{
+								for(int b=0 ; b<CAL_WIDTH ; b++)
+								{
+									if(e.getSource() == dateButs[a][b])
+									{
+										JOptionPane.showMessageDialog(null, "남은 인원 " + n + "/3");
+										day = dateButs[a][b].getText();	//일 가져오기
+									}
+								}
+							}
+							
+						}
+					});
 					calPanel.add(dateButs[i][j]);
 				}
 			}
+			
+			vac_half.addActionListener(new ActionListener() {
+			       public void actionPerformed(ActionEvent e) {
+			            JComboBox cb = (JComboBox) e.getSource(); // 콤보박스 알아내기
+			            index = cb.getSelectedIndex();// 선택된 아이템의 인덱스
+			       }
+			  });
 			
 			JPanel frameBottomPanel;
 			JButton AppBtn = new JButton("신청");
 			AppBtn.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					String ss[]=new String[10];
-					String day="1";									//일 가져오기
 					if(e.getSource() == AppBtn)
 					{
 						int res;
@@ -198,11 +228,28 @@ public class Vacation extends CalendarDataManager{
 						System.out.println(d);
 						DBA db=new DBA();
 						res=db.leaveApplication(user.getId(), d);
-						n--;
 						if(res==1) {
-							int h=user.getHalfway()-2;
-							db.updatehalfway(user.getId(), h);
-							JOptionPane.showMessageDialog(null, "신청되었습니다.");
+							if(Integer.parseInt(day) <= calDayOfMon)	//내일부터 신청가능
+								JOptionPane.showMessageDialog(null, "휴가와 반차신청은 내일부터 신청가능합니다.");
+							else if(Integer.parseInt(day) > calDayOfMon)
+							{
+								if(index == 0)	//휴학/반차 선택
+					            	JOptionPane.showMessageDialog(null, "휴학과 반차중 하나 선택하십시오.");
+					            else if(index == 1)	//휴가 선택
+					            {
+					            	int h=user.getHalfway()-2;
+									db.updatehalfway(user.getId(), h);
+									JOptionPane.showMessageDialog(null, "신청되었습니다.");
+									n--;
+					            }
+					            else if(index == 2)	//반차 선택
+					            {
+					            	int h=user.getHalfway()-1;
+									db.updatehalfway(user.getId(), h);
+									JOptionPane.showMessageDialog(null, "신청되었습니다.");
+									n--;
+					            }
+							}
 						}
 						else 
 							JOptionPane.showMessageDialog(null, "신청 실패");
@@ -268,9 +315,12 @@ public class Vacation extends CalendarDataManager{
 				
 				File f =new File("MemoData/"+calYear+((calMonth+1)<10?"0":"")+(calMonth+1)+(calDates[i][j]<10?"0":"")+calDates[i][j]+".txt");
 				if(f.exists()){
-					dateButs[i][j].setText("<html><b><font color="+fontColor+">"+calDates[i][j]+"</font></b></html>");
+//					dateButs[i][j].setText("<html><b><font color="+fontColor+">"+calDates[i][j]+"</font></b></html>");
+					dateButs[i][j].setText(calDates[i][j] + "");
 				}
-				else dateButs[i][j].setText("<html><font color="+fontColor+">"+calDates[i][j]+"</font></html>");
+				else 
+//					dateButs[i][j].setText("<html><font color="+fontColor+">"+calDates[i][j]+"</font></html>");
+					dateButs[i][j].setText(calDates[i][j] + "");
 
 				JLabel todayMark = new JLabel("<html><font color=green>*</html>");
 				dateButs[i][j].removeAll();
@@ -324,7 +374,7 @@ public class Vacation extends CalendarDataManager{
 		}
 	}
 	public static void main(String[] args){
-		
+
 	}
 }
 
