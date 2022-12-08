@@ -199,6 +199,7 @@ public class MyUser extends JFrame implements ActionListener {
             uposition.setText(user.getRank());
             udepartment.setText(user.getDepart());
             upoint.setText(user.getPoint() + "");
+            uhalf.setText(user.getHalfway() + "");
             if (user.getImgaddr() == null) {
                 img = new ImageIcon(this.getClass().getResource("/employee.jpg"));
             } else {
