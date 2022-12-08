@@ -234,7 +234,7 @@ public class Vacation extends CalendarDataManager{
 							todaymonth = 1;
 						int todayday = today.get(Calendar.DAY_OF_MONTH);
 						
-						if(Integer.parseInt(ss[7]) > todayyear)
+						if(Integer.parseInt(ss[7]) > todayyear)	//올해 이후
 						{
 							if(index == 0)	//휴학/반차 선택
 				            	JOptionPane.showMessageDialog(null, "휴가와 반차중 하나 선택하십시오.");
@@ -265,7 +265,7 @@ public class Vacation extends CalendarDataManager{
 				            	}
 				            }
 						}
-						else if(Integer.parseInt(ss[7]) == todayyear && Integer.parseInt(ss[5]) >= todaymonth && Integer.parseInt(day) > todayday)
+						else if(Integer.parseInt(ss[7]) == todayyear && Integer.parseInt(ss[5]) > todaymonth)	//올해, 이번달 이후
 						{
 							if(index == 0)	//휴학/반차 선택
 				            	JOptionPane.showMessageDialog(null, "휴가와 반차중 하나 선택하십시오.");
@@ -295,6 +295,38 @@ public class Vacation extends CalendarDataManager{
 				            		JOptionPane.showMessageDialog(null, "신청 실패");
 				            	}
 				            }
+						else if(Integer.parseInt(ss[7]) == todayyear && Integer.parseInt(ss[5]) == todaymonth && Integer.parseInt(day) > todayday)	//올해, 이번달, 오늘 이후
+						{
+							if(index == 0)	//휴학/반차 선택
+				            	JOptionPane.showMessageDialog(null, "휴가와 반차중 하나 선택하십시오.");
+				            else if(index == 1)	//휴가 선택
+				            {
+				            	res=db.leaveApplication(user.getId(), d,"휴가");
+				            	if(res==1) {
+					            	int h=user.getHalfway()-2;
+									db.updatehalfway(user.getId(), h);
+									JOptionPane.showMessageDialog(null, "신청되었습니다.");
+									n--;
+				            	}
+				            	else {
+				            		JOptionPane.showMessageDialog(null, "신청 실패");
+				            	}
+				            }
+				            else if(index == 2)	//반차 선택
+				            {
+				            	res=db.leaveApplication(user.getId(), d,"반차");
+				            	if(res==1) {
+					            	int h=user.getHalfway()-1;
+									db.updatehalfway(user.getId(), h);
+									JOptionPane.showMessageDialog(null, "신청되었습니다.");
+									n--;
+				            	}
+				            	else {
+				            		JOptionPane.showMessageDialog(null, "신청 실패");
+				            	}
+				            }
+						}
+					
 						}
 						else
 							JOptionPane.showMessageDialog(null, "휴가와 반차신청은 내일부터 신청가능합니다.");
