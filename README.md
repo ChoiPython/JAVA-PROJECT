@@ -20,4 +20,4 @@
 ##### 2022-12-09 종료
 ---------------
 #### Using Language
-<img src="https://img.shields.io/badge/Java-007396?style=flat&logo=OpenJDK&logoColor=white"/> <img src="https://img.shields.io/badge/Mysql-4479A1?style=for-the-badge&logo=java&logoColor=white">
+<img src="https://img.shields.io/badge/Java-007396?style=flat&logo=JAVA&logoColor=white"/> <img src="https://img.shields.io/badge/Mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
