@@ -33,64 +33,64 @@ create table shop(
 //사원 데이터
 insert into user values(0,'admin',NULL,NULL,NULL,NULL,NULL);
 
-insert user into values(20212950,'이창건','자바','학생',12,34,null);
-insert user into values(20172261,'정지운','자바','학생',12,34,null);
-insert user into values(20212877,'이형록','자바','학생',12,34,null);
-insert user into values(20212503,'최주영','자바','학생',12,34,null);
-insert user into values(20212934,'최원석','자바','학생',12,34,null);
+insert into user values(20212950,'이창건','자바','학생',12,34,null);
+insert into user values(20172261,'정지운','자바','학생',12,34,null);
+insert into user values(20212877,'이형록','자바','학생',12,34,null);
+insert into user values(20212503,'최주영','자바','학생',12,34,null);
+insert into user values(20212934,'최원석','자바','학생',12,34,null);
 
 
 
 //출근 데이터
-insert Attendance into values('2022-12-01', 20212950, '출근');
-insert Attendance into values('2022-12-01', 20172261, '지각');
-insert Attendance into values('2022-12-01', 20212877, '출근');
-insert Attendance into values('2022-12-01', 20212503, '출근');
-insert Attendance into values('2022-12-01', 20212934, '출근');
+insert into Attendance values('2022-12-01', 20212950, '출근');
+insert into Attendance values('2022-12-01', 20172261, '지각');
+insert into Attendance values('2022-12-01', 20212877, '출근');
+insert into Attendance values('2022-12-01', 20212503, '출근');
+insert into Attendance values('2022-12-01', 20212934, '출근');
 
-insert Attendance into values('2022-12-02', 20212950, '출근');
-insert Attendance into values('2022-12-02', 20172261, '지각');
-insert Attendance into values('2022-12-02', 20212877, '출근');
-insert Attendance into values('2022-12-02', 20212503, '출근');
-insert Attendance into values('2022-12-02', 20212934, '지각');
+insert into Attendance values('2022-12-02', 20212950, '출근');
+insert into Attendance values('2022-12-02', 20172261, '지각');
+insert into Attendance values('2022-12-02', 20212877, '출근');
+insert into Attendance values('2022-12-02', 20212503, '출근');
+insert into Attendance values('2022-12-02', 20212934, '지각');
 
-insert Attendance into values('2022-12-03', 20212950, '출근');
-insert Attendance into values('2022-12-03', 20172261, '출근');
-insert Attendance into values('2022-12-03', 20212877, '출근');
-insert Attendance into values('2022-12-03', 20212503, '결근');
-insert Attendance into values('2022-12-03', 20212934, '출근');
+insert into Attendance values('2022-12-03', 20212950, '출근');
+insert into Attendance values('2022-12-03', 20172261, '출근');
+insert into Attendance values('2022-12-03', 20212877, '출근');
+insert into Attendance values('2022-12-03', 20212503, '결근');
+insert into Attendance values('2022-12-03', 20212934, '출근');
 
-insert Attendance into values('2022-12-04', 20212950, '출근');
-insert Attendance into values('2022-12-04', 20172261, '출근');
-insert Attendance into values('2022-12-04', 20212877, '출근');
-insert Attendance into values('2022-12-04', 20212503, '출근');
-insert Attendance into values('2022-12-04', 20212934, '출근');
+insert into Attendance values('2022-12-04', 20212950, '출근');
+insert into Attendance values('2022-12-04', 20172261, '출근');
+insert into Attendance values('2022-12-04', 20212877, '출근');
+insert into Attendance values('2022-12-04', 20212503, '출근');
+insert into Attendance values('2022-12-04', 20212934, '출근');
 
-insert Attendance into values('2022-12-05', 20212950, '출근');
-insert Attendance into values('2022-12-05', 20172261, '출근');
-insert Attendance into values('2022-12-05', 20212877, '출근');
-insert Attendance into values('2022-12-05', 20212503, '출근');
-insert Attendance into values('2022-12-05', 20212934, '출근');
+insert into Attendance values('2022-12-05', 20212950, '출근');
+insert into Attendance values('2022-12-05', 20172261, '출근');
+insert into Attendance values('2022-12-05', 20212877, '출근');
+insert into Attendance values('2022-12-05', 20212503, '출근');
+insert into Attendance values('2022-12-05', 20212934, '출근');
 
-insert Attendance into values('2022-12-06', 20212950, '출근');
-insert Attendance into values('2022-12-06', 20172261, '출근');
-insert Attendance into values('2022-12-06', 20212877, '출근');
-insert Attendance into values('2022-12-06', 20212503, '출근');
-insert Attendance into values('2022-12-06', 20212934, '출근');
+insert into Attendance values('2022-12-06', 20212950, '출근');
+insert into Attendance values('2022-12-06', 20172261, '출근');
+insert into Attendance values('2022-12-06', 20212877, '출근');
+insert into Attendance values('2022-12-06', 20212503, '출근');
+insert into Attendance values('2022-12-06', 20212934, '출근');
 
-insert Attendance into values('2022-12-07', 20212950, '출근');
-insert Attendance into values('2022-12-07', 20172261, '결근');
-insert Attendance into values('2022-12-07', 20212877, '출근');
-insert Attendance into values('2022-12-07', 20212503, '출근');
-insert Attendance into values('2022-12-07', 20212934, '출근');
+insert into Attendance values('2022-12-07', 20212950, '출근');
+insert into Attendance values('2022-12-07', 20172261, '결근');
+insert into Attendance values('2022-12-07', 20212877, '출근');
+insert into Attendance values('2022-12-07', 20212503, '출근');
+insert into Attendance values('2022-12-07', 20212934, '출근');
 
-insert Attendance into values('2022-12-08', 20212950, '출근');
-insert Attendance into values('2022-12-08', 20172261, '출근');
-insert Attendance into values('2022-12-08', 20212877, '출근');
-insert Attendance into values('2022-12-08', 20212503, '출근');
-insert Attendance into values('2022-12-08', 20212934, '출근');
+insert into Attendance values('2022-12-08', 20212950, '출근');
+insert into Attendance values('2022-12-08', 20172261, '출근');
+insert into Attendance values('2022-12-08', 20212877, '출근');
+insert into Attendance values('2022-12-08', 20212503, '출근');
+insert into Attendance values('2022-12-08', 20212934, '출근');
 
 //12-10일에 티오가 꽉 차서 신청 못하는 모습 보여주기
-insert Attendance into values('2022-12-10', 20212950, '휴가');
-insert Attendance into values('2022-12-10', 20212877, '반차');
-insert Attendance into values('2022-12-08', 20212934, '휴가');
+insert into Attendance values('2022-12-10', 20212950, '휴가');
+insert into Attendance values('2022-12-10', 20212877, '반차');
+insert into Attendance values('2022-12-08', 20212934, '휴가');
