@@ -14,6 +14,9 @@
 - 포인트 제도를 통한 반차 & 휴가 구매
 - 뽑기를 통한 반차 획득
 
+## 다운로드
+- [코드 다운로드](https://github.com/ChoiPython/JAVA-PROJECT/archive/refs/heads/main.zip)
+
 ##### 2022-12-09 종료
 ---------------
 #### Using Language
